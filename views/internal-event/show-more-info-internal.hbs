@@ -1,0 +1,282 @@
+<style media="screen">
+  #modalMoreInfoInternal table td{
+    border: 1px solid #adadad;
+    vertical-align:top;
+  }
+  #modalMoreInfoInternal .titleDataReport{
+    font-size: 10px;
+  }
+  #modalMoreInfoInternal .titleDataReport span{
+    color: white;
+    background-color: #2A3F54;
+    border-right: 1px solid #73879C;
+    border-bottom: 1px solid #73879C;
+    padding: 1px 3px 2px 2px;
+    font-weight: bold;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  #modalMoreInfoInternal .contentDataReport{
+    padding: 2px 4px 2px 4px;
+    text-align: right;
+    min-height: 15px;
+  }
+  #modalMoreInfoInternal .headerTable{
+    background-color: #2A3F54;
+    height: 30px;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    vertical-align: middle;
+  }
+  #modalMoreInfoInternal table:not(:first-child){
+    width: 100%;
+    margin-top: 10px;
+  }
+</style>
+
+<div id="modalMoreInfoInternal" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width:80%;">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="col-sm-9">
+          <h4 class="modal-title">{{EventCode}} - {{StatusName}} - {{title}}</h4>
+        </div>
+        <div class="col-sm-2 text-right">
+          <a download href="/internal-event/downloadPDF?EventCode={{EventCode}}"><span class="label label-danger">Download PDF</span></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <table style="width:100%;">
+          <tr>
+            <td colspan="4" class="headerTable">Main Information</td>
+          </tr>
+          <tr>
+            <td style="width:25%;">
+              <div class="titleDataReport">
+                <span>Created By</span>
+              </div>
+              <div class="contentDataReport">
+                {{CreatedByName}}
+              </div>
+            </td>
+            <td style="width:25%;">
+              <div class="titleDataReport">
+                <span>Responsible By Event</span>
+              </div>
+              <div class="contentDataReport">
+                {{ResponsibleByName}}
+              </div>
+            </td>
+            <td style="width:25%;">
+              <div class="titleDataReport">
+                <span>Departament</span>
+              </div>
+              <div class="contentDataReport">
+                inserir departamento
+              </div>
+            </td>
+            <td style="width:25%;">
+              <div class="titleDataReport">
+                <span>Start/End Time</span>
+              </div>
+              <div class="contentDataReport">
+                  {{start}} - {{end}}
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:25%;">
+              <div class="titleDataReport">
+                <span>Nº Parent</span>
+              </div>
+              <div class="contentDataReport">
+                {{Nparent}}
+              </div>
+            </td>
+            <td style="width:25%;">
+              <div class="titleDataReport">
+                <span>Nº Pupil</span>
+              </div>
+              <div class="contentDataReport">
+                {{Npupil}}
+              </div>
+            </td>
+            <td style="width:25%;">
+              <div class="titleDataReport">
+                <span>Nº Staff</span>
+              </div>
+              <div class="contentDataReport">
+                {{Nstaff}}
+              </div>
+            </td>
+            <td style="width:25%;">
+              <div class="titleDataReport">
+                <span>Nº Visitor</span>
+              </div>
+              <div class="contentDataReport">
+                {{Nvisitor}}
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:25%;">
+              <div class="titleDataReport">
+                <span>Need Computer?</span>
+              </div>
+              <div class="contentDataReport">
+                {{#if NeedComputer}}
+                  {{NeedComputer}}
+                  {{else}}
+                  No Reported
+                {{/if}}
+              </div>
+            </td>
+            <td style="width:25%;">
+              <div class="titleDataReport">
+                <span>Need DataShow?</span>
+              </div>
+              <div class="contentDataReport">
+                {{#if NeedDataShow}}
+                  {{NeedDataShow}}
+                  {{else}}
+                  No Reported
+                {{/if}}
+              </div>
+            </td>
+            <td style="width:25%;">
+              <div class="titleDataReport">
+                <span>Video Conference</span>
+              </div>
+              <div class="contentDataReport">
+                {{#if VideoFrom}}
+                  From: {{VideoFrom}}, To: {{VideoTo}}
+                  {{else}}
+                  No Reported
+                {{/if}}
+              </div>
+            </td>
+            <td style="width:25%;">
+              <div class="titleDataReport">
+                <span>Budget</span>
+              </div>
+              <div class="contentDataReport">
+                {{setor}} {{grupo}} {{conta}}
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4" style="width:100%;">
+              <div class="titleDataReport">
+                <span>Additional Information</span>
+              </div>
+              <div class="contentDataReport">
+                {{AdditionalInformation}}
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <table>
+          <tr>
+            <td colspan="5" class="headerTable">Products</td>
+          </tr>
+          {{#each products}}
+            <tr>
+              <td style="width:70%;">
+                <div class="titleDataReport">
+                  <span>Name</span>
+                </div>
+                <div class="contentDataReport">
+                  {{ProductNameEnglish}}/{{ProductNamePort}} ({{UnitInEnglish}}/{{UnitInPort}})
+                </div>
+              </td>
+              <td style="width:10%;">
+                <div class="titleDataReport">
+                  <span>Amount</span>
+                </div>
+                <div class="contentDataReport">
+                  {{Amount}}
+                </div>
+              </td>
+              <td style="width:10%;">
+                <div class="titleDataReport">
+                  <span>Price</span>
+                </div>
+                <div class="contentDataReport">
+                  {{Price}}
+                </div>
+              </td>
+              <td style="width:10%;">
+                <div class="titleDataReport">
+                  <span>SubTotal</span>
+                </div>
+                <div class="contentDataReport">
+                  {{TotalProd}}
+                </div>
+              </td>
+            </tr>
+          {{/each}}
+          {{#if products}}
+          <tr>
+            <td style="border:0px;"></td>
+            <td style="border:0px;"></td>
+            <td style="border:0px;"></td>
+            <td>
+              <div class="titleDataReport">
+                <span>Total + 14%</span>
+              </div>
+              <div class="contentDataReport">
+                R$ {{TotalGeralProduct}}
+              </div>
+            </td>
+          </tr>
+          {{else}}
+          <tr style="height:30px;">
+            <td colspan="4" style="vertical-align:middle;text-align:center;">Don't have products</td>
+          </tr>
+          {{/if}}
+        </table>
+
+        <table>
+          <tr>
+            <td colspan="4" class="headerTable">Guests</td>
+          </tr>
+          {{#if guests}}
+          {{#each guests}}
+            <tr>
+              <td style="width:50%;">
+                <div class="titleDataReport">
+                  <span>Type</span>
+                </div>
+                <div class="contentDataReport">
+                  {{Type}}
+                </div>
+              </td>
+              <td style="width:50%;">
+                <div class="titleDataReport">
+                  <span>Name</span>
+                </div>
+                <div class="contentDataReport">
+                  {{NameGuest}}
+                </div>
+              </td>
+            </tr>
+          {{/each}}
+          {{else}}
+          <tr style="height:30px;">
+            <td colspan="4" style="vertical-align:middle;text-align:center;">Don't have guests</td>
+          </tr>
+          {{/if}}
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

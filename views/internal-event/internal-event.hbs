@@ -1,0 +1,850 @@
+{{#section 'head'}}
+  <style media="screen">
+  .select2-container .select2-search,
+    .select2-container .select2-search__field {
+        width: 100% !important;
+    }
+    .popover-content{
+      height: 100px;
+      padding: 4px;
+      font-size: 11px;
+      width: 400px; /* Max Width of the popover (depending on the container!) */
+    }
+    .popover-title{
+      text-align: left;
+      background-color: #2A3F54;
+      border-color: #2A3F54;
+      color: white;
+    }
+    .campoMoreInfo{
+      font-weight: bold;
+    }
+  </style>
+{{/section}}
+
+<div class="row">
+  <div class="col-sm-6">
+    <select id="roomID" name="getAllSiteBuildingRoom" style="width:100%;">
+      <option value="">SELECT THE ROOM</option>
+      {{#each getAllSiteBuildingRoom}}
+        <option value="{{RoomID}}">{{unidade}} - {{NameBuilding}} - {{NameRoom}}</option>
+      {{/each}}
+    </select>
+  </div>
+</div>
+
+<div class="row" style="margin-top:15px;">
+  <div class="col-md-12">
+    <div class="x_panel">
+      <div class="x_content">
+        <div id="calendar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modalNewEvent" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width:90%;">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-sm-6">
+            <h5 class="modal-title">New Internal Event - <span id="dateTitle"></span> in <span id="roomTitle"></span></h5>
+          </div>
+          <div class="col-sm-6">
+            <select class="form-control" name="" id="selectReuseEvent" style="width:100%;">
+              <option value="">Reuse Info Event:</option>
+              {{#each myEvents}}
+                <option value="{{EventCode}}">{{EventCode}} - {{title}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+      </div>
+      <form id="formNewEvent" action="index.html" method="post">
+        <input type="hidden" name="dateNewEvent" id="dateNewEvent">
+        <input type="hidden" name="roomIDNewEvent" id="roomIDNewEvent">
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">Main information</div>
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-sm-1">
+                        <label for="startTimeNewEvent">Start</label>
+                        <input type="time" name="startTimeNewEvent" id="startTimeNewEvent" class="form-control" required>
+                      </div>
+                      <div class="col-sm-1">
+                        <label for="endTimeNewEvent">End</label>
+                        <input type="time" name="endTimeNewEvent" id="endTimeNewEvent" class="form-control" required>
+                      </div>
+                      <div class="col-sm-4">
+                        <label for="nameNewEvent"></label>
+                        <input type="text" name="nameNewEvent" id="nameNewEvent" class="form-control" placeholder=" Event Name" required>
+                      </div>
+                      <div class="col-sm-3">
+                        <label for="responsibleNewEvent"></label>
+                        <select id="responsibleNewEvent" name="responsibleNewEvent" style="width:100%;">
+                          <option value="">RESPONSIVE BY EVENT</option>
+                          {{#each allActiveUser}}
+                            <option value="{{matricula}}">{{pad matricula 4 0}} - {{toTitleCase nomeusuario}}</option>
+                          {{/each}}
+                        </select>
+                      </div>
+                      <div class="col-sm-3">
+                        <label for="iddepartamento"></label>
+                        <select id="iddepartamento" name="iddepartamento" style="width:100%;">
+                          <option value="">SELECT THE DEPARTAMENT</option>
+                          {{#each allDepartament}}
+                            <option value="{{iddepartamento}}">{{toTitleCase nomedepartamento}}</option>
+                          {{/each}}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">Equipaments</div>
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        Need Computer/Notebook ?
+                      </div>
+                      <div class="col-sm-4 text-right">
+                         <input id="needcomputerN" type="radio" name="needcomputer" value="No"> <label for="needcomputerN">No</label>
+                         <input id="needcomputerS" style="margin-left: 5px;" type="radio" name="needcomputer" value="Yes"> <label for="needcomputerS">Yes</label>
+                      </div>
+                    </div>
+                    <div class="row" style="margin-top:7px;">
+                      <div class="col-sm-7">
+                        Need DataShow ?
+                      </div>
+                      <div class="col-sm-5 text-right">
+                         <input id="needDataShowN" type="radio" name="needDataShow" value="No"> <label for="needDataShowN">No</label>
+                         <input id="needDataShowS" style="margin-left: 5px;" type="radio" name="needDataShow" value="Yes"> <label for="needDataShowS">Yes</label>
+                      </div>
+                    </div>
+                    <div class="row" style="margin-top:7px;">
+                      <div class="col-sm-4">
+                        Video Conference
+                      </div>
+                      <div class="col-sm-8 text-right">
+                          <label for="videoFrom">From:</label>
+                          <select class="" name="videoFrom" id="videoFrom">
+                            <option value=""></option>
+                            <option value="ADM">ADM</option>
+                            <option value="Botafogo">Botafogo</option>
+                            <option value="Urca">Urca</option>
+                            <option value="Barra">Barra</option>
+                          </select>
+                          <label for="videoTo">To:</label>
+                          <select class="" name="videoTo" id="videoTo">
+                            <option value=""></option>
+                            <option value="ADM">ADM</option>
+                            <option value="Botafogo">Botafogo</option>
+                            <option value="Urca">Urca</option>
+                            <option value="Barra">Barra</option>
+                            <option value="All">All</option>
+                          </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-8">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">Additional Information</div>
+                  <div class="panel-body">
+                    <textarea name="additionalInformation" id="additionalInformation" rows="3" class="form-control btn-block"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">Participants</div>
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-sm-2">
+                        <input type="number" min="0" name="qtdParentNewEvent" id="qtdParentNewEvent" class="form-control nParticipant" placeholder=" Nº Parent" style="padding-right: 2px;" data-toggle="tooltip" title="Nº Parent">
+                      </div>
+                      <div class="col-sm-2">
+                        <input type="number" min="0" name="qtdPupilNewEvent" id="qtdPupilNewEvent" class="form-control nParticipant" placeholder=" Nº Pupil" data-toggle="tooltip" title="Nº Pupil">
+                      </div>
+                      <div class="col-sm-2">
+                        <input type="number" min="0" name="qtdStaffNewEvent" id="qtdStaffNewEvent" class="form-control nParticipant" placeholder=" Nº Staff" data-toggle="tooltip" title="Nº Staff">
+                      </div>
+                      <div class="col-sm-2">
+                        <input type="number" min="0" name="qtdVisitorNewEvent" id="qtdVisitorNewEvent" class="form-control nParticipant" placeholder=" Nº Visitor" data-toggle="tooltip" title="Nº Visitor">
+                      </div>
+                      <div class="col-sm-4">
+                        <input type="text" min="0" name="qtdTotalParticipant" id="qtdTotalParticipant" class="form-control" placeholder=" Total" disabled style="text-align: right;">
+                      </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                      <div class="col-sm-2">
+                        <select class="form-control" id="listTypeName">
+                          <option data-group-name="parent" value="Parent">Parent</option>
+                          <option data-group-name="pupil" value="Pupil">Pupil</option>
+                          <option data-group-name="staff" value="Staff">Staff</option>
+                          <option data-group-name="visitor" value="Visitor">Visitor</option>
+                        </select>
+                      </div>
+                        <div class="col-sm-10">
+                          <input type="text" name="nameParticipantNewEvent" id="nameParticipantNewEvent" class="form-control" placeholder=" Insert name and press enter">
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="margin-top:10px;">
+                      <div class="row">
+                        <div class="col-sm-3 text-center">
+                          <button type="button" class="btn btn-primary" style="padding-top: 0px;padding-bottom: 0px;margin-bottom:3px;">Parent <span id="sumparent" class="badge">0</span></button>
+                        </div>
+                        <div class="col-sm-3 text-center">
+                          <button type="button" class="btn btn-primary" style="padding-top: 0px;padding-bottom: 0px;margin-bottom:3px;">Pupil <span id="sumpupil" class="badge">0</span></button>
+                        </div>
+                        <div class="col-sm-3 text-center">
+                          <button type="button" class="btn btn-primary" style="padding-top: 0px;padding-bottom: 0px;margin-bottom:3px;">Staff <span id="sumstaff" class="badge">0</span></button>
+                        </div>
+                        <div class="col-sm-3 text-center">
+                          <button type="button" class="btn btn-primary" style="padding-top: 0px;padding-bottom: 0px;margin-bottom:3px;">Visitor <span id="sumvisitor" class="badge">0</span></button>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-3 lineName" data-group-name="parent" style="padding-left:0px;">
+                        </div>
+                        <div class="col-sm-3 lineName" data-group-name="pupil" style="padding-left:0px;">
+                        </div>
+                        <div class="col-sm-3 lineName" data-group-name="staff" style="padding-left:0px;">
+                        </div>
+                        <div class="col-sm-3 lineName" data-group-name="visitor" style="padding-left:0px;">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">Menu</div>
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <select id="id_budget" name="id_budget" style="width:100%;">
+                          <option value="">SELECT THE BUDGET</option>
+                          {{#each sess.budgets}}
+                            <option data-setor="{{setor}}" data-grupo="{{grupo}}" data-conta="{{conta}}" data-ncont="{{nomecont}}" data-saldo="{{saldo}}" value="{{id_orca}}">{{pad setor 3 0}} {{pad grupo 3 0}} {{conta}} {{ncont}} - R${{addDecimalCases saldo}}</option>
+                          {{/each}}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                      <div class="col-sm-10">
+                        <select id="listProduct" name="allProductActive" multiple style="width:100%;">
+                          {{#each allProductActive}}
+                            <option data-name-english="{{NameEnglish}}" data-name-port="{{NamePort}}" data-name-unit-engl="{{NameUnitEngl}}" data-name-unit-port="{{NameUnitPort}}" data-price={{Price}} data-event-product-id="{{EventProductID}}" value="{{EventProductID}}">{{NameEnglish}}/{{NamePort}} | {{NameUnitEngl}}/{{NameUnitPort}} | R$ {{Price}}</option>
+                          {{/each}}
+                        </select>
+                      </div>
+                      <div class="col-sm-2">
+                        <input type="number" min="0" name="qtdProduct" id="qtdProduct" class="form-control" style="height:33px;" title="Insert amount and press enter" data-toggle="tooltip">
+                      </div>
+                    </div>
+                    <div class="row" style="margin-top:10px;">
+                      <div class="col-sm-12">
+                        <div class="table-responsive">
+                          <table class="table" id="tableItemEvent" style="margin-bottom: 0px;">
+                            <thead>
+                              <th style="width:5%;border-right: 1px solid white;">Remove</th>
+                              <th style="width:65%;border-right: 1px solid white;">Product</th>
+                              <th style="width:10%;border-right: 1px solid white;">Amount</th>
+                              <th style="width:20%;">Total (R$)</th>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="submit" value="Create" class="btn btn-success" id="submitFormNewEvent">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="divModalMoreInfo">
+</div>
+
+{{#section 'script'}}
+<script type="text/javascript">
+
+  $("#selectReuseEvent").on("change", function (e) {
+    let EventCode = $("#selectReuseEvent").val()
+    if('' === EventCode){
+      resetForm()
+    }else{
+      let dataSend = {EventCode}
+
+      $.ajax({
+        url: '/find/fillout-form',
+        type: 'POST',
+        data: dataSend,
+        dataType:'json',
+        success: function(data) {
+          document.getElementById('formNewEvent').reset()
+          console.log(data);
+          // debugger
+          $('#startTimeNewEvent').val(data.EventFound.start.split(' ')[1])
+          $('#endTimeNewEvent').val(data.EventFound.end.split(' ')[1])
+          $('#nameNewEvent').val(data.EventFound.title)
+          $('#responsibleNewEvent').val(data.EventFound.ResponsibleByEvent).trigger('change')
+          $('#iddepartamento').val(data.EventFound.Departament_ID).trigger('change')
+          $('#id_budget').val(data.EventFound.Budget_ID).trigger('change')
+
+          $('input[name="needcomputer"][value='+ data.EventFound.NeedComputer +']').prop("checked", true)
+          $('input[name="needDataShow"][value='+ data.EventFound.NeedDataShow +']').prop("checked", true)
+          $("#videoFrom").val(data.EventFound.VideoFrom)
+          $("#videoTo").val(data.EventFound.VideoTo)
+
+          $('#id_budget').val(data.EventFound.Budget_ID).trigger('change')
+
+          $('#additionalInformation').text(data.EventFound.AdditionalInformation)
+
+          $('#qtdParentNewEvent').val(data.EventFound.Nparent)
+          $('#qtdPupilNewEvent').val(data.EventFound.Npupil)
+          $('#qtdStaffNewEvent').val(data.EventFound.Nstaff)
+          $('#qtdVisitorNewEvent').val(data.EventFound.Nvisitor)
+
+          let sum = 0
+          $('.nParticipant').each(function(){
+            if('' !== $(this).val()) sum += parseInt($(this).val())
+          })
+          $('#qtdTotalParticipant').val('Total: ' + sum)
+
+          $('.lineName').empty()
+          $('#sumparent').text(0)
+          $('#sumpupil').text(0)
+          $('#sumstaff').text(0)
+          $('#sumvisitor').text(0)
+          data.EventFound.guests.map(function(e){
+            $('.lineName[data-group-name="'+ e.Type.toLowerCase() +'"]').append(
+              '<div class="lineGuest new'+e.Type.toLowerCase()+'" data-group-name="'+ e.Type.toLowerCase() +'" data-yourname="'+ e.NameGuest +'">'
+                +'<div class="col-sm-10" style="white-space:nowrap;padding-left:0px;padding-right:0px;" data-toggle="tooltip" title="'+ e.NameGuest +'">'
+                  + e.NameGuest
+                +'</div>'
+                +'<div class="col-sm-2">'
+                  +'<i onclick="removeName(this,`'+ e.Type.toLowerCase() +'`)" class="fa fa-times" aria-hidden="true"></i>'
+                +'</div>'
+              +'</div>'
+            )
+          })
+          $('#sumparent').text($('.newparent').size())
+          $('#sumpupil').text($('.newpupil').size())
+          $('#sumstaff').text($('.newstaff').size())
+          $('#sumvisitor').text($('.newvisitor').size())
+
+          $('#tableItemEvent tbody').empty()
+          let sumProd = 0
+          data.EventFound.products.map(function(e){
+
+            sumProd += e.Price * e.Amount
+            $('#tableItemEvent tbody').append(
+              '<tr class="lineItemEvent" data-product-id="'+ e.EventProduct_ID +'" data-price-prod="'+ e.Price +'" data-qtd="'+ e.Amount +'">'
+                +'<td class="text-center"><i onclick="removeItemEvent(this)" class="fa fa-times" aria-hidden="true"></i></td>'
+                +'<td>'+ e.ProductNameEnglish + '/' + e.ProductNamePort + '  |  ' + e.UnitInEnglish + '/' + e.UnitInPort +'</td>'
+                +'<td class="text-right">'
+                  +'<input onkeyup="updateValueAmont(this);" type="number" min="1" value="'+ e.Amount +'"'
+                +'</td>'
+                +'<td class="text-right totalProduct">'+ (e.Price * e.Amount).toFixed(2) +'</td>'
+              +'</tr>'
+            )
+          })
+          $('#tableItemEvent tbody').append(
+            '<tr class="lineTotalGeral">'
+              +'<td class="text-right" colspan="4">'+ sumProd.toFixed(2).replace('.',',') +'</td>'
+            +'</tr>'
+          )
+        }
+      })
+    }
+  })
+
+  $('#videoFrom').change(function(e){
+    $('#videoTo option').attr('disabled',false)
+    document.getElementById('videoTo')
+      .options[this.options.selectedIndex]
+      .setAttribute('disabled',true)
+    $('#videoTo').val('')
+  })
+
+
+  function addItemEvent(){
+    if ('' === document.getElementById('qtdProduct').value
+     || '' === $('#listProduct').find(":selected").val()) return;
+
+    $('.lineTotalGeral').remove()
+
+    $("#listProduct").select2().find(":selected").each(function(){
+      let eventProductID = $(this).data('event-product-id')
+      let nomeProdIngl = $(this).data('name-english')
+      let nomeProdPort = $(this).data('name-port')
+      let unitIngl = $(this).data('name-unit-engl')
+      let unitPort = $(this).data('name-unit-port')
+      let priceProd = parseFloat($(this).data('price'))
+      let qtdProd = parseInt($('#qtdProduct').val())
+
+      $('#tableItemEvent tbody').append(
+        '<tr class="lineItemEvent" data-product-id="'+eventProductID+'" data-price-prod="'+priceProd+'" data-qtd="'+qtdProd+'">'
+          +'<td class="text-center"><i onclick="removeItemEvent(this)" class="fa fa-times" aria-hidden="true"></i></td>'
+          +'<td>'+ nomeProdIngl + '/' + nomeProdPort + '  |  ' + unitIngl + '/' + unitPort +'</td>'
+          +'<td class="text-right">'
+            +'<input onkeyup="updateValueAmont(this);" type="number" min="1" value="'+ qtdProd +'"'
+          +'</td>'
+          +'<td class="text-right totalProduct">'+ (priceProd * qtdProd).toFixed(2) +'</td>'
+        +'</tr>'
+      )
+    })
+
+    let sum = 0;
+    $('.totalProduct').each(function(){
+      sum += parseFloat($(this).text());  // Or this.innerHTML, this.innerText
+    });
+
+    $('#tableItemEvent tbody').append(
+      '<tr class="lineTotalGeral">'
+        +'<td class="text-right" colspan="4">'+ sum.toFixed(2).replace('.',',') +'</td>'
+      +'</tr>'
+    )
+    document.getElementById('qtdProduct').value = ''
+    $('#listProduct').val('').trigger("change")
+
+  }
+
+  $('#qtdProduct').keypress(function(e){
+    if ( e.which == 13 ){
+      e.preventDefault()
+      addItemEvent();
+    }
+  });
+
+  function updateValueAmont(el){
+    let newValue = parseInt($(el).val()) * parseFloat($(el).closest('tr').data('price-prod'))
+    if($(el).val() === '') newValue = 0
+    $(el).closest('tr').find('.totalProduct').text(newValue.toFixed(2))
+    $(el).closest('tr').data('qtd',parseInt($(el).val()))
+
+    let sum = 0;
+    $('.totalProduct').each(function(){
+      sum += parseFloat($(this).text());  // Or this.innerHTML, this.innerText
+    });
+    $('.lineTotalGeral').find('td').text(sum.toFixed(2))
+  }
+
+  function addNameListEvent(novo){
+    if ('' === document.getElementById(novo).value) return;
+    let newName = document.getElementById(novo).value
+
+    let groupPerson = $('#listTypeName').find(':selected').data('group-name')
+    if(17 < newName.length) newName = newName.substr(0,15) + '...'
+    $('.lineName[data-group-name="'+groupPerson+'"]').append(
+      '<div class="lineGuest new'+groupPerson+'" data-group-name="'+groupPerson+'" data-yourname="'+document.getElementById(novo).value+'">'
+        +'<div class="col-sm-10" style="white-space:nowrap;padding-left:0px;padding-right:0px;" data-toggle="tooltip" title="'+document.getElementById(novo).value+'">'
+          + newName
+        +'</div>'
+        +'<div class="col-sm-2">'
+          +'<i onclick="removeName(this,`'+groupPerson+'`)" class="fa fa-times" aria-hidden="true"></i>'
+        +'</div>'
+      +'</div>'
+    )
+    $('[data-toggle="tooltip"]').tooltip()
+    $('#sum'+groupPerson).text($('.new'+groupPerson).size())
+    document.getElementById(novo).value = ''
+  }
+
+  function removeName(el,groupPerson){
+    $(el).parent().parent().remove()
+    $('#sum'+groupPerson).text($('.new'+groupPerson).size())
+  }
+
+  function removeItemEvent(el){
+    $(el).parent().parent().remove()
+    let sum = 0;
+    $('.totalProduct').each(function(){
+      sum += parseFloat($(this).text());  // Or this.innerHTML, this.innerText
+    });
+    $('.lineTotalGeral td').text(sum.toFixed(2).replace('.',','))
+  }
+
+  $('.nParticipant').keyup(function(e){
+    let sum = 0
+    $('.nParticipant').each(function(){
+      if('' !== $(this).val()) sum += parseInt($(this).val())
+    })
+    $('#qtdTotalParticipant').val('Total: ' + sum)
+  })
+
+  $('#nameParticipantNewEvent').keypress(function(e){
+    if ( e.which == 13 ){
+      e.preventDefault()
+      addNameListEvent(this.id)
+    }
+  })
+
+  $(document).ready(function() {
+    $("#roomID").select2()
+    $("#responsibleNewEvent").select2()
+    $("#selectReuseEvent").select2().on("select2:selecting", function(e) {
+       setTimeout(function() { $('#nameNewEvent').focus() }, 50)
+    })
+    $("#iddepartamento").select2()
+    $("#listProduct").select2({
+      placeholder: "SELECT THE PRODUCTS"
+    })
+    $('[data-toggle="tooltip"]').tooltip();
+
+    $("#roomID").change(function(e){
+      var curretFullDate = $("#calendar").fullCalendar('getDate');
+      var currentMonth = curretFullDate.month() + 1
+      var currentYear = curretFullDate.year()
+      var idRoom = $("#roomID").val()
+      $('#calendar').fullCalendar('removeEvents');
+      if('' !== idRoom) searchEvents()
+    })
+
+    // setTimeout(function () { $('#roomID').val('551').trigger('change') }, 100);
+
+    $('#calendar').fullCalendar({
+      header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay,listMonth'
+		  },
+      timezone:'local',
+      timeFormat: 'H(:mm)',
+      displayEventEnd: true,
+      allDaySlot:false,
+      dayClick: function(date, jsEvent, view) {
+        checkEventPast(date)
+        if( '' !== $("#roomID").val() ){
+          showModalNewEvent(date)
+        }else {
+          swal({
+            title:"Select the room!",
+            text:"First, select the room!",
+            type:"info"
+          }).then(
+            function () {
+              $('#roomID').select2('open')
+            }
+          )
+        }
+      },
+      eventClick: function(calEvent, jsEvent, view) {
+        findEventByCode(calEvent.EventCode)
+      },viewRender: function (view, element) {
+        if( '' !== $("#roomID").val() ) searchEvents()
+      },eventRender: function(event, element) {
+        element.find(".fc-event-title").remove();
+        element.find(".fc-event-time").remove();
+        event.description = 'This is a cool event'
+        event.id = event.EventID
+
+        if(!event.ResponsibleByName) event.ResponsibleByName = 'Not Reported'
+        if(!event.NeedComputer) event.NeedComputer = 'Not Reported'
+        if(!event.NeedDataShow) event.NeedDataShow = 'Not Reported'
+        if(!event.VideoFrom){
+          event.VideoConference = 'Not Reported'
+        }else{
+          event.VideoConference = event.VideoFrom + ' to ' + event.VideoTo
+        }
+
+        var contentPopover = '<div class="row">'
+                             + '<div class="col-sm-9">'
+                               + '<div class="row">'
+                                  + '<div class="col-sm-5">'
+                                  + 'Event Name:'
+                                  + '</div>'
+                                  + '<div class="col-sm-7">'
+                                  + toTitleCase(event.title)
+                                  + '</div>'
+                               + '</div>'
+                               + '<div class="row">'
+                                  + '<div class="col-sm-5">'
+                                  + 'Created By:'
+                                  + '</div>'
+                                  + '<div class="col-sm-7">'
+                                  + toTitleCase(event.CreatedByName)
+                                  + '</div>'
+                               + '</div>'
+                               + '<div class="row">'
+                                  + '<div class="col-sm-5">'
+                                  + 'Responsible By:'
+                                  + '</div>'
+                                  + '<div class="col-sm-7">'
+                                  + toTitleCase(event.ResponsibleByName)
+                                  + '</div>'
+                               + '</div>'
+                               + '<div class="row">'
+                                  + '<div class="col-sm-5">'
+                                  + 'Need Computer:'
+                                  + '</div>'
+                                  + '<div class="col-sm-7">'
+                                  + event.NeedComputer
+                                  + '</div>'
+                               + '</div>'
+                               + '<div class="row">'
+                                  + '<div class="col-sm-5">'
+                                  + 'Need DataShow:'
+                                  + '</div>'
+                                  + '<div class="col-sm-7">'
+                                  + event.NeedDataShow
+                                  + '</div>'
+                               + '</div>'
+                               + '<div class="row">'
+                                  + '<div class="col-sm-5">'
+                                  + 'Video Conference:'
+                                  + '</div>'
+                                  + '<div class="col-sm-7">'
+                                  + event.VideoConference
+                                  + '</div>'
+                               + '</div>'
+                             + '</div>'
+                            //  + '<div class="col-sm-3 text-right">'
+                            //    + '<div>'
+                            //     + '<button class="btn btn-danger btn-xs">Cancel</button>'
+                            //    + '</div>'
+                            //    + '<div style="margin-top:5px;">'
+                            //    + '<button class="btn btn-success btn-xs">Approve</button>'
+                            //    + '</div>'
+                            //  + '</div>'
+                           + '</div>'
+
+        $(element).popover({html:'true', placement: 'top', container: 'body', title: event.EventCode + ' - ' + event.StatusName, content:contentPopover})
+        .addClass('mysuperpopover')
+        .on("mouseenter", function () {
+            var _this = this;
+            $(this).popover("show");
+            $(".popover").on("mouseleave", function () {
+                $(_this).popover('hide');
+            });
+        }).on("mouseleave", function () {
+            var _this = this;
+            setTimeout(function () {
+                if (!$(".popover:hover").length) {
+                    $(_this).popover("hide");
+                }
+            }, 0);
+        }).on("show.bs.popover", function(){
+          $(this).data("bs.popover").tip().css('maxWidth',"600px")
+        })
+      }
+    })
+   });
+
+  function searchEvents(){
+    if($("#roomID").val() === '') return
+    let dataSend = {
+      roomID: $("#roomID").val(),
+      firstDay: moment($('#calendar').fullCalendar('getView').start).format('YYYY-MM-DD'),
+      lastDay: moment($('#calendar').fullCalendar('getView').end).format('YYYY-MM-DD')
+    }
+    $.ajax({
+        url: '/internal-event/search-events',
+        type: 'POST',
+        data: dataSend,
+        dataType:'json',
+        success: function(data) {
+          $('#calendar').fullCalendar('removeEvents');
+          $('#calendar').fullCalendar('addEventSource', data)
+        }
+    })
+  }
+
+  function showModalNewEvent(date){
+    $('#roomTitle').text($('#roomID').select2('data')[0].text)
+    $('#dateTitle').text(moment(date).format('DD/MM/YYYY'))
+    $('#dateNewEvent').val(moment(date).format('YYYY-MM-DD'))
+    $('#roomIDNewEvent').val($("#roomID").val())
+    $('#modalNewEvent').modal('show')
+  }
+
+  $('#modalNewEvent').on('shown.bs.modal', function () {
+    $('#startTimeNewEvent').focus();
+  })
+
+  $( "#formNewEvent" ).submit(function( e ) {
+    e.preventDefault()
+    checkEndAfterStart()
+    checkNewTimeDay()
+    checkVideoConference()
+    checkBudgetBalance()
+    passou()
+
+    let data = $('#formNewEvent').serializeArray()
+    data.push({name: 'guests', value: JSON.stringify(serializeGuest())})
+    data.push({name: 'products', value: JSON.stringify(serializeTableProduct())})
+
+    $.ajax({
+      url: '/internal-event/create-event',
+      type: 'POST',
+      data,
+      dataType:'json',
+      success: function(data) {
+        // debugger
+        $('#submitFormNewEvent').prop("disabled",false);
+        $('#submitFormNewEvent').prop("value",'Create');
+        // searchEvents()
+        // $('#selectReuseEvent').val('').trigger('change')
+        // resetForm()
+        swal({
+          title: "Saved successfully",
+          text: data,
+          type:"success"
+        }).then(
+          function () {
+            $('#modalNewEvent').modal('hide')
+            window.location.replace('/my-event')
+          }
+        )
+
+      }
+    })
+  });
+
+  function serializeTableProduct(){
+    let arrayProducts = []
+    $('#tableItemEvent tbody tr').not(':last').each(function(e){
+      arrayProducts.push($(this).data())
+    })
+    return arrayProducts
+  }
+
+  function serializeGuest(){
+    let arrayGuest = []
+    $('.lineGuest').each(function(e){
+      arrayGuest.push({
+        type: $(this).data('group-name'),
+        name:$(this).data('yourname')
+      })
+    })
+    console.log(arrayGuest);
+    return arrayGuest
+  }
+
+  function checkVideoConference(){
+    if (($('#videoFrom').val() !== '') && $('#videoTo').val() === '') {
+      swal({
+        title:"",
+        text:"Video Conference to can\'t be empty",
+        type: "info"
+      }).then(
+        function () {
+          $('#videoTo').css('border-color','red')
+        }
+      )
+      throw new Error('Please choose Video Conference to')
+    }
+  }
+
+  function checkNewTimeDay(){
+    let startEvent = moment($('#dateNewEvent').val() + 'T' + $('#startTimeNewEvent').val())
+    let endEvent = moment($('#dateNewEvent').val() + 'T' + $('#endTimeNewEvent').val())
+    var isBetween = $('#calendar').fullCalendar( 'clientEvents', function(event){
+      if(startEvent.isBetween(event.start, event.end, null, [])
+      || endEvent.isBetween(event.start, event.end, null, [])){
+        // alert('Horário selecionado já está em uso na Room' + $('#roomID').select2('data')[0].text.split('-').pop())
+        swal("Time already selected", "In " + $('#roomID').select2('data')[0].text.split('-').pop(), "error")
+        throw new Error('Time + Room already in use.')
+      }
+    })
+  }
+
+  function checkEventPast(dataDesejada){
+    if( dataDesejada.format('YYYY-MM-DD') < moment().format('YYYY-MM-DD') ){
+      swal("Incorrect Date", "You can\'t create event to previous days", "error")
+      throw new Error('Event can\'t be before today.')
+    }
+  }
+
+  function checkBudgetBalance(){
+    if ($('.lineItemEvent').size() > 0 && '' === $('#id_budget').val()) {
+      $('#id_budget').css('border-color','red')
+      swal("No Budget Selected", "Please choose an budget", "error")
+      throw new Error('Please choose an budget')
+    }
+
+    let sum = 0
+    $('.totalProduct').each(function(){
+      sum += (parseFloat($(this).text()) * 1.14)
+    })
+
+    if ($('#id_budget').find(":selected").data('saldo') < sum) {
+      $('#id_budget').css('border-color','red')
+      swal("Budget doesn't have balance", "Choose another budget or remove itens", "error")
+      throw new Error('Please choose an budget')
+    }
+  }
+
+  function checkEndAfterStart(){
+    let startEvent = moment($('#dateNewEvent').val() + 'T' + $('#startTimeNewEvent').val())
+    let endEvent = moment($('#dateNewEvent').val() + 'T' + $('#endTimeNewEvent').val())
+    if(startEvent >= endEvent){
+
+      swal("End time must be later than initial", "", "error")
+      // alert('Horário Final deve ser após horário inicial')
+      throw new Error('Time + Room already in use.')
+    }
+  }
+
+  function passou(){
+    $('#submitFormNewEvent').prop("disabled", true);
+    $('#submitFormNewEvent').prop("value",'...creating');
+    // alert('passou')
+  }
+
+  function findEventByCode(EventCode){
+    let data = {EventCode}
+    $.ajax({
+      url: '/internal-event/find-event-by-code',
+      type: 'POST',
+      data,
+      dataType:'json',
+      success: function(eventData) {
+        var template = Handlebars.compile(eventData.template);
+        $('#divModalMoreInfo').html(template(eventData))
+        $('#modalMoreInfoInternal').modal('show')
+        console.log(eventData);
+      }
+    })
+  }
+
+  function resetForm(){
+    document.getElementById('formNewEvent').reset()
+    $('#responsibleNewEvent').val('').trigger('change')
+    $('#id_budget').css('border-color','rgb(166, 166, 166)')
+    $('#iddepartamento').val('').trigger('change')
+    $('#additionalInformation').text('')
+    $('.lineName').empty()
+    $('#sumparent').text(0)
+    $('#sumpupil').text(0)
+    $('#sumstaff').text(0)
+    $('#sumvisitor').text(0)
+    $('#tableItemEvent tbody').empty()
+  }
+</script>
+{{/section}}

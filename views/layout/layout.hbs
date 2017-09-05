@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>British School - Expense Report</title>
+    <link href="/vendor/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/vendor/select2/dist/css/select2.css" rel="stylesheet">
+    <link href="/vendor/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
+    <link href="/vendor/sweetalert/sweetalert2.css" rel="stylesheet">
+    <link href="/vendor/data-tables/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/build/css/custom.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <link href="/stylesheets/timer.css" rel="stylesheet">
+    {{{_sections.head}}}
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="/" class="site_title">
+                <img src="/images/british_logo.png" alt="..." class="img-circle profile_img" style="width:50px;height:50px;margin-bottom:5px;">
+                <span>British School</span>
+              </a>
+            </div>
+            <div class="clearfix"></div>
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>Expense Report</h3>
+                <ul class="nav side-menu">
+                  {{#each sess.functionalityProfile}}
+                    <li><a href="{{Action}}"><i class="fa {{Icon}}"></i> {{Name}} </a></li>
+                  {{/each}}
+                </ul>
+              </div>
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a data-toggle="tooltip" data-placement="top" title="Settings" class="no-loading">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="FullScreen" class="no-loading">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Lock" class="no-loading">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="/logout">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a class="no-loading" id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle no-loading" data-toggle="dropdown" aria-expanded="false">
+                    {{toTitleCase sess.nomeusuario}}
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="javascript:;" class="no-loading"> Profile</a></li>
+                    <li>
+                      <a href="javascript:;" class="no-loading">
+                        <span class="badge bg-red pull-right">50%</span>
+                        <span>Settings</span>
+                      </a>
+                    </li>
+                    <li><a href="javascript:;" class="no-loading">Help</a></li>
+                    <li><a href="/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                  </ul>
+                </li>
+
+                <li role="presentation" class="dropdown">
+                  <a href="javascript:;" class="dropdown-toggle info-number no-loading" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-envelope-o"></i>
+                    <span class="badge bg-green">6</span>
+                  </a>
+                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                    <!-- <li>
+                      <a>
+                        <span class="image"><img src="/images/british_logo.png" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li> -->
+                    <li>
+                      <div class="text-center">
+                        <a class="no-loading">
+                          <strong>See All Alerts</strong>
+                          <i class="fa fa-angle-right"></i>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="clearfix"></div>
+          {{{body}}}
+          <div class="clearfix"></div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            British School - ICT Administrative
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <div id="relogio" style="display:none;">
+      <div style="color: #a0cadb;position:fixed;top: 40%;left: 45%;" class="la-timer la-3x">
+          <div></div>
+      </div>
+    </div>
+
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/vendor/select2/dist/js/select2.js"></script>
+    <script src="/vendor/moment/min/moment.min.js"></script>
+    <script src="/vendor/fullcalendar/dist/fullcalendar.js"></script>
+    <script src="/vendor/data-tables/js/jquery.dataTables.min.js"></script>
+    <script src="/vendor/data-tables/js/dataTables.bootstrap.min.js"></script>
+    <script src="/vendor/sweetalert/sweetalert2.js"></script>
+    <script src="/vendor/handlebars/handlebars-v4.0.10.js"></script>
+
+    <script src="/vendor/build/js/custom.js"></script>
+    <script src="/javascripts/muner.js"></script>
+
+    <script type="text/javascript">
+
+      $('a:not(.no-loading)').click(function(){
+        $('#relogio').addClass('in loadingscreen');
+        $('#relogio').css('display','block');
+      })
+
+      $( document ).ajaxStart(function() {
+          $('#relogio').addClass('in loadingscreen');
+          $('#relogio').css('display','block');
+          // alert('indo')
+      })
+      $(document).ajaxComplete(function() {
+          $('#relogio').removeClass('in loadingscreen');
+          $('#relogio').css('display','none');
+          // alert('voltei')
+      })
+    </script>
+
+    {{{_sections.script}}}
+
+  </body>
+</html>

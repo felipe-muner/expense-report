@@ -1,0 +1,366 @@
+{{#section 'head'}}
+  <style media="screen">
+  .select2-container .select2-search,
+    .select2-container .select2-search__field {
+        width: 100% !important;
+    }
+  </style>
+{{/section}}
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-sm-2">
+        Editing Event {{Evento.EventCode}}
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-sm-12" id="divTable">
+        <form action="/find/updateEdit" method="post">
+          <input type="hidden" name="EventCode" value="{{Evento.EventCode}}">
+          <div class="row">
+            {{#if Evento.isInternal}}
+            <div class="col-sm-6">
+                <select class="form-control" name="roomID" id="roomID" data-container="body" title="Room">
+                  {{#each getAllSiteBuildingRoom}}
+                    <option {{setSelected ../Evento.RoomID RoomID}} value="{{RoomID}}">{{unidade}} - {{NameBuilding}} - {{NameRoom}}</option>
+                  {{/each}}
+                </select>
+            </div>
+            <div class="col-sm-6">
+              <select id="responsibleNewEvent" name="responsibleNewEvent" style="width:100%;" data-container="body" title="Responsible by Event">
+                <option value="">RESPONSIVE BY EVENT</option>
+                {{#each allActiveUser}}
+                  <option {{setSelected ../Evento.ResponsibleByEvent matricula}} value="{{matricula}}">{{pad matricula 4 0}} - {{toTitleCase nomeusuario}}</option>
+                {{/each}}
+              </select>
+            </div>
+            {{else}}
+            <div class="col-sm-12">
+              <select id="responsibleNewEvent" name="responsibleNewEvent" style="width:100%;" data-container="body" title="Responsible by Event">
+                <option value="">RESPONSIVE BY EVENT</option>
+                {{#each allActiveUser}}
+                  <option {{setSelected ../Evento.ResponsibleByEvent matricula}} value="{{matricula}}">{{pad matricula 4 0}} - {{toTitleCase nomeusuario}}</option>
+                {{/each}}
+              </select>
+            </div>
+            {{/if}}
+          </div>
+          <div class="row" style="margin-top:10px;">
+            <div class="col-sm-3">
+              <input type="datetime-local" name="StartTime" id="StartTime" value="{{Evento.startFormated}}" class="form-control" data-container="body" title="Start" data-toggle="tooltip">
+            </div>
+            <div class="col-sm-3">
+              <input type="datetime-local" name="EndTime" id="EndTime" value="{{Evento.endFormated}}" class="form-control" data-container="body" title="End" data-toggle="tooltip">
+            </div>
+            <div class="col-sm-6">
+              <input type="text" name="Name" value="{{Evento.title}}" class="form-control" data-container="body" title="Event Name" data-toggle="tooltip">
+            </div>
+          </div>
+          {{#if Evento.isExternal}}
+            <div class="row" style="margin-top:10px;">
+              <div class="col-sm-4">
+                <input type="text" name="LocationEvent" value="{{Evento.LocationEvent}}" class="form-control" data-container="body" title="Location Name" data-toggle="tooltip">
+              </div>
+              <div class="col-sm-4">
+                <select class="form-control" name="meansOfTransport" id="meansOfTransport" data-container="body" title="Means Of Transport" data-toggle="tooltip">
+                  <option value="">Select</option>
+                  {{#each meansOfTransport}}
+                    <option {{setSelected ../Evento.MeansOfTransport EventTransportID}} value="{{EventTransportID}}">{{TypeVehicleEnglish}}/{{TypeVehiclePort}} - {{AmountSeat}}</option>
+                  {{/each}}
+                </select>
+              </div>
+              <div class="col-sm-1">
+                <select class="form-control" name="TransportWaitAvenue" class="form-control" data-container="body" title="Transport will wait in avenue?" data-toggle="tooltip">
+                  {{#each Evento.OptionsTransportWaitAvenue}}
+                    <option {{setSelected ../Evento.TransportWaitAvenue opt}} value="{{opt}}">{{opt}}</option>
+                  {{/each}}
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <select name="DepartureFrom" id="DepartureFrom" class="form-control" data-container="body" title="Departure From" data-toggle="tooltip">
+                  {{#each Evento.OptionsDepartureFrom}}
+                    <option {{setSelected ../Evento.DepartureFrom opt}} value="{{opt}}">{{opt}}</option>
+                  {{/each}}
+                </select>
+              </div>
+              <div class="col-sm-1">
+                <input type="number" step="1" name="AmountSeat" value="{{Evento.AmountPerson}}" class="form-control" data-container="body" title="Amount Person" data-toggle="tooltip">
+              </div>
+            </div>
+            <div class="row" style="margin-top:10px;">
+              <div class="col-sm-1">
+                <input type="number" name="Nparent" value="{{Evento.Nparent}}" class="form-control" data-container="body" title="Nº Parent" data-toggle="tooltip">
+              </div>
+              <div class="col-sm-1">
+                <input type="number" name="Npupil" value="{{Evento.Npupil}}" class="form-control" data-container="body" title="Nº Pupil" data-toggle="tooltip">
+              </div>
+              <div class="col-sm-1">
+                <input type="number" name="Nstaff" value="{{Evento.Nstaff}}" class="form-control" data-container="body" title="Nº Staff" data-toggle="tooltip">
+              </div>
+              <div class="col-sm-1">
+                <input type="number" name="Nvisitor" value="{{Evento.Nvisitor}}" class="form-control" data-container="body" title="Nº Visitor" data-toggle="tooltip">
+              </div>
+            </div>
+          {{/if}}
+          {{#if Evento.isInternal}}
+            <div class="row" style="margin-top:10px;">
+              <div class="col-sm-2">
+                <select name="" class="form-control" data-container="body" title="Need computer/notebook?" data-toggle="tooltip">
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <select name="" class="form-control" data-container="body" title="Need DataShow?" data-toggle="tooltip">
+
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <select name="" class="form-control" data-container="body" title="Video Conference From:" data-toggle="tooltip">
+
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <select name="" class="form-control" data-container="body" title="Video Conference To:" data-toggle="tooltip">
+
+                </select>
+              </div>
+              <div class="col-sm-1">
+                <input type="number" name="Nparent" value="{{Evento.Nparent}}" class="form-control" data-container="body" title="Nº Parent" data-toggle="tooltip">
+              </div>
+              <div class="col-sm-1">
+                <input type="number" name="Npupil" value="{{Evento.Npupil}}" class="form-control" data-container="body" title="Nº Pupil" data-toggle="tooltip">
+              </div>
+              <div class="col-sm-1">
+                <input type="number" name="Nstaff" value="{{Evento.Nstaff}}" class="form-control" data-container="body" title="Nº Staff" data-toggle="tooltip">
+              </div>
+              <div class="col-sm-1">
+                <input type="number" name="Nvisitor" value="{{Evento.Nvisitor}}" class="form-control" data-container="body" title="Nº Visitor" data-toggle="tooltip">
+              </div>
+            </div>
+          {{/if}}
+          <div class="row" style="margin-top:10px;">
+            <div class="col-sm-6">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-sm-2">
+                      Participants
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="row" style="margin-bottom:15px;border-bottom:1px solid black;" data-container="body" title="Choose the type, insert the name and press enter" data-toggle="tooltip">
+                      <div class="col-sm-4" style="margin-bottom:10px;">
+                        <select class="form-control" name="listTypeGuest" id="listTypeGuest">
+                          {{#each Evento.OptionsGuest}}
+                            <option value="{{opt}}">{{toTitleCase opt}}</option>
+                          {{/each}}
+                        </select>
+                      </div>
+                      <div class="col-sm-8" style="margin-bottom:10px;">
+                        <input type="text" name="nameParticipant" id="nameParticipant" value="" class="form-control" placeholder="Choose the type, insert the name and press enter">
+                      </div>
+                  </div>
+                  <div class="allGuests">
+                    {{#each Evento.guests}}
+                      <div class="row lineGuest" style="margin-top:5px;">
+                        <div class="col-sm-4">
+                          <select class="form-control">
+                            {{#each ../Evento.OptionsGuest}}
+                              <option {{setSelected ../Type opt}} value="{{opt}}">{{toTitleCase opt}}</option>
+                            {{/each}}
+                          </select>
+                        </div>
+                        <div class="col-sm-7">
+                          <input type="text" name="pupil" value="{{toTitleCase NameGuest}}" class="form-control">
+                        </div>
+                        <div class="col-sm-1">
+                          <i onclick="removeGuest(this);" class="fa fa-times" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                    {{/each}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="panel panel-primary">
+                <div class="panel-heading">Menu</div>
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <select id="id_budget" name="id_budget" style="width:100%;">
+                        <option value="">SELECT THE BUDGET</option>
+                        {{#each sess.budgets}}
+                          <option {{setSelectedCompareSession ../Evento.Budget_ID id_orca}} data-setor="{{setor}}" data-grupo="{{grupo}}" data-conta="{{conta}}" data-ncont="{{nomecont}}" data-saldo="{{saldo}}" value="{{id_orca}}">{{pad setor 3 0}} {{pad grupo 3 0}} {{conta}} {{ncont}} - R${{addDecimalCases saldo}}</option>
+                        {{/each}}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top:5px;">
+                    <div class="col-sm-10">
+                      <select id="listProduct" name="allProductActive" multiple style="width:100%;">
+                        {{#each allProductActive}}
+                          <option data-name-english="{{NameEnglish}}" data-name-port="{{NamePort}}" data-name-unit-engl="{{NameUnitEngl}}" data-name-unit-port="{{NameUnitPort}}" data-price={{Price}} data-event-product-id="{{EventProductID}}" value="{{EventProductID}}">{{NameEnglish}}/{{NamePort}} | {{NameUnitEngl}}/{{NameUnitPort}} | R$ {{Price}}</option>
+                        {{/each}}
+                      </select>
+                    </div>
+                    <div class="col-sm-2">
+                      <input type="number" min="0" name="qtdProduct" id="qtdProduct" class="form-control" style="height:33px;" title="Insert amount and press enter" data-toggle="tooltip">
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top:10px;">
+                    <div class="col-sm-12">
+                      <div class="table-responsive">
+                        <table class="table" id="tableItemEvent" style="margin-bottom: 0px;">
+                          <thead>
+                            <th style="width:5%;border-right: 1px solid white;">Remove</th>
+                            <th style="width:65%;border-right: 1px solid white;">Product</th>
+                            <th style="width:10%;border-right: 1px solid white;">Amount</th>
+                            <th style="width:20%;">Total (R$)</th>
+                          </thead>
+                          <tbody>
+                            {{#each Evento.products}}
+                              <tr class="lineItemEvent" data-product-id="{{EventProduct_ID}}" data-price-prod="{{Price}}" data-qtd="{{Amount}}">
+                                <td class="text-center"><i onclick="removeProduct(this);" class="fa fa-times" aria-hidden="true" data-container="body" title="Remove" data-toggle="tooltip"></i></td>
+                                <td>
+                                  {{ProductNameEnglish}}/{{ProductNamePort}} | {{UnitInEnglish}}/{{UnitInPort}}
+                                </td>
+                                <td>
+                                  <input type="number" name="" value="{{Amount}}">
+                                </td>
+                                <td class="text-right">
+                                  {{addDecimalCases TotalProd}}
+                                </td>
+                              </tr>
+                            {{/each}}
+                            <tr>
+                              <td colspan="4" class="text-right lineTotalGeral">{{Evento.totProd}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{json Evento}}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{#section 'script'}}
+  <script type="text/javascript">
+
+    $('#roomID').select2()
+    $('#responsibleNewEvent').select2()
+    $("#listProduct").select2({
+      placeholder: "SELECT THE PRODUCTS"
+    })
+    $('[data-toggle="tooltip"]').tooltip()
+
+    $(".select2-container").tooltip({
+      title: function() {
+          return $(this).prev().attr("title");
+      },
+      placement: "auto"
+    })
+
+    $('#nameParticipant').keypress(function(e){
+      if ( e.which == 13 ){
+        e.preventDefault()
+
+        if ('' === document.getElementById('nameParticipant').value) return;
+        let newName = document.getElementById('nameParticipant').value
+
+        let type = $('#listTypeGuest').val()
+
+        var array = ["Parent","Pupil","Staff","Visitor"];
+
+        let div = document.createElement("select");
+        let selectList = document.createElement("select");
+        selectList.className = 'form-control'
+        div.appendChild(selectList)
+        for (var i = 0; i < array.length; i++) {
+
+          var option = document.createElement("option");
+          option.value = array[i].toLowerCase()
+          option.text = array[i]
+          if (type === array[i].toLowerCase()) {
+            option.setAttribute('selected', true);
+          }
+          selectList.appendChild(option)
+        }
+
+        $('.allGuests').prepend('<div class="row lineGuest" style="margin-top:5px;">'+
+                                  '<div class="col-sm-4">'+
+                                    div.innerHTML +
+                                  '</div>'+
+                                  '<div class="col-sm-7">'+
+                                     '<input class="form-control" type="text" value="'+ document.getElementById('nameParticipant').value+'" />'+
+                                  '</div>'+
+                                  '<div class="col-sm-1">'+
+                                    '<i onclick="removeGuest(this);" class="fa fa-times" aria-hidden="true" data-container="body" title="Remove" data-toggle="tooltip"></i>'+
+                                  '</div>'+
+                                '</div>')
+        $('[data-toggle="tooltip"]').tooltip()
+        document.getElementById('nameParticipant').value = ''
+      }
+    })
+
+    function removeGuest(el){
+      $(el).closest('.lineGuest').remove()
+    }
+    function removeProduct(el){
+      $(el).closest('tr').remove()
+    }
+
+    function addItemEvent(){
+      if ('' === document.getElementById('qtdProduct').value
+       || 0 === $("#listProduct").select2().find(":selected").size()) return;
+
+      $('.lineTotalGeral').remove()
+
+      $("#listProduct").select2().find(":selected").each(function(){
+        let eventProductID = $(this).data('event-product-id')
+        let nomeProdIngl = $(this).data('name-english')
+        let nomeProdPort = $(this).data('name-port')
+        let unitIngl = $(this).data('name-unit-engl')
+        let unitPort = $(this).data('name-unit-port')
+        let priceProd = parseFloat($(this).data('price'))
+        let qtdProd = parseInt($('#qtdProduct').val())
+
+        $('#tableItemEvent tbody').append(
+          '<tr class="lineItemEvent" data-product-id="'+eventProductID+'" data-price-prod="'+priceProd+'" data-qtd="'+qtdProd+'">'
+            +'<td class="text-center"><i onclick="removeItemEvent(this)" class="fa fa-times" aria-hidden="true"></i></td>'
+            +'<td>'+ nomeProdIngl + '/' + nomeProdPort + '  |  ' + unitIngl + '/' + unitPort +'</td>'
+            +'<td class="text-right">'
+              +'<input onkeyup="updateValueAmont(this);" type="number" min="1" value="'+ qtdProd +'"'
+            +'</td>'
+            +'<td class="text-right totalProduct">'+ (priceProd * qtdProd).toFixed(2) +'</td>'
+          +'</tr>'
+        )
+      })
+
+      let sum = 0;
+      $('.totalProduct').each(function(){
+        sum += parseFloat($(this).text());  // Or this.innerHTML, this.innerText
+      });
+
+      $('#tableItemEvent tbody').append(
+        '<tr class="lineTotalGeral">'
+          +'<td class="text-right" colspan="4">'+ sum.toFixed(2).replace('.',',') +'</td>'
+        +'</tr>'
+      )
+      document.getElementById('qtdProduct').value = ''
+      $('#listProduct').val('').trigger("change")
+    }
+
+  </script>
+{{/section}}

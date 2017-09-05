@@ -1,0 +1,71 @@
+div.meuMenu span:first-of-type{
+  padding-right: 5px;
+}
+
+div.meuMenu .label{
+  cursor: pointer;
+}
+
+.meuMenu .panel-heading{
+  padding: 5px;
+}
+
+.fa{
+  cursor: pointer;
+}
+
+.alert{
+  margin-bottom: 15px;
+}
+
+.label{
+  cursor: pointer;
+}
+
+.modal-footer{
+  padding: 10px 5px 5px 5px;
+}
+
+.panel {
+  margin-bottom: 5px;
+}
+
+table {
+  font-size: 11px;
+}
+
+th{
+   text-align:center;
+}
+.table td{
+  padding:4px !important;
+}
+div.modal-body, div.modal-header, div.panel-body, div.panel-heading{
+  padding: 8px;
+}
+.select2-container--default .select2-selection--single, .select2-container--default .select2-selection--multiple {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  min-height: 25px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #73879C;
+  padding-top: 0;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 25px;
+}
+table.table th{
+  background-color: #2A3F54;
+  color:white;
+}
+.removePadding{
+  padding: 4px;
+}
+
+.panel-primary > .panel-heading {
+    color: #fff;
+    background-color: #2A3F54;
+    border-color: #2A3F54;
+}

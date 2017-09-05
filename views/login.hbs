@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sistema - Expense Report</title>
+    <link href="/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <style media="screen">
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        /* display: none; <- Crashes Chrome on hover */
+        -webkit-appearance: none;
+        margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="jumbotron" id="conteudoPrincipal">
+      <div class="container">
+      	<div class="text-center"><img src="http://192.168.4.51/controle_usuario_versao_dois/production/images/logo_british.png" width="400" height="200"></div>
+        <h2 class="text-center" style="margin-top:0px;">Expense Report</h2>
+        <div>
+          <div class="row">
+            {{#if msg}}
+              <div id="login-alert" class="alert {{alertClass}} col-sm-12"bee>
+                <ul><li>{{this.msg}}</li></ul>
+              </div>
+            {{/if}}
+          </div>
+        	<div class="row text-center">
+	        	<form class="navbar-form" style="margin-bottom:0px;" method="post" action="/login">
+	        		<div id="result"></div>
+		            <div class="form-group">
+		              <input type="number" placeholder="Enrolment Number" class="form-control" required="required" autofocus name="matricula" id="matricula">
+		            </div>
+		            <div class="form-group">
+		              <input type="password" placeholder="Password" class="form-control" required="required" name="password" id="password">
+		            </div>
+		            <input type="submit" class="btn btn-success" value="Acessar">
+		        </form>
+	        </div>
+	        <div class="row text-center">
+	        	<div style="margin-left:190px;">
+	        		<span style="font-size:12px;text-decoration:underline;cursor:pointer;" data-toggle="modal" data-target="#myModal">Forgot Password?</span>
+	        	</div>
+	        </div>
+        </div>
+      </div>
+    </div>
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Forgot password?</h4>
+          </div>
+          <div class="modal-body">
+            <form action="/email-forget-password" method="post">
+              <input autofocus type="text" name="matriculaToReset" id="matriculaToReset" placeholder=" Please type your enrolment number" class="form-control">
+              <div class="text-right" style="margin-top:10px;">
+                <input type="submit" class="btn btn-primary">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+
+      $('#myModal').on('shown.bs.modal', function () {
+        $('#matriculaToReset').focus()
+      })
+
+    </script>
+  </body>
+</html>
