@@ -43,6 +43,9 @@ function hbsHelpers(hbs) {
       },
       addDecimalCases: function(num) {
         return num.toFixed(2)
+      },
+      i18n: function(label) {
+        return __(label)
       }
     }
   });

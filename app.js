@@ -10,6 +10,7 @@ const exphbs = require('express-handlebars');
 const hbs = require('./helpers/handlebars.js')(exphbs);
 const expressSession = require('express-session');
 const nodemailer = require('nodemailer');
+const i18n = require('i18n');
 const mailSender = require(process.env.PWD + '/util/MailSender')
 
 var conn = require('./conn');
@@ -36,6 +37,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressSession({secret:'e2r3$r!q0oIl', saveUninitialized:false, resave:false, name:'expensereport'}));
+i18n.configure({
+  locales: ['en', 'pt-BR'],
+  defaultLocale: 'en',
+  directory: process.env.PWD + '/locales111',
+  objectNotation: true,
+  register: global
+})
+
+app.get('/set-locale/:lang', function(req, res, next) {
+  i18n.setLocale(req.params.lang)
+  res.redirect(req.query.redirectUrl)
+})
 
 app.use('/', index);
 
