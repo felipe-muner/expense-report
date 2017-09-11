@@ -37,10 +37,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressSession({secret:'e2r3$r!q0oIl', saveUninitialized:false, resave:false, name:'expensereport'}));
+
 i18n.configure({
   locales: ['en', 'pt-BR'],
   defaultLocale: 'en',
-  directory: process.env.PWD + '/locales111',
+  directory: process.env.PWD + '/locales',
   objectNotation: true,
   register: global
 })

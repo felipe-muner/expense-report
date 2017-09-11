@@ -15,9 +15,17 @@
     </style>
   </head>
   <body>
+    <a id="linkenglish" href="/set-locale/en">ingle</a>
+    <a id="linkport" href="/set-locale/pt-BR">port</a>
+    <hr>
+
+    {{{i18n 'nome'}}}
+    <br>
+    {{{i18n 'idade'}}}
+    <br>
     <div class="jumbotron" id="conteudoPrincipal">
       <div class="container">
-      	<div class="text-center"><img src="http://192.168.4.51/controle_usuario_versao_dois/production/images/logo_british.png" width="400" height="200"></div>
+      	<div class="text-center"><img src="" width="400" height="200"></div>
         <h2 class="text-center" style="margin-top:0px;">Expense Report</h2>
         <div>
           <div class="row">
@@ -69,6 +77,9 @@
       </div>
     </div>
     <script type="text/javascript">
+
+      document.getElementById("linkenglish").href = '/set-locale/en?redirectUrl=' + location.pathname
+      document.getElementById("linkport").href = '/set-locale/pt-BR?redirectUrl=' + location.pathname
 
       $('#myModal').on('shown.bs.modal', function () {
         $('#matriculaToReset').focus()
