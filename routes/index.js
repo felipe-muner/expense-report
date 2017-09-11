@@ -11,25 +11,8 @@ const md5 = require('md5')
 const pdf = require('html-pdf');
 const A4option = require(process.env.PWD + '/views/report/A4config')
 
-// router.get('/testeJavaScriptTemplate', function(req, res, next) {
-//   conn.acquire(function(err,con){
-//     con.query('SELECT * FROM usuarios WHERE ativo = 1 ORDER BY idusuario', function(err, result) {
-//       con.release();
-//       if(err){
-//         res.render('error', { error: err } );
-//       }else{
-//         result.map(function(e){
-//           console.log('INSERT INTO usuario_controle_acesso VALUES(null,'+e.idusuario+',7,20,1);')
-//         })
-//       }
-//     });
-//   });
-//   res.send('ok')
-// });
-
 router.get('/', function(req, res, next) {
   console.log('entrei aqui testarei session');
-  throw 
   if (req.session.matricula) {
     console.log('entrei aqui tem session!');
     res.redirect('/panel')
@@ -49,7 +32,6 @@ router.post('/login', l.searchMatricula, l.incrementAttempt, l.checkFirstAccess,
   console.log(req.budgets)
   console.log('___')
   console.log('___')
-
 
   req.session.matricula = req.foundUser.matricula
   req.session.nomeusuario = req.foundUser.nomeusuario

@@ -189,6 +189,7 @@ function Login(){
         con.release();
         if(err){ res.render('error', { error: err } );}
         else{
+          console.log(this.sql);
           if(0 === result.length){
             // console.log('nao achei suuario');
             res.render('login',{ layout: false, alertClass: 'alert-danger', msg: 'Incorrect Enrolment Number'})

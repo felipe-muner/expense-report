@@ -12,7 +12,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
  const isDeveloping = process.env.NODE_ENV !== 'production'
- const port = isDeveloping ? 3005 : process.env.PORT
+ const port = isDeveloping ? 3004 : process.env.PORT
 
 //var port = normalizePort(process.env.PORT || '3000');
 //var port = normalizePort(process.env.PORT);
