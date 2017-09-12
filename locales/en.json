@@ -23,7 +23,12 @@
 		"moeda": "Currency",
 		"requestby": "Request by",
 		"authorizedby": "Authorized By",
-		"event": "Event Name"
+		"event": "Event Name",
+		"submitForm": "Create",
+		"datePayment": "Date of Payment",
+		"description": "Description",
+		"centrocusto": "Cost Center",
+		"value": "Value"
 	},
 	"myPage": {
 		"titlePanel": "My Documents"

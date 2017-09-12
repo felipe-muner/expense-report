@@ -23,7 +23,12 @@
 		"moeda": "Moeda",
 		"requestby": "Solicitado por",
 		"authorizedby": "Autorizado por",
-		"event": "Nome do evento"
+		"event": "Nome do evento",
+		"submitForm": "Criar",
+		"datePayment": "Data de Pagamento",
+		"description": "Descriçāo",
+		"centrocusto": "Centro de Custo",
+		"value": "Valor"
 	},
 	"myPage": {
 		"titlePanel": "Meus Documentos"

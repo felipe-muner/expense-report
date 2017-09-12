@@ -1,60 +1,164 @@
 <div class="panel panel-primary">
   <div class="panel-heading">{{{i18n 'newPage.titlePanel'}}}</div>
   <div class="panel-body">
-    <div class="row">
-      <div class="col-sm-4">
-        <label for="">{{{i18n 'newPage.tipo'}}}</label>
-        <select id="ExpenseReportType_ID" name="ExpenseReportType_ID" class="form-control">
-          <option value="">Select</option>
-          {{#each TypeExpenseReport}}
-            <option value="{{ExpenseReportTypeID}}">{{{i18n NameType}}}</option>
-          {{/each}}
-        </select>
+    <form class="" action="index.html" method="post">
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="">{{{i18n 'newPage.tipo'}}}</label>
+          <select id="ExpenseReportType_ID" name="ExpenseReportType_ID" class="form-control">
+            <option value="">Select</option>
+            {{#each TypeExpenseReport}}
+              <option value="{{ExpenseReportTypeID}}">{{{i18n NameType}}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="col-sm-4">
+          <label for="">{{{i18n 'newPage.budget'}}}</label>
+          <select id="id_budget" name="id_budget" style="width:100%;">
+            <option value="">Select</option>
+            {{#each sess.budgets}}
+              <option data-setor="{{setor}}" data-grupo="{{grupo}}" data-conta="{{conta}}" data-ncont="{{nomecont}}" data-saldo="{{saldo}}" value="{{id_orca}}">{{pad setor 3 0}} {{pad grupo 3 0}} {{conta}} {{ncont}} - R${{addDecimalCases saldo}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="col-sm-4">
+          <label for="">{{{i18n 'newPage.moeda'}}}</label>
+          <select id="Currency" name="Currency" class="form-control">
+            <option value="">Select</option>
+            {{#each Currency}}
+              <option value="{{quotation}}">{{completeName}} - R$ {{quotation}}</option>
+            {{/each}}
+          </select>
+        </div>
       </div>
-      <div class="col-sm-4">
-        <label for="">{{{i18n 'newPage.budget'}}}</label>
-        <select id="id_budget" name="id_budget" style="width:100%;">
-          <option value="">Select</option>
-          {{#each sess.budgets}}
-            <option data-setor="{{setor}}" data-grupo="{{grupo}}" data-conta="{{conta}}" data-ncont="{{nomecont}}" data-saldo="{{saldo}}" value="{{id_orca}}">{{pad setor 3 0}} {{pad grupo 3 0}} {{conta}} {{ncont}} - R${{addDecimalCases saldo}}</option>
-          {{/each}}
-        </select>
+      <div class="row" style="margin-top:10px;">
+        <div class="col-sm-3">
+          <label for="">{{{i18n 'newPage.requestby'}}}</label>
+          <input type="text" name="RequestedBy" value="" class="form-control">
+        </div>
+        <div class="col-sm-3">
+          <label for="">{{{i18n 'newPage.authorizedby'}}}</label>
+          <input type="text" name="AuthorizeBy" value="" class="form-control">
+        </div>
+        <div class="col-sm-6">
+          <label for="">{{{i18n 'newPage.event'}}}</label>
+          <input type="text" name="" value="" class="form-control">
+        </div>
       </div>
-      <div class="col-sm-4">
-        <label for="">{{{i18n 'newPage.moeda'}}}</label>
-        <select id="Currency" name="Currency" class="form-control">
-          <option value="">Select</option>
-          {{#each Currency}}
-            <option value="{{quotation}}">{{completeName}} - R$ {{quotation}}</option>
-          {{/each}}
-        </select>
+
+      <!--  TABELA DESPESAS-->
+      <div class="row" style="margin-top:10px;">
+        <div class="col-sm-12" id="tableExpense">
+
+        </div>
       </div>
-    </div>
-    <div class="row" style="margin-top:10px;">
-      <div class="col-sm-3">
-        <label for="">{{{i18n 'newPage.requestby'}}}</label>
-        <input type="text" name="RequestedBy" value="" class="form-control">
+      <!--  TABELA DESPESAS-->
+      <div class="text-center row" style="margin-top:10px;">
+        <input type="submit" name="btnSubmit" value="{{{i18n 'newPage.submitForm'}}}" class="btn btn-success btn-xs">
       </div>
-      <div class="col-sm-3">
-        <label for="">{{{i18n 'newPage.authorizedby'}}}</label>
-        <input type="text" name="AuthorizeBy" value="" class="form-control">
-      </div>
-      <div class="col-sm-6">
-        <label for="">{{{i18n 'newPage.event'}}}</label>
-        <input type="text" name="" value="" class="form-control">
-      </div>
-    </div>
+    </form>
   </div>
 </div>
 
 
+<div class="row" id="tableWholeSchoolExpense" style="display:none;">
+  <table class="table" style="width:100%;margin-bottom:5px;">
+    <thead>
+      <tr style="background-color:#2A3F54;color:#FFF;">
+        <th style="width:15%;">{{{i18n 'newPage.datePayment'}}}</th>
+        <th style="width:55%;">{{{i18n 'newPage.description'}}}</th>
+        <th style="width:15%;">{{{i18n 'newPage.centrocusto'}}}</th>
+        <th style="width:10%;">{{{i18n 'newPage.value'}}}</th>
+        <th style="width:5%;">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <td>
+        <input type="date" name="" value="" class="form-control">
+      </td>
+      <td>
+        <input type="text" name="" value="" class="form-control">
+      </td>
+      <td>
+        <select class="form-control" name="">
+          <option value="">Select</option>
+          <option value=""></option>
+          <option value=""></option>
+          <option value=""></option>
+          <option value=""></option>
+        </select>
+      </td>
+      <td>
+        <input type="number" name="" value="" step="0.01" min="0" class="form-control">
+      </td>
+      <td class="text-center">
+        <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line"></i>
+      </td>
+    </tbody>
+  </table>
+</div>
+
+<!-- <div class="tableEducacionalExpense">
+  <table>
+    <thead>
+      <tr>
+        <th>{{{i18n 'newPage.datePayment'}}}</th>
+        <th>{{{i18n 'newPage.description'}}}</th>
+        <th>{{{i18n 'newPage.value'}}}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->
 
 {{#section 'script'}}
 
   <script>
+
+    $('#tableExpense').html($('#tableWholeSchoolExpense').html())
+
     $('#ExpenseReportType_ID').select2()
     $('#Currency').select2()
     $('#id_budget').select2()
+    $('[data-toggle="tooltip"]').tooltip();
+
+    $('#id_budget').change(function(e) {
+
+      if('' === $('#id_budget').val()){
+        clearTable()
+      }else if('999999' === $('#id_budget').val()){
+        searchApprovers()
+        tableERWholeSchool()
+      }else{
+        searchApprovers()
+        tableEREducational()
+      }
+    });
+
+    function searchApprovers(){
+      alert('vou buscar aprovadores')
+    }
+
+    function tableERWholeSchool(){
+      alert('sou adm')
+    }
+
+    function clearTable(){
+      alert('limpar tabelas')
+    }
+
+    function tableEREducational(){
+      alert('sou edu')
+    }
+
   </script>
 
 {{/section}}
