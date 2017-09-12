@@ -86,11 +86,6 @@
 
       $('[data-toggle="tooltip"]').tooltip();
 
-      if(localStorage.defaultLang){
-        alert('tem local storage')
-        window.location.replace('/set-locale/'+localStorage.defaultLang+'?redirectUrl=' + location.pathname)
-      }
-
       document.getElementById("linkenglish").href = '/set-locale/en?redirectUrl=' + location.pathname
       document.getElementById("linkport").href = '/set-locale/pt-BR?redirectUrl=' + location.pathname
 

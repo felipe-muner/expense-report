@@ -6,5 +6,9 @@
 		"botaoConfirmar": "Enviar",
 		"modal-title": "Perdeu a senha ?",
 		"modal-ph-matricula": "Insira sua matricula e clique em enviar"
-	}
+	},
+	"Create": "Criar",
+	"My Documents": "Meus Documentos",
+	"Cancel": "Cancelar",
+	"Name": "Name"
 }

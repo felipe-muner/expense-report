@@ -20,7 +20,7 @@
     {{{_sections.head}}}
   </head>
 
-  <body class="nav-md">
+  <body class="nav-md" onload="carregaLang();">
     <div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col">
@@ -38,7 +38,7 @@
                 <h3>Expense Report</h3>
                 <ul class="nav side-menu">
                   {{#each sess.functionalityProfile}}
-                    <li><a href="{{Action}}"><i class="fa {{Icon}}"></i> {{Name}} </a></li>
+                    <li><a href="{{Action}}"><i class="fa {{Icon}}"></i> {{{i18n Name}}} </a></li>
                   {{/each}}
                 </ul>
               </div>
@@ -92,6 +92,16 @@
                 </li>
 
                 <li role="presentation" class="dropdown">
+                  <a id="linkport" href="/panel" class="dropdown-toggle info-number no-loading">
+                    <img src="/images/iconBR.png" width="30" height="30">
+                  </a>
+                </li>
+                <li role="presentation" class="dropdown">
+                  <a id="linkenglish" href="/panel" class="dropdown-toggle info-number no-loading">
+                    <img src="/images/iconUK.png" width="30" height="30">
+                  </a>
+                </li>
+                <li role="presentation" class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle info-number no-loading" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-envelope-o"></i>
                     <span class="badge bg-green">6</span>
@@ -118,6 +128,8 @@
                       </div>
                     </li>
                   </ul>
+
+
                 </li>
               </ul>
             </nav>
@@ -164,6 +176,11 @@
     <script src="/javascripts/muner.js"></script>
 
     <script type="text/javascript">
+
+      function carregaLang(){
+        document.getElementById("linkenglish").href = '/set-locale/en?redirectUrl=' + location.pathname
+        document.getElementById("linkport").href = '/set-locale/pt-BR?redirectUrl=' + location.pathname
+      }
 
       $('a:not(.no-loading)').click(function(){
         $('#relogio').addClass('in loadingscreen');

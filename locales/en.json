@@ -6,5 +6,9 @@
 		"botaoConfirmar": "Submit",
 		"modal-title": "Forgot password?",
 		"modal-ph-matricula": "Please type your enrollment number"
-	}
+	},
+	"Create": "Create",
+	"My Documents": "My Documents",
+	"Cancel": "Cancel",
+	"Name": "Name"
 }
