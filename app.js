@@ -50,7 +50,7 @@ app.get('/set-locale/:lang', function(req, res, next) {
 })
 
 app.use('/', require('./routes/index'));
-app.use('/expense-report', require('./routes/index'));
+app.use('/expense-report', require('./routes/expense-report'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

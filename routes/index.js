@@ -145,9 +145,11 @@ router.post('/email-forget-password', function(req, res, next) {
 //   });
 // })
 
-router.get('*', function(req, res, next) {
-  req.session.matricula ? next() : res.redirect('/');
-});
+
+//DESCOMENTAR
+// router.get('*', function(req, res, next) {
+//   req.session.matricula ? next() : res.redirect('/');
+// });
 
 router.get('/panel', function(req, res, next) {
   console.log('entrei panel');
@@ -158,23 +160,6 @@ router.get('/panel', function(req, res, next) {
   console.log(req.session.functionalityProfile);
   console.log('----budgets' + JSON.stringify(req.session.budgets,null,2));
   res.render('panel', {sess: req.session})
-})
-
-router.get('/new-expense-report', function(req, res, next) {
-  res.render('expense-report/new', {
-    sess:req.session,
-    nome:"felipe"
-  })
-}).get('/my-expense-report', function(req, res, next) {
-  res.render('expense-report/my', {
-    sess:req.session,
-    nome:"felipe"
-  })
-}).get('/cancel-expense-report', function(req, res, next) {
-  res.render('expense-report/cancel', {
-    sess:req.session,
-    nome:"felipe"
-  })
 })
 
 module.exports = router;
