@@ -1,3 +1,10 @@
+{{#section 'head'}}
+  <style media="screen">
+    .table > thead > tr > th {
+      border-right: 1px solid white;
+    }
+  </style>
+{{/section}}
 <div class="panel panel-primary">
   <div class="panel-heading">{{{i18n 'newPage.titlePanel'}}}</div>
   <div class="panel-body">
@@ -53,6 +60,7 @@
         </div>
       </div>
       <!--  TABELA DESPESAS-->
+
       <div class="text-center row" style="margin-top:10px;">
         <input type="submit" name="btnSubmit" value="{{{i18n 'newPage.submitForm'}}}" class="btn btn-success btn-xs">
       </div>
@@ -61,7 +69,7 @@
 </div>
 
 
-<div class="row" id="tableWholeSchoolExpense" style="display:none;">
+<div class="row" id="layoutExpenseWholeSchool" style="display:none;">
   <table class="table" style="width:100%;margin-bottom:5px;">
     <thead>
       <tr style="background-color:#2A3F54;color:#FFF;">
@@ -72,58 +80,38 @@
         <th style="width:5%;">&nbsp;</th>
       </tr>
     </thead>
-    <tbody>
-      <td>
-        <input type="date" name="" value="" class="form-control">
-      </td>
-      <td>
-        <input type="text" name="" value="" class="form-control">
-      </td>
-      <td>
-        <select class="form-control" name="">
-          <option value="">Select</option>
-          <option value=""></option>
-          <option value=""></option>
-          <option value=""></option>
-          <option value=""></option>
-        </select>
-      </td>
-      <td>
-        <input type="number" name="" value="" step="0.01" min="0" class="form-control">
-      </td>
-      <td class="text-center">
-        <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line"></i>
-      </td>
+    <tbody id="bodyWSExpense">
+      <tr class="expenseLine">
+        <td>
+          <input type="date" name="" value="" class="form-control">
+        </td>
+        <td>
+          <input type="text" name="" value="" class="form-control">
+        </td>
+        <td>
+          <select name="CostCenter" class="form-control CostCenter">
+            <option value="">Select</option>
+            {{#each allCostCenter}}
+              <option value="{{Number}}">{{Number}} - {{Name}}</option>
+            {{/each}}
+          </select>
+        </td>
+        <td>
+          <input type="number" name="" value="" step="0.01" min="0" class="form-control">
+        </td>
+        <td class="text-center">
+          <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" onclick="appendTR();"></i>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
 
-<!-- <div class="tableEducacionalExpense">
-  <table>
-    <thead>
-      <tr>
-        <th>{{{i18n 'newPage.datePayment'}}}</th>
-        <th>{{{i18n 'newPage.description'}}}</th>
-        <th>{{{i18n 'newPage.value'}}}</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-</div> -->
+{{json this}}
 
 {{#section 'script'}}
 
   <script>
-
-    $('#tableExpense').html($('#tableWholeSchoolExpense').html())
 
     $('#ExpenseReportType_ID').select2()
     $('#Currency').select2()
@@ -147,8 +135,10 @@
       alert('vou buscar aprovadores')
     }
 
+    $('#tableExpense').html($('#layoutExpenseWholeSchool').html())
+    //JOGAR PARA DENTRO DA FUNCAO
     function tableERWholeSchool(){
-      alert('sou adm')
+
     }
 
     function clearTable(){
@@ -157,6 +147,34 @@
 
     function tableEREducational(){
       alert('sou edu')
+    }
+
+    function appendTR(){
+      $('#bodyWSExpense').append(
+        '<tr class="expenseLine">'+
+          '<td>'+
+            '<input type="date" name="" value="" class="form-control">'+
+          '</td>'+
+          '<td>'+
+            '<input type="text" name="" value="" class="form-control">'+
+          '</td>'+
+          '<td>'+
+            '<select name="CostCenter" class="form-control">'+
+              '<option value="">Select</option>'+
+              {{#each allCostCenter}}
+                '<option value="{{Number}}">{{Number}} - {{Name}}</option>'+
+              {{/each}}
+            '</select>'+
+          '</td>'+
+          '<td>'+
+            '<input type="number" name="" value="" step="0.01" min="0" class="form-control">'+
+          '</td>'+
+          '<td class="text-center">'+
+            '<i style="font-size:23px;" class="fa fa-trash" aria-hidden="true" onclick="$(this).closest(\'tr\').remove()" data-toggle="tooltip" data-placement="bottom" title="Less Line"></i>'+
+          '</td>'+
+        '</tr>'
+      )
+      $('[data-toggle="tooltip"]').tooltip();
     }
 
   </script>
