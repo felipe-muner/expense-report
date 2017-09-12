@@ -9,9 +9,7 @@ const moment = require('moment')
 const pdf = require('html-pdf');
 const A4option = require(process.env.PWD + '/views/report/A4config')
 
-router.get('/new', er.getCurrencies, function(req, res, next) {
-  console.log('neewww')
-  console.log(req.currencies)
+router.get('/new', er.getCurrencies, er.getTypesExpenseReport, function(req, res, next) {
   res.render('expense-report/new', {
     sess: req.session,
     nome: "felipe"

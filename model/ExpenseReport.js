@@ -21,6 +21,20 @@ function ExpenseReport(){
       }
     })
   }
+
+  this.getTypesExpenseReport = function(req, res, next){
+    conn.acquire(function(err,con){
+      con.query('SELECT ExpenseReportTypeID, NameType FROM ExpenseReportType', function(err, result) {
+        con.release();
+        if(err){
+          res.render('error', { error: err } );
+        }else{
+          req.allTypesExpenseReport = result
+          next()
+        }
+      });
+    });
+  }
 }
 
 module.exports = new ExpenseReport()

@@ -11,7 +11,10 @@
 		"modal-ph-matricula": "Type your enrollment number"
 	},
 	"newPage": {
-		"titlePanel": "New Expense Report"
+		"titlePanel": "New Expense Report",
+		"tipo": "Type",
+		"budget": "Budget",
+		"moeda": "Currency"
 	},
 	"myPage": {
 		"titlePanel": "My Documents"

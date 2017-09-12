@@ -11,7 +11,10 @@
 		"modal-ph-matricula": "Insira sua matricula e clique em enviar"
 	},
 	"newPage": {
-		"titlePanel": "Novo Expense Report"
+		"titlePanel": "Novo Expense Report",
+		"tipo": "Tipo",
+		"budget": "Conta",
+		"moeda": "Moeda"
 	},
 	"myPage": {
 		"titlePanel": "Meus Documentos"
