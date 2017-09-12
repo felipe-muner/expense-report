@@ -18,8 +18,6 @@ var connPurchasing = require('./conn-purchasing');
 conn.init()
 connPurchasing.init()
 
-var index = require('./routes/index')
-
 var app = express()
 
 app.use(helmet())
@@ -51,7 +49,8 @@ app.get('/set-locale/:lang', function(req, res, next) {
   res.redirect(req.query.redirectUrl)
 })
 
-app.use('/', index);
+app.use('/', require('./routes/index'));
+app.use('/expense-report', require('./routes/index'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

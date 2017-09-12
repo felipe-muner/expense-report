@@ -1,0 +1,9 @@
+const express = require('express');
+const router = express.Router();
+const conn = require(process.env.PWD + '/conn');
+const connPurchasing = require(process.env.PWD + '/conn-purchasing');
+const mailSender = require(process.env.PWD + '/model/MailSender')
+const fs = require('fs')
+const moment = require('moment')
+const pdf = require('html-pdf');
+const A4option = require(process.env.PWD + '/views/report/A4config')
