@@ -2,13 +2,12 @@
 	"loginPage": {
 		"matricula": "Enrollment",
 		"senha": "Password",
-		"perdeuSenha": "Forgot password?",
+		"perdeuSenha": "Forgot Password?",
 		"botaoConfirmar": "Submit",
 		"modal-title": "Forgot password?",
-		"modal-ph-matricula": "Please type your enrollment number"
+		"modal-ph-matricula": "Type your enrollment number"
 	},
 	"Create": "Create",
 	"My Documents": "My Documents",
-	"Cancel": "Cancel",
-	"Name": "Name"
+	"Cancel": "Cancel"
 }
