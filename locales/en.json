@@ -1,4 +1,9 @@
 {
-	"nome": "felipe ingles",
-	"idade": "27ingles"
+	"perdeuSenha": "Forgot Password?",
+	"botaoConfirmar": "Submit",
+	"campoSenha": "Password",
+	"matricula": "Enrollment",
+	"senha": "Password",
+	"nome": "nome",
+	"idade": "idade"
 }

@@ -1,4 +1,9 @@
 {
-  "nome": "felipe portugues",
-  "idade": "27portugues"
+	"perdeuSenha": "Perdeu a senha?",
+	"botaoConfirmar": "Enviar",
+	"campoSenha": "Senha",
+	"matricula": "Matriícula",
+	"senha": "Senha",
+	"nome": "nome",
+	"idade": "idade"
 }

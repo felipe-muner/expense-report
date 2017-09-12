@@ -15,22 +15,35 @@
     </style>
   </head>
   <body>
-    <a id="linkenglish" href="/set-locale/en">ingle</a>
+    <!-- <a id="linkenglish" href="/set-locale/en">ingle</a>
     <a id="linkport" href="/set-locale/pt-BR">port</a>
     <hr>
-
     {{{i18n 'nome'}}}
     <br>
     {{{i18n 'idade'}}}
-    <br>
+    <br> -->
+    <div>
+      <div style="text-align:right;margin-top:5px;margin-bottom:5px;">
+        <a id="linkenglish">
+          <img src="/images/iconUK.png" width="30" height="30" style="margin-right:5px;" data-toggle="tooltip" data-placement="bottom" title="English">
+        </a>
+        <a id="linkport">
+          <img src="/images/iconBR.png" width="30" height="30" style="margin-right:50px;" data-toggle="tooltip" data-placement="bottom" title="Portuguese">
+        </a>
+      </div>
+    </div>
     <div class="jumbotron" id="conteudoPrincipal">
       <div class="container">
-      	<div class="text-center"><img src="" width="400" height="200"></div>
-        <h2 class="text-center" style="margin-top:0px;">Expense Report</h2>
+        <div class="">
+          <div class="text-center"><img src="" width="400" height="200"></div>
+        </div>
+        <div class="text-align:center;">
+          <h2 class="text-center" style="margin-top:0px;">Expense Report</h2>
+        </div>
         <div>
           <div class="row">
             {{#if msg}}
-              <div id="login-alert" class="alert {{alertClass}} col-sm-12"bee>
+              <div id="login-alert" class="alert {{alertClass}} col-sm-12">
                 <ul><li>{{this.msg}}</li></ul>
               </div>
             {{/if}}
@@ -39,17 +52,17 @@
 	        	<form class="navbar-form" style="margin-bottom:0px;" method="post" action="/login">
 	        		<div id="result"></div>
 		            <div class="form-group">
-		              <input type="number" placeholder="Enrolment Number" class="form-control" required="required" autofocus name="matricula" id="matricula">
+		              <input type="number" placeholder="{{{i18n 'matricula'}}}" class="form-control" required="required" autofocus name="matricula" id="matricula">
 		            </div>
 		            <div class="form-group">
-		              <input type="password" placeholder="Password" class="form-control" required="required" name="password" id="password">
+		              <input type="password" placeholder="{{{i18n 'senha'}}}" class="form-control" required="required" name="password" id="password">
 		            </div>
-		            <input type="submit" class="btn btn-success" value="Acessar">
+		            <input type="submit" class="btn btn-success" value="{{{i18n 'botaoConfirmar'}}}">
 		        </form>
 	        </div>
 	        <div class="row text-center">
 	        	<div style="margin-left:190px;">
-	        		<span style="font-size:12px;text-decoration:underline;cursor:pointer;" data-toggle="modal" data-target="#myModal">Forgot Password?</span>
+	        		<span style="font-size:12px;text-decoration:underline;cursor:pointer;" data-toggle="modal" data-target="#myModal">{{{i18n 'perdeuSenha'}}}</span>
 	        	</div>
 	        </div>
         </div>
@@ -77,6 +90,13 @@
       </div>
     </div>
     <script type="text/javascript">
+
+      $('[data-toggle="tooltip"]').tooltip();
+
+      if(localStorage.defaultLang){
+        alert('tem local storage')
+        window.location.replace('/set-locale/'+localStorage.defaultLang+'?redirectUrl=' + location.pathname)
+      }
 
       document.getElementById("linkenglish").href = '/set-locale/en?redirectUrl=' + location.pathname
       document.getElementById("linkport").href = '/set-locale/pt-BR?redirectUrl=' + location.pathname
