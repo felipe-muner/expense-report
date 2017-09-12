@@ -1,9 +1,10 @@
 {
-	"perdeuSenha": "Forgot Password?",
-	"botaoConfirmar": "Submit",
-	"campoSenha": "Password",
-	"matricula": "Enrollment",
-	"senha": "Password",
-	"nome": "nome",
-	"idade": "idade"
+	"loginPage": {
+		"matricula": "Enrollment",
+		"senha": "Password",
+		"perdeuSenha": "Forgot password?",
+		"botaoConfirmar": "Submit",
+		"modal-title": "Forgot password?",
+		"modal-ph-matricula": "Please type your enrollment number"
+	}
 }

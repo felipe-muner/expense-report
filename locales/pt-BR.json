@@ -1,9 +1,10 @@
 {
-	"perdeuSenha": "Perdeu a senha?",
-	"botaoConfirmar": "Enviar",
-	"campoSenha": "Senha",
-	"matricula": "Matriícula",
-	"senha": "Senha",
-	"nome": "nome",
-	"idade": "idade"
+	"loginPage": {
+		"matricula": "Matrícula",
+		"senha": "Senha",
+		"perdeuSenha": "Perdeu a senha?",
+		"botaoConfirmar": "Enviar",
+		"modal-title": "Perdeu a senha ?",
+		"modal-ph-matricula": "Insira sua matricula e clique em enviar"
+	}
 }
