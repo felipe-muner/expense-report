@@ -45,6 +45,7 @@ function hbsHelpers(hbs) {
         return num.toFixed(2)
       },
       i18n: function(label) {
+        console.log(label)
         return __(label)
       }
     }

@@ -2,6 +2,12 @@
 	"Create": "Criar",
 	"My Documents": "Meus Documentos",
 	"Cancel": "Cancelar",
+	"Cash advanced": "Adiantamento",
+	"Expense report": "Prestar Conta",
+	"Reimbursement": "Reembolso",
+	"Payment": "Pagamento",
+	"Deposit in the budget": "Deposito no orcamento",
+	"Trave/Exams expense": "Trave/Exams expense",
 	"loginPage": {
 		"matricula": "Matrícula",
 		"senha": "Senha",
@@ -21,5 +27,6 @@
 	},
 	"cancelPage": {
 		"titlePanel": "Cancelar Expense Report"
-	}
+	},
+	"Travel/Exams expense": "Travel/Exams expense"
 }

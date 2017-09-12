@@ -7,7 +7,7 @@
         <select id="ExpenseReportType_ID" name="ExpenseReportType_ID" class="form-control">
           <option value="">Select</option>
           {{#each TypeExpenseReport}}
-            <option value="{{ExpenseReportTypeID}}">{{NameType}}</option>
+            <option value="{{ExpenseReportTypeID}}">{{{i18n NameType}}}</option>
           {{/each}}
         </select>
       </div>
