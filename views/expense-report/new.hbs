@@ -4,19 +4,43 @@
     <div class="row">
       <div class="col-sm-4">
         <label for="">{{{i18n 'newPage.tipo'}}}</label>
-        <select class="form-control" name="">
+        <select id="ExpenseReportType_ID" name="ExpenseReportType_ID" class="form-control">
+          <option value="">Select</option>
+          {{#each TypeExpenseReport}}
+            <option value="{{ExpenseReportTypeID}}">{{NameType}}</option>
+          {{/each}}
         </select>
       </div>
       <div class="col-sm-4">
         <label for="">{{{i18n 'newPage.budget'}}}</label>
-        <select class="form-control" name="">
+        <select id="id_budget" name="id_budget" style="width:100%;">
+          <option value="">Select</option>
+          {{#each sess.budgets}}
+            <option data-setor="{{setor}}" data-grupo="{{grupo}}" data-conta="{{conta}}" data-ncont="{{nomecont}}" data-saldo="{{saldo}}" value="{{id_orca}}">{{pad setor 3 0}} {{pad grupo 3 0}} {{conta}} {{ncont}} - R${{addDecimalCases saldo}}</option>
+          {{/each}}
         </select>
       </div>
       <div class="col-sm-4">
         <label for="">{{{i18n 'newPage.moeda'}}}</label>
-        <select class="form-control" name="">
+        <select id="Currency" name="Currency" class="form-control">
+          <option value="">Select</option>
+          {{#each Currency}}
+            <option value="{{quotation}}">{{completeName}} - R$ {{quotation}}</option>
+          {{/each}}
         </select>
       </div>
     </div>
   </div>
 </div>
+
+
+
+{{#section 'script'}}
+
+  <script>
+    $('#ExpenseReportType_ID').select2()
+    $('#Currency').select2()
+    $('#id_budget').select2()
+  </script>
+
+{{/section}}

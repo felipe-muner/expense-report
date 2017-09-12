@@ -10,9 +10,12 @@ const pdf = require('html-pdf');
 const A4option = require(process.env.PWD + '/views/report/A4config')
 
 router.get('/new', er.getCurrencies, er.getTypesExpenseReport, function(req, res, next) {
+  console.log(req.currencies);
+  console.log(req.allTypesExpenseReport);
   res.render('expense-report/new', {
     sess: req.session,
-    nome: "felipe"
+    Currency: req.currencies,
+    TypeExpenseReport: req.allTypesExpenseReport
   })
 }).get('/my', function(req, res, next) {
   console.log('myyyy');
