@@ -1,4 +1,7 @@
 {
+	"Create": "Criar",
+	"My Documents": "Meus Documentos",
+	"Cancel": "Cancelar",
 	"loginPage": {
 		"matricula": "Matrícula",
 		"senha": "Senha",
@@ -7,7 +10,13 @@
 		"modal-title": "Perdeu a senha ?",
 		"modal-ph-matricula": "Insira sua matricula e clique em enviar"
 	},
-	"Create": "Criar",
-	"My Documents": "Meus Documentos",
-	"Cancel": "Cancelar"
+	"newPage": {
+		"titlePanel": "Novo Expense Report"
+	},
+	"myPage": {
+		"titlePanel": "Meus Documentos"
+	},
+	"cancelPage": {
+		"titlePanel": "Cancelar Expense Report"
+	}
 }
