@@ -7,7 +7,7 @@
 	"Reimbursement": "Reembolso",
 	"Payment": "Pagamento",
 	"Deposit in the budget": "Deposito no orcamento",
-	"Trave/Exams expense": "Trave/Exams expense",
+	"Travel/Exams expense": "Despesa com Viagem/Exame",
 	"loginPage": {
 		"matricula": "Matrícula",
 		"senha": "Senha",
@@ -20,13 +20,15 @@
 		"titlePanel": "Novo Expense Report",
 		"tipo": "Tipo",
 		"budget": "Conta",
-		"moeda": "Moeda"
+		"moeda": "Moeda",
+		"requestby": "Solicitado por",
+		"authorizedby": "Autorizado por",
+		"event": "Nome do evento"
 	},
 	"myPage": {
 		"titlePanel": "Meus Documentos"
 	},
 	"cancelPage": {
 		"titlePanel": "Cancelar Expense Report"
-	},
-	"Travel/Exams expense": "Travel/Exams expense"
+	}
 }

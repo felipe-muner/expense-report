@@ -8,8 +8,6 @@
 	"Payment": "Payment",
 	"Deposit in the budget": "Deposit in the budget",
 	"Travel/Exams expense": "Travel/Exams expense",
-	"NameType": "NameType",
-	"ExpenseReportTypeID": "ExpenseReportTypeID",
 	"loginPage": {
 		"matricula": "Enrollment",
 		"senha": "Password",
@@ -23,7 +21,9 @@
 		"tipo": "Type",
 		"budget": "Budget",
 		"moeda": "Currency",
-		"NameType": "felipe"
+		"requestby": "Request by",
+		"authorizedby": "Authorized By",
+		"event": "Event Name"
 	},
 	"myPage": {
 		"titlePanel": "My Documents"
