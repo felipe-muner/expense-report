@@ -24,6 +24,10 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
   res.json({
     "req.body": req.body
   })
+}).post('/approver-by-budget', er.getApproversByBudget, function(req, res, next) {
+  res.json({
+    "Approvers": req.ApproversByBudget
+  })
 }).get('/my', function(req, res, next) {
   console.log('myyyy');
   res.render('expense-report/my', {

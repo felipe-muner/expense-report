@@ -1,8 +1,26 @@
 const conn = require(process.env.PWD + '/conn');
+const connPurchasing = require(process.env.PWD + '/conn-purchasing');
 const fetch = require('node-fetch');
 const request = require('request')
 
 function ExpenseReport(){
+
+  this.getApproversByBudget = function(req, res, next){
+    connPurchasing.acquire(function(err,con){
+      con.query('SELECT u.ID_USER, u.Fname, u.LName FROM user_approve_budget AS uab Inner Join tblusers AS u ON u.ID_USER = uab.id_user WHERE u.Failed = 2 AND uab.id_budget = ?', [parseInt(req.body.id_budget)], function(err, result) {
+        con.release();
+        if(err){
+          console.log(this.sql)
+          res.render('error', { error: err } );
+        }else{
+          console.log(this.sql)
+          req.ApproversByBudget = result
+          next()
+        }
+      });
+    });
+  }
+
   this.getCurrencies = function(req, res, next){
     request('http://api.fixer.io/latest?base=BRL', function (error, response, body) {
       if(error){
