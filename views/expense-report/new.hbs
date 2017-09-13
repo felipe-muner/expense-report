@@ -244,6 +244,7 @@
           $('.tableExpense').css('display','none')
           $('#expenseNotWSNotReal').css('display','block')
         }
+        $('.linhaAdicional').remove()
         $('#divTableExpense').css('display','block')
       }
     })
@@ -254,10 +255,12 @@
       // $(el).closest('tbody').find('tr').eq(0).clone().appendTo($(el).closest('tbody'))
       let newLine = $(el).closest('tbody').find('tr').eq(0).clone()
       $(newLine).find('input').val('')
+      $(newLine).find('td:last').html(
+        '<i style="font-size:23px;" class="fa fa-trash" aria-hidden="true" onclick="$(this).closest(\'tr\').remove()" data-toggle="tooltip" data-container="body" data-placement="bottom" title="Less Line"></i>'
+      )
+      $(newLine).addClass('linhaAdicional')
       $(el).closest('tbody').append(newLine)
-
       $('[data-toggle="tooltip"]').tooltip()
-      // $('.expenseLine').eq(0).clone().appendTo("#bodyWSExpense").find(":text :number").val("");
     }
 
     function searchApprovers(){
