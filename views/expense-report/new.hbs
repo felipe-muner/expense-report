@@ -33,7 +33,7 @@
           <select id="Currency" name="Currency" class="form-control" required>
             <option value="">Select</option>
             {{#each Currency}}
-              <option value="{{quotation}}" data-quotation={{quotation}} data-currency={{code}}>{{completeName}} - R$ {{quotation}}</option>
+              <option value="{{code}}" data-quotation={{quotation}} data-currency={{code}}>{{completeName}} - R$ {{quotation}}</option>
             {{/each}}
           </select>
         </div>
@@ -41,7 +41,7 @@
       <div class="row" style="margin-top:10px;">
         <div class="col-sm-4">
           <label for="">{{{i18n 'newPage.requestby'}}}</label>
-          <input type="text" name="RequestedBy" value="" class="form-control" required>
+          <input type="text" name="RequestedBy" value="{{toTitleCase sess.nomeusuario}}" class="form-control" required>
         </div>
         <div class="col-sm-4">
           <label for="">{{{i18n 'newPage.authorizedby'}}}</label>
@@ -50,7 +50,7 @@
         </div>
         <div class="col-sm-4">
           <label for="">{{{i18n 'newPage.event'}}}</label>
-          <input type="text" name="EventName" value="" class="form-control" required>
+          <input type="text" name="EventName" id="EventName" value="" class="form-control" required>
         </div>
       </div>
 
@@ -115,7 +115,7 @@
       $('#ExpenseReportType_ID').val('1').trigger('change');
       $('#id_budget').val('999999').trigger('change');
       $('#Currency').val('GBP').trigger('change');
-
+      $('#EventName').val('teste muner')
     })
 
     $('#ExpenseReportType_ID').select2()
