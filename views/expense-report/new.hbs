@@ -12,7 +12,7 @@
       <div class="row">
         <div class="col-sm-4">
           <label for="">1 - {{{i18n 'newPage.tipo'}}} -></label>
-          <select id="ExpenseReportType_ID" name="ExpenseReportType_ID" class="form-control" required>
+          <select id="ExpenseReportType_ID" name="ExpenseReportType_ID" style="width:100%;" required>
             <option value="">Select</option>
             {{#each TypeExpenseReport}}
               <option value="{{ExpenseReportTypeID}}">{{{i18n NameType}}}</option>
@@ -30,7 +30,7 @@
         </div>
         <div class="col-sm-4">
           <label for="">3 - {{{i18n 'newPage.moeda'}}}</label>
-          <select id="Currency" name="Currency" class="form-control" required>
+          <select id="Currency" name="Currency" style="width:100%;" required>
             <option value="">Select</option>
             {{#each Currency}}
               <option value="{{code}}" data-quotation={{quotation}} data-currency={{code}}>{{completeName}} - R$ {{quotation}}</option>
@@ -45,7 +45,7 @@
         </div>
         <div class="col-sm-4">
           <label for="">{{{i18n 'newPage.authorizedby'}}}</label>
-          <select name="AuthorizeBy" id="AuthorizeBy" class="form-control">
+          <select name="AuthorizeBy" id="AuthorizeBy" style="width:100%;">
           </select>
         </div>
         <div class="col-sm-4">
@@ -250,7 +250,12 @@
 
     function appendTR(el){
       //       '<i style="font-size:23px;" class="fa fa-trash" aria-hidden="true" onclick="$(this).closest(\'tr\').remove()" data-toggle="tooltip" data-placement="bottom" title="Less Line"></i>'+
-      $(el).closest('tbody').find('tr').eq(0).clone().appendTo($(el).closest('tbody'))
+
+      // $(el).closest('tbody').find('tr').eq(0).clone().appendTo($(el).closest('tbody'))
+      let newLine = $(el).closest('tbody').find('tr').eq(0).clone()
+      $(newLine).find('input').val('')
+      $(el).closest('tbody').append(newLine)
+
       $('[data-toggle="tooltip"]').tooltip()
       // $('.expenseLine').eq(0).clone().appendTo("#bodyWSExpense").find(":text :number").val("");
     }
