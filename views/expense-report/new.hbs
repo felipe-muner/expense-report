@@ -11,7 +11,7 @@
     <form class="" action="index.html" method="post">
       <div class="row">
         <div class="col-sm-4">
-          <label for="">{{{i18n 'newPage.tipo'}}}</label>
+          <label for="">1 - {{{i18n 'newPage.tipo'}}} -></label>
           <select id="ExpenseReportType_ID" name="ExpenseReportType_ID" class="form-control">
             <option value="">Select</option>
             {{#each TypeExpenseReport}}
@@ -20,7 +20,7 @@
           </select>
         </div>
         <div class="col-sm-4">
-          <label for="">{{{i18n 'newPage.budget'}}}</label>
+          <label for="">2 - {{{i18n 'newPage.budget'}}} -></label>
           <select id="id_budget" name="id_budget" style="width:100%;">
             <option value="">Select</option>
             {{#each sess.budgets}}
@@ -29,7 +29,7 @@
           </select>
         </div>
         <div class="col-sm-4">
-          <label for="">{{{i18n 'newPage.moeda'}}}</label>
+          <label for="">3 - {{{i18n 'newPage.moeda'}}}</label>
           <select id="Currency" name="Currency" class="form-control">
             <option value="">Select</option>
             {{#each Currency}}
@@ -39,15 +39,15 @@
         </div>
       </div>
       <div class="row" style="margin-top:10px;">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <label for="">{{{i18n 'newPage.requestby'}}}</label>
           <input type="text" name="RequestedBy" value="" class="form-control">
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <label for="">{{{i18n 'newPage.authorizedby'}}}</label>
           <input type="text" name="AuthorizeBy" value="" class="form-control">
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <label for="">{{{i18n 'newPage.event'}}}</label>
           <input type="text" name="" value="" class="form-control">
         </div>

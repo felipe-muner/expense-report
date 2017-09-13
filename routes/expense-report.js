@@ -9,8 +9,8 @@ const moment = require('moment')
 const pdf = require('html-pdf');
 const A4option = require(process.env.PWD + '/views/report/A4config')
 
-// router.get('/new',er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCenter, function(req, res, next) {
-router.get('/new', er.getTypesExpenseReport, er.getAllCostCenter, function(req, res, next) {
+router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCenter, function(req, res, next) {
+// router.get('/new', er.getTypesExpenseReport, er.getAllCostCenter, function(req, res, next) {
   console.log(req.currencies);
   console.log(req.allTypesExpenseReport);
   console.log(req.allCostCenter);
