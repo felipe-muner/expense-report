@@ -45,7 +45,7 @@
         </div>
         <div class="col-sm-4">
           <label for="">{{{i18n 'newPage.authorizedby'}}}</label>
-          <select name="AuthorizeBy" id="AuthorizeBy" style="width:100%;">
+          <select name="AuthorizeBy" id="AuthorizeBy" style="width:100%;" required>
           </select>
         </div>
         <div class="col-sm-4">
@@ -85,7 +85,7 @@
                   </select>
                 </td>
                 <td>
-                  <input type="number" name="Value" value="" step="0.01" min="0" class="form-control">
+                  <input type="number" name="ValueExpense" value="" step="0.01" min="0" class="form-control">
                 </td>
                 <td class="text-center">
                   <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" data-container="body" onclick="appendTR(this);"></i>
@@ -123,10 +123,10 @@
                   </select>
                 </td>
                 <td>
-                  <input type="number" name="Value" value="" step="0.01" min="0" class="form-control">
+                  <input type="number" name="ValueExpense" value="" step="0.01" min="0" class="form-control">
                 </td>
                 <td>
-                  <input type="number" name="ValueForeign" value="" step="0.01" min="0" class="form-control" readonly>
+                  <input type="number" name="ValueReal" value="" step="0.01" min="0" class="form-control" readonly>
                 </td>
                 <td class="text-center">
                   <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" data-container="body" onclick="appendTR(this);"></i>
@@ -153,7 +153,7 @@
                   <input type="text" name="Description" value="" class="form-control">
                 </td>
                 <td>
-                  <input type="number" name="Value" value="" step="0.01" min="0" class="form-control">
+                  <input type="number" name="ValueExpense" value="" step="0.01" min="0" class="form-control">
                 </td>
                 <td class="text-center">
                   <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" data-container="body" onclick="appendTR(this);"></i>
@@ -182,10 +182,10 @@
                   <input type="text" name="Description" value="" class="form-control">
                 </td>
                 <td>
-                  <input type="number" name="Value" value="" step="0.01" min="0" class="form-control">
+                  <input type="number" name="ValueExpense" value="" step="0.01" min="0" class="form-control">
                 </td>
                 <td>
-                  <input type="number" name="ValueForeign" value="" step="0.01" min="0" class="form-control" readonly>
+                  <input type="number" name="ValueReal" value="" step="0.01" min="0" class="form-control" readonly>
                 </td>
                 <td class="text-center">
                   <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" data-container="body" onclick="appendTR(this);"></i>
@@ -314,12 +314,14 @@
     function serializeExpense(){
       let arrayListExpense = []
       $('.tableExpense:visible .expenseLine').each(function(e){
-        arrayListExpense.push({
-          DatePayment: Math.random(),
-          Description: Math.random(),
-          CostCenter: Math.random(),
-          Value: Math.random()
-        })
+        let newLine = {
+          DatePayment: $(this).find('input[name=DataPayment]').val(),
+          Description: $(this).find('input[name=Description]').val(),
+          CostCenter: $(this).find('input[name=CostCenter]').val(),
+          ValueExpense: $(this).find('input[name=ValueExpense]').val()
+        }
+
+        arrayListExpense.push(newLine)
       })
       console.log(arrayListExpense)
       return arrayListExpense
