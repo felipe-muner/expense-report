@@ -115,7 +115,7 @@
       $('#ExpenseReportType_ID').val('1').trigger('change');
       $('#id_budget').val('999999').trigger('change');
       $('#Currency').val('GBP').trigger('change');
-      // $('#EventName').val('teste muner')
+      $('#EventName').val('teste muner')
     })
 
     $('#ExpenseReportType_ID').select2()
@@ -203,7 +203,7 @@
 
 
     $('#formExpenseReport').submit(function(e){
-
+      e.preventDefault()
 
     })
 
