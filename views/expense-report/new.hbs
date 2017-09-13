@@ -88,7 +88,7 @@
                   <input type="number" name="Value" value="" step="0.01" min="0" class="form-control" required>
                 </td>
                 <td class="text-center">
-                  <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" onclick="appendTR();"></i>
+                  <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" data-container="body" onclick="appendTR(this);"></i>
                 </td>
               </tr>
             </tbody>
@@ -129,7 +129,7 @@
                   <span></span>
                 </td>
                 <td class="text-center">
-                  <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" onclick="appendTR();"></i>
+                  <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" data-container="body" onclick="appendTR(this);"></i>
                 </td>
               </tr>
             </tbody>
@@ -156,7 +156,7 @@
                   <input type="number" name="Value" value="" step="0.01" min="0" class="form-control" required>
                 </td>
                 <td class="text-center">
-                  <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" onclick="appendTR();"></i>
+                  <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" data-container="body" onclick="appendTR(this);"></i>
                 </td>
               </tr>
             </tbody>
@@ -188,7 +188,7 @@
                   <span></span>
                 </td>
                 <td class="text-center">
-                  <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" onclick="appendTR();"></i>
+                  <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" data-container="body" onclick="appendTR(this);"></i>
                 </td>
               </tr>
             </tbody>
@@ -218,7 +218,7 @@
     $('#Currency').select2()
     $('#id_budget').select2()
     $('#AuthorizeBy').select2()
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip()
 
     $('#id_budget, #Currency').change(function(e) {
       if( '' === $('#id_budget').val() && '' !== $('#Currency').val() ){
@@ -248,6 +248,13 @@
       }
     })
 
+    function appendTR(el){
+      //       '<i style="font-size:23px;" class="fa fa-trash" aria-hidden="true" onclick="$(this).closest(\'tr\').remove()" data-toggle="tooltip" data-placement="bottom" title="Less Line"></i>'+
+      $(el).closest('tbody').find('tr').eq(0).clone().appendTo($(el).closest('tbody'))
+      $('[data-toggle="tooltip"]').tooltip()
+      // $('.expenseLine').eq(0).clone().appendTo("#bodyWSExpense").find(":text :number").val("");
+    }
+
     function searchApprovers(){
       // alert('buscarei aprovador')
       if('999999' ===$('#id_budget').val()){
@@ -255,7 +262,6 @@
         var optionCR = new Option("Dna. Claudia Ribeiro", "10")
         var optionDM = new Option("Dna. Denise Martins", "11")
         $('#AuthorizeBy').append(optionCR).append(optionDM)
-
       }else{
         let dataSend = {
           "id_budget": $('#id_budget').val()
@@ -281,13 +287,6 @@
 
     function tableEREducational(){
       alert('sou edu')
-    }
-
-    function appendTR(){
-      //       '<i style="font-size:23px;" class="fa fa-trash" aria-hidden="true" onclick="$(this).closest(\'tr\').remove()" data-toggle="tooltip" data-placement="bottom" title="Less Line"></i>'+
-      $('.expenseLine').eq(0).clone().appendTo("#bodyWSExpense").find(":text :number").val("");
-
-      $('[data-toggle="tooltip"]').tooltip();
     }
 
     function checkLineExpenseReport(){
