@@ -28,7 +28,8 @@
 		"datePayment": "Data de Pagamento",
 		"description": "Descriçāo",
 		"centrocusto": "Centro de Custo",
-		"value": "Valor"
+		"value": "Valor",
+		"valueBR": "Valor em Real"
 	},
 	"myPage": {
 		"titlePanel": "Meus Documentos"

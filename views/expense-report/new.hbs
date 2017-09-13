@@ -31,6 +31,7 @@
         <div class="col-sm-4">
           <label for="">3 - {{{i18n 'newPage.moeda'}}}</label>
           <select id="Currency" name="Currency" class="form-control" required>
+            <option value="">Select</option>
             {{#each Currency}}
               <option value="{{code}}" data-quotation={{quotation}} data-currency={{code}}>{{completeName}} - R$ {{quotation}}</option>
             {{/each}}
@@ -55,8 +56,143 @@
 
       <!--  TABELA DESPESAS-->
       <div class="row" style="margin-top:10px;">
-        <div class="col-sm-12" id="tableExpense">
+        <div class="col-sm-12" id="divTableExpense" style="display:none;">
+          <!-- TABELA EXPENSE WS AND REAL -->
+          <table class="table tableExpense" style="width:100%;margin-bottom:5px;" id="expenseWSReal">
+            <thead>
+              <tr style="background-color:#2A3F54;color:#FFF;">
+                <th style="width:15%;">{{{i18n 'newPage.datePayment'}}}</th>
+                <th style="width:55%;">{{{i18n 'newPage.description'}}}</th>
+                <th style="width:15%;">{{{i18n 'newPage.centrocusto'}}}</th>
+                <th style="width:10%;">{{{i18n 'newPage.value'}}}</th>
+                <th style="width:5%;">&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="expenseLine">
+                <td>
+                  <input type="date" name="DataPayment" value="" class="form-control" required>
+                </td>
+                <td>
+                  <input type="text" name="Description" value="" class="form-control" required>
+                </td>
+                <td>
+                  <select name="CostCenter" class="form-control CostCenter" required>
+                    <option value="">Select</option>
+                    {{#each allCostCenter}}
+                      <option value="{{Number}}">{{Number}} - {{Name}}</option>
+                    {{/each}}
+                  </select>
+                </td>
+                <td>
+                  <input type="number" name="Value" value="" step="0.01" min="0" class="form-control" required>
+                </td>
+                <td class="text-center">
+                  <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" onclick="appendTR();"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
+          <!-- TABELA EXPENSE WS AND NOT REAL -->
+          <table class="table tableExpense" style="width:100%;margin-bottom:5px;" id="expenseWSNotReal">
+            <thead>
+              <tr style="background-color:#2A3F54;color:#FFF;">
+                <th style="width:15%;">{{{i18n 'newPage.datePayment'}}}</th>
+                <th style="width:45%;">{{{i18n 'newPage.description'}}}</th>
+                <th style="width:15%;">{{{i18n 'newPage.centrocusto'}}}</th>
+                <th style="width:10%;">{{{i18n 'newPage.value'}}}</th>
+                <th style="width:10%;">{{{i18n 'newPage.valueBR'}}}</th>
+                <th style="width:5%;">&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="expenseLine">
+                <td>
+                  <input type="date" name="DataPayment" value="" class="form-control" required>
+                </td>
+                <td>
+                  <input type="text" name="Description" value="" class="form-control" required>
+                </td>
+                <td>
+                  <select name="CostCenter" class="form-control CostCenter" required>
+                    <option value="">Select</option>
+                    {{#each allCostCenter}}
+                      <option value="{{Number}}">{{Number}} - {{Name}}</option>
+                    {{/each}}
+                  </select>
+                </td>
+                <td>
+                  <input type="number" name="Value" value="" step="0.01" min="0" class="form-control" required>
+                </td>
+                <td>
+                  <span></span>
+                </td>
+                <td class="text-center">
+                  <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" onclick="appendTR();"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- TABELA EXPENSE NOT WS AND REAL -->
+          <table class="table tableExpense" style="width:100%;margin-bottom:5px;" id="expenseNotWSReal">
+            <thead>
+              <tr style="background-color:#2A3F54;color:#FFF;">
+                <th style="width:15%;">{{{i18n 'newPage.datePayment'}}}</th>
+                <th style="width:70%;">{{{i18n 'newPage.description'}}}</th>
+                <th style="width:10%;">{{{i18n 'newPage.value'}}}</th>
+                <th style="width:5%;">&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="expenseLine">
+                <td>
+                  <input type="date" name="DataPayment" value="" class="form-control" required>
+                </td>
+                <td>
+                  <input type="text" name="Description" value="" class="form-control" required>
+                </td>
+                <td>
+                  <input type="number" name="Value" value="" step="0.01" min="0" class="form-control" required>
+                </td>
+                <td class="text-center">
+                  <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" onclick="appendTR();"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- TABELA EXPENSE NOT WS NOT REAL -->
+          <table class="table tableExpense" style="width:100%;margin-bottom:5px;" id="expenseNotWSNotReal">
+            <thead>
+              <tr style="background-color:#2A3F54;color:#FFF;">
+                <th style="width:15%;">{{{i18n 'newPage.datePayment'}}}</th>
+                <th style="width:60%;">{{{i18n 'newPage.description'}}}</th>
+                <th style="width:10%;">{{{i18n 'newPage.value'}}}</th>
+                <th style="width:10%;">{{{i18n 'newPage.valueBR'}}}</th>
+                <th style="width:5%;">&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="expenseLine">
+                <td>
+                  <input type="date" name="DataPayment" value="" class="form-control" required>
+                </td>
+                <td>
+                  <input type="text" name="Description" value="" class="form-control" required>
+                </td>
+                <td>
+                  <input type="number" name="Value" value="" step="0.01" min="0" class="form-control" required>
+                </td>
+                <td>
+                  <span></span>
+                </td>
+                <td class="text-center">
+                  <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" onclick="appendTR();"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <!--  TABELA DESPESAS-->
@@ -68,53 +204,14 @@
   </div>
 </div>
 
-
-<div class="row" id="layoutExpenseWholeSchool" style="display:none;">
-  <table class="table" style="width:100%;margin-bottom:5px;">
-    <thead>
-      <tr style="background-color:#2A3F54;color:#FFF;">
-        <th style="width:15%;">{{{i18n 'newPage.datePayment'}}}</th>
-        <th style="width:55%;">{{{i18n 'newPage.description'}}}</th>
-        <th style="width:15%;">{{{i18n 'newPage.centrocusto'}}}</th>
-        <th style="width:10%;">{{{i18n 'newPage.value'}}}</th>
-        <th style="width:5%;">&nbsp;</th>
-      </tr>
-    </thead>
-    <tbody id="bodyWSExpense">
-      <tr class="expenseLine">
-        <td>
-          <input type="date" name="DataPayment" value="" class="form-control" required>
-        </td>
-        <td>
-          <input type="text" name="Description" value="" class="form-control" required>
-        </td>
-        <td>
-          <select name="CostCenter" class="form-control CostCenter" required>
-            <option value="">Select</option>
-            {{#each allCostCenter}}
-              <option value="{{Number}}">{{Number}} - {{Name}}</option>
-            {{/each}}
-          </select>
-        </td>
-        <td>
-          <input type="number" name="Value" value="" step="0.01" min="0" class="form-control" required>
-        </td>
-        <td class="text-center">
-          <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" onclick="appendTR();"></i>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
 {{#section 'script'}}
 
   <script>
     $(document).ready(function(e){
-      $('#ExpenseReportType_ID').val('1').trigger('change');
-      $('#id_budget').val('999999').trigger('change');
-      $('#Currency').val('BRL').trigger('change');
-      $('#EventName').val('teste muner')
+      // $('#ExpenseReportType_ID').val('1').trigger('change');
+      // $('#id_budget').val('999999').trigger('change');
+      // $('#Currency').val('BRL').trigger('change');
+      // $('#EventName').val('teste muner')
     })
 
     $('#ExpenseReportType_ID').select2()
@@ -123,20 +220,36 @@
     $('#AuthorizeBy').select2()
     $('[data-toggle="tooltip"]').tooltip();
 
-    $('#id_budget').change(function(e) {
-
-      if('' === $('#id_budget').val()){
-        clearTable()
-      }else if('999999' === $('#id_budget').val()){
-        searchApprovers()
-        tableERWholeSchool()
+    $('#id_budget, #Currency').change(function(e) {
+      if( '' === $('#id_budget').val() && '' !== $('#Currency').val() ){
+        $('#divTableExpense').css('display','none')
+        clearAuthorizedBy()
+      }else if( '' === $('#id_budget').val() || '' === $('#Currency').val() ){
+        $('#divTableExpense').css('display','none')
       }else{
-        searchApprovers()
-        tableEREducational()
+        if('999999' === $('#id_budget').val() && 'BRL' === $('#Currency').val()){
+          searchApprovers()
+          $('.tableExpense').css('display','none')
+          $('#expenseWSReal').css('display','block')
+        }else if('999999' === $('#id_budget').val() && 'BRL' !== $('#Currency').val()){
+          searchApprovers()
+          $('.tableExpense').css('display','none')
+          $('#expenseWSNotReal').css('display','block')
+        }else if('999999' !== $('#id_budget').val() && 'BRL' === $('#Currency').val()){
+          searchApprovers()
+          $('.tableExpense').css('display','none')
+          $('#expenseNotWSReal').css('display','block')
+        }else if('999999' !== $('#id_budget').val() && 'BRL' !== $('#Currency').val()){
+          searchApprovers()
+          $('.tableExpense').css('display','none')
+          $('#expenseNotWSNotReal').css('display','block')
+        }
+        $('#divTableExpense').css('display','block')
       }
-    });
+    })
 
     function searchApprovers(){
+      // alert('buscarei aprovador')
       if('999999' ===$('#id_budget').val()){
         $('#AuthorizeBy option').remove()
         var optionCR = new Option("Dna. Claudia Ribeiro", "10")
@@ -159,12 +272,7 @@
       }
     }
 
-
-    function tableERWholeSchool(){
-      $('#tableExpense').html($('#layoutExpenseWholeSchool').html())
-    }
-
-    function clearTable(){
+    function clearAuthorizedBy(){
       $('#AuthorizeBy option').remove()
       var option = new Option("First select the budget ", "")
       $('#AuthorizeBy').append(option)
