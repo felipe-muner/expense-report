@@ -8,7 +8,7 @@
 <div class="panel panel-primary">
   <div class="panel-heading">{{{i18n 'newPage.titlePanel'}}}</div>
   <div class="panel-body">
-    <form class="" action="index.html" method="post">
+    <form id="formExpenseReport">
       <div class="row">
         <div class="col-sm-4">
           <label for="">1 - {{{i18n 'newPage.tipo'}}} -></label>
@@ -113,6 +113,9 @@
 {{#section 'script'}}
 
   <script>
+    $(document).ready(function(e){
+      $('#id_budget').val('999999').trigger('change');
+    })
 
     $('#ExpenseReportType_ID').select2()
     $('#Currency').select2()
@@ -156,10 +159,9 @@
       }
     }
 
-    $('#tableExpense').html($('#layoutExpenseWholeSchool').html())
-    //JOGAR PARA DENTRO DA FUNCAO
-    function tableERWholeSchool(){
 
+    function tableERWholeSchool(){
+      $('#tableExpense').html($('#layoutExpenseWholeSchool').html())
     }
 
     function clearTable(){
@@ -197,6 +199,13 @@
       )
       $('[data-toggle="tooltip"]').tooltip();
     }
+
+
+    $('#formExpenseReport').submit(function(e){
+      e.preventDefault()
+
+      alert('qwe')
+    })
 
   </script>
 
