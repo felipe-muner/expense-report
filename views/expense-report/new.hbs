@@ -218,7 +218,9 @@
     $('#Currency').select2()
     $('#id_budget').select2()
     $('#AuthorizeBy').select2()
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip({
+      "trigger" : 'hover'
+    })
 
     $('#id_budget, #Currency').change(function(e) {
       if( '' === $('#id_budget').val() && '' !== $('#Currency').val() ){
@@ -250,17 +252,11 @@
     })
 
     function appendTR(el){
-      //       '<i style="font-size:23px;" class="fa fa-trash" aria-hidden="true" onclick="$(this).closest(\'tr\').remove()" data-toggle="tooltip" data-placement="bottom" title="Less Line"></i>'+
-
-      // $(el).closest('tbody').find('tr').eq(0).clone().appendTo($(el).closest('tbody'))
       let newLine = $(el).closest('tbody').find('tr').eq(0).clone()
       $(newLine).find('input').val('')
-      $(newLine).find('td:last').html(
-        '<i style="font-size:23px;" class="fa fa-trash" aria-hidden="true" onclick="$(this).closest(\'tr\').remove()" data-toggle="tooltip" data-container="body" data-placement="bottom" title="Less Line"></i>'
-      )
+      $(newLine).find('td:last').html('<i style="font-size:23px;" class="fa fa-trash" aria-hidden="true" onclick="$(this).closest(\'tr\').remove()" data-toggle="tooltip" data-container="body" data-placement="bottom" title="Less Line"></i>')
       $(newLine).addClass('linhaAdicional')
       $(el).closest('tbody').append(newLine)
-      $('[data-toggle="tooltip"]').tooltip()
     }
 
     function searchApprovers(){
