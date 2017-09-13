@@ -20,6 +20,10 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
     TypeExpenseReport: req.allTypesExpenseReport,
     allCostCenter: req.allCostCenter
   })
+}).post('/create', function(req, res, next) {
+  res.json({
+    "req.body": req.body
+  })
 }).get('/my', function(req, res, next) {
   console.log('myyyy');
   res.render('expense-report/my', {

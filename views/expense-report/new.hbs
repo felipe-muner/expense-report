@@ -293,7 +293,33 @@
       e.preventDefault()
       alert('valdiou')
 
+      let dataSend = $(this).serializeArray()
+      dataSend.push({name: 'expenseList', value: JSON.stringify(serializeExpense())})
+
+      $.ajax({
+        url: '/expense-report/create',
+        type: 'POST',
+        data: dataSend,
+        dataType:'json',
+        success: function(data) {
+
+        }
+      })
     })
+
+    function serializeExpense(){
+      let arrayListExpense = []
+      $('.tableExpense:visible .expenseLine').each(function(e){
+        arrayListExpense.push({
+          DatePayment: Math.random(),
+          Description: Math.random(),
+          CostCenter: Math.random(),
+          Value: Math.random()
+        })
+      })
+      console.log(arrayListExpense)
+      return arrayListExpense
+    }
 
   </script>
 
