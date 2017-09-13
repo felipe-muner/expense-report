@@ -16,6 +16,15 @@ function ExpenseReport(){
           newCurrency.quotation = (1 / parseURLCurrency[key]).toFixed(4)
           return newCurrency
         })
+
+        arrayCurrency.sort((a,b) => {
+          if (a.code < b.code)
+            return -1;
+          if (a.code > b.code)
+            return 1;
+          return 0;
+        })
+
         req.currencies = arrayCurrency
         next()
       }
