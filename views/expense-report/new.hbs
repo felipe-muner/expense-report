@@ -84,13 +84,13 @@
     <tbody id="bodyWSExpense">
       <tr class="expenseLine">
         <td>
-          <input type="date" name="" value="" class="form-control">
+          <input type="date" name="DataPayment" value="" class="form-control" required>
         </td>
         <td>
-          <input type="text" name="" value="" class="form-control">
+          <input type="text" name="Description" value="" class="form-control" required>
         </td>
         <td>
-          <select name="CostCenter" class="form-control CostCenter">
+          <select name="CostCenter" class="form-control CostCenter" required>
             <option value="">Select</option>
             {{#each allCostCenter}}
               <option value="{{Number}}">{{Number}} - {{Name}}</option>
@@ -98,7 +98,7 @@
           </select>
         </td>
         <td>
-          <input type="number" name="" value="" step="0.01" min="0" class="form-control">
+          <input type="number" name="Value" value="" step="0.01" min="0" class="form-control" required>
         </td>
         <td class="text-center">
           <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" onclick="appendTR();"></i>
@@ -115,7 +115,7 @@
       $('#ExpenseReportType_ID').val('1').trigger('change');
       $('#id_budget').val('999999').trigger('change');
       $('#Currency').val('GBP').trigger('change');
-      $('#EventName').val('teste muner')
+      // $('#EventName').val('teste muner')
     })
 
     $('#ExpenseReportType_ID').select2()
@@ -203,9 +203,8 @@
 
 
     $('#formExpenseReport').submit(function(e){
-      e.preventDefault()
 
-      alert('qwe')
+
     })
 
   </script>
