@@ -17,6 +17,12 @@ function ExpenseReport(){
           return newCurrency
         })
 
+        arrayCurrency.push({
+          "code":"BRL",
+          "completeName":"BRL",
+          "quotation":"1.0000"
+        })
+
         arrayCurrency.sort((a,b) => {
           if (a.code < b.code)
             return -1;

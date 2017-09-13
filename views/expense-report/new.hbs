@@ -31,7 +31,6 @@
         <div class="col-sm-4">
           <label for="">3 - {{{i18n 'newPage.moeda'}}}</label>
           <select id="Currency" name="Currency" class="form-control" required>
-            <option value="">Select</option>
             {{#each Currency}}
               <option value="{{code}}" data-quotation={{quotation}} data-currency={{code}}>{{completeName}} - R$ {{quotation}}</option>
             {{/each}}
@@ -98,7 +97,7 @@
           </select>
         </td>
         <td>
-          <input type="number" name="Value" value="2222" step="0.01" min="0" class="form-control" required>
+          <input type="number" name="Value" value="" step="0.01" min="0" class="form-control" required>
         </td>
         <td class="text-center">
           <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" onclick="appendTR();"></i>
@@ -114,7 +113,7 @@
     $(document).ready(function(e){
       $('#ExpenseReportType_ID').val('1').trigger('change');
       $('#id_budget').val('999999').trigger('change');
-      $('#Currency').val('GBP').trigger('change');
+      $('#Currency').val('BRL').trigger('change');
       $('#EventName').val('teste muner')
     })
 
@@ -166,7 +165,10 @@
     }
 
     function clearTable(){
-      alert('limpar tabelas')
+      $('#AuthorizeBy option').remove()
+      var option = new Option("First select the budget ", "")
+      $('#AuthorizeBy').append(option)
+      //alert('limpar tabelas')
     }
 
     function tableEREducational(){
