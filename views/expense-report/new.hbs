@@ -33,7 +33,7 @@
           <select id="Currency" name="Currency" class="form-control" required>
             <option value="">Select</option>
             {{#each Currency}}
-              <option value="{{quotation}}">{{completeName}} - R$ {{quotation}}</option>
+              <option value="{{quotation}}" data-quotation={{quotation}} data-currency={{code}}>{{completeName}} - R$ {{quotation}}</option>
             {{/each}}
           </select>
         </div>
@@ -108,13 +108,14 @@
   </table>
 </div>
 
-{{json this}}
-
 {{#section 'script'}}
 
   <script>
     $(document).ready(function(e){
+      $('#ExpenseReportType_ID').val('1').trigger('change');
       $('#id_budget').val('999999').trigger('change');
+      $('#Currency').val('GBP').trigger('change');
+
     })
 
     $('#ExpenseReportType_ID').select2()
