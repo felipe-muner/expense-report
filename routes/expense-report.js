@@ -21,7 +21,8 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
     allCostCenter: req.allCostCenter
   })
 }).post('/create', function(req, res, next) {
-  console.log(JSON.stringify(req.body,null,2))
+  console.log(req.body)
+  console.log(JSON.parse(req.body.listExpense))
   res.json({
     "req.body": req.body
   })

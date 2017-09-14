@@ -299,22 +299,24 @@
 
       let dataSend = $(this).serializeArray()
       dataSend.push({name: 'listExpense', value: JSON.stringify(serializeExpense())})
+      dataSend.push({name: 'CurrencyName', value: 'CurrencyName'})
+      dataSend.push({name: 'CurrencyQuotation', value: 'CurrencyQuotation'})
 
-      dataSend.forEach(function(e){
-        if('listExpense' === e.name && 0 === JSON.parse(e.value).length){
-          swal({
-            title:"",
-            text:"Please insert at least 1 valid expense",
-            type: "error"
-          }).then(
-            function () {
-              $('.tableExpense:visible tbody tr:first').css('background-color','#EBCCD1')
-            }
-          )
-          throw new Error('ERRO SEM DESPESA NA TABELA')
-        }
-      })
-
+      // dataSend.forEach(function(e){
+      //   if('listExpense' === e.name && 0 === JSON.parse(e.value).length){
+      //     swal({
+      //       title:"",
+      //       text:"Please insert at least 1 valid expense",
+      //       type: "error"
+      //     }).then(
+      //       function () {
+      //         $('.tableExpense:visible tbody tr:first').css('background-color','#EBCCD1')
+      //       }
+      //     )
+      //     throw new Error('ERRO SEM DESPESA NA TABELA')
+      //   }
+      // })
+      console.log(dataSend)
       alert('valdiou')
 
       $.ajax({
