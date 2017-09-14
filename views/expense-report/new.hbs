@@ -208,10 +208,10 @@
 
   <script>
     $(document).ready(function(e){
-      // $('#ExpenseReportType_ID').val('1').trigger('change');
-      // $('#id_budget').val('999999').trigger('change');
-      // $('#Currency').val('BRL').trigger('change');
-      // $('#EventName').val('teste muner')
+      $('#ExpenseReportType_ID').val('1').trigger('change');
+      $('#id_budget').val('999999').trigger('change');
+      $('#Currency').val('BRL').trigger('change');
+      $('#EventName').val('teste muner')
     })
 
     $('#ExpenseReportType_ID').select2()
@@ -256,6 +256,7 @@
       $(newLine).find('input').val('')
       $(newLine).find('td:last').html('<i style="font-size:23px;" class="fa fa-trash" aria-hidden="true" onclick="$(this).closest(\'tr\').remove()" data-toggle="tooltip" data-container="body" data-placement="bottom" title="Less Line"></i>')
       $(newLine).addClass('linhaAdicional')
+      $(newLine).css('background-color', '#FFF')
       $(el).closest('tbody').append(newLine)
     }
 
@@ -295,10 +296,26 @@
 
     $('#formExpenseReport').submit(function(e){
       e.preventDefault()
-      alert('valdiou')
 
       let dataSend = $(this).serializeArray()
-      dataSend.push({name: 'expenseList', value: JSON.stringify(serializeExpense())})
+      dataSend.push({name: 'listExpense', value: JSON.stringify(serializeExpense())})
+
+      dataSend.forEach(function(e){
+        if('listExpense' === e.name && 0 === JSON.parse(e.value).length){
+          swal({
+            title:"",
+            text:"Please insert at least 1 valid expense",
+            type: "error"
+          }).then(
+            function () {
+              $('.tableExpense:visible tbody tr:first').css('background-color','#EBCCD1')
+            }
+          )
+          throw new Error('ERRO SEM DESPESA NA TABELA')
+        }
+      })
+
+      alert('valdiou')
 
       $.ajax({
         url: '/expense-report/create',
@@ -306,7 +323,7 @@
         data: dataSend,
         dataType:'json',
         success: function(data) {
-
+          // console.log(JSON.stringify(data,null,2));
         }
       })
     })
@@ -314,13 +331,104 @@
     function serializeExpense(){
       let arrayListExpense = []
       $('.tableExpense:visible .expenseLine').each(function(e){
+        let that = this
         let newLine = {
           DatePayment: $(this).find('input[name=DataPayment]').val(),
           Description: $(this).find('input[name=Description]').val(),
-          CostCenter: $(this).find('input[name=CostCenter]').val(),
+          CostCenter: $(this).find('select[name=CostCenter]').val(),
           ValueExpense: $(this).find('input[name=ValueExpense]').val()
         }
 
+        if( '999999' === $('#id_budget').val() ){
+          Object.keys(newLine).forEach(function(e){
+            if( 'DatePayment' === e ){
+              if( '' === newLine[e] || moment(newLine[e]).isBefore(moment().format('YYYY-MM-DD')) ){
+                swal({
+                  title:"",
+                  text:"Please insert an correct date",
+                  type: "error"
+                }).then(
+                  function () {
+                    $(that).css('background-color','#EBCCD1')
+                  }
+                )
+                throw new Error('DATA DESPESA INCORRETA')
+              }
+            }else if( 'Description' === e && '' === newLine[e]){
+              swal({
+                title:"",
+                text:"Please insert an correct description",
+                type: "error"
+              }).then(
+                function () {
+                  $(that).css('background-color','#EBCCD1')
+                }
+              )
+              throw new Error('DESCRIPTION DESPESA INCORRETA')
+            }else if( 'CostCenter' === e && '' === newLine[e]){
+              swal({
+                title:"",
+                text:"Please insert an correct cost center",
+                type: "error"
+              }).then(
+                function () {
+                  $(that).css('background-color','#EBCCD1')
+                }
+              )
+              throw new Error('COST CENTER INCORRETA')
+            }else if( 'ValueExpense' === e && '' === newLine[e] ){
+              swal({
+                title:"",
+                text:"Please insert an correct value",
+                type: "error"
+              }).then(
+                function () {
+                  $(that).css('background-color','#EBCCD1')
+                }
+              )
+              throw new Error('VALUE INCORRETO')
+            }
+          })
+        }else{
+          Object.keys(newLine).forEach(function(e){
+            if( 'DatePayment' === e ){
+              if( '' === newLine[e] || moment(newLine[e]).isBefore(moment().format('YYYY-MM-DD')) ){
+                swal({
+                  title:"",
+                  text:"Please insert an correct date",
+                  type: "error"
+                }).then(
+                  function () {
+                    $(that).css('background-color','#EBCCD1')
+                  }
+                )
+                throw new Error('DATA DESPESA INCORRETA')
+              }
+            }else if( 'Description' === e && '' === newLine[e]){
+              swal({
+                title:"",
+                text:"Please insert an correct description",
+                type: "error"
+              }).then(
+                function () {
+                  $(that).css('background-color','#EBCCD1')
+                }
+              )
+              throw new Error('DESCRIPTION DESPESA INCORRETA')
+            }else if( 'ValueExpense' === e && '' === newLine[e] ){
+              swal({
+                title:"",
+                text:"Please insert an correct value",
+                type: "error"
+              }).then(
+                function () {
+                  $(that).css('background-color','#EBCCD1')
+                }
+              )
+              throw new Error('VALUE INCORRETO')
+            }
+          })
+        }
         arrayListExpense.push(newLine)
       })
       console.log(arrayListExpense)
