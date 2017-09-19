@@ -123,10 +123,10 @@
                   </select>
                 </td>
                 <td>
-                  <input type="number" name="ValueExpense" value="" step="0.01" min="0" class="form-control">
+                  <input type="number" name="ValueExpense" value="" step="0.01" min="0" class="form-control" onkeyup="updateValueReal(this)">
                 </td>
                 <td>
-                  <input type="number" name="ValueReal" value="" step="0.01" min="0" class="form-control" readonly>
+                  <input type="number" name="ValueReal" value="" step="0.01" min="0" class="form-control realValue" readonly>
                 </td>
                 <td class="text-center">
                   <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" data-container="body" onclick="appendTR(this);"></i>
@@ -182,10 +182,10 @@
                   <input type="text" name="Description" value="" class="form-control">
                 </td>
                 <td>
-                  <input type="number" name="ValueExpense" value="" step="0.01" min="0" class="form-control">
+                  <input type="number" name="ValueExpense" value="" step="0.01" min="0" class="form-control" onkeyup="updateValueReal(this)">
                 </td>
                 <td>
-                  <input type="number" name="ValueReal" value="" step="0.01" min="0" class="form-control" readonly>
+                  <input type="number" name="ValueReal" value="" step="0.01" min="0" class="form-control realValue" readonly>
                 </td>
                 <td class="text-center">
                   <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" data-container="body" onclick="appendTR(this);"></i>
@@ -442,6 +442,11 @@
       })
       console.log(arrayListExpense)
       return arrayListExpense
+    }
+
+    function updateValueReal(el){
+      let valueForeign = parseFloat($(el).val()) * parseFloat($("#Currency option:selected").data('quotation'))
+      $(el).closest('tr').find('.realValue').val(valueForeign.toFixed(2))
     }
 
   </script>
