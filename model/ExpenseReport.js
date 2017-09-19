@@ -110,6 +110,7 @@ function ExpenseReport(){
       RequestedBy: req.body.RequestedBy,
       AuthorizedBy: req.body.AuthorizeBy,
       CreatedByMatricula: req.session.matricula,
+      EventName: req.body.EventName,
       Currency: req.body.CurrencyName,
       CurrencyQuotation: req.body.CurrencyQuotation
     }
