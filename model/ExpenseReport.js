@@ -17,8 +17,8 @@ function ExpenseReport(){
           req.ApproversByBudget = result
           next()
         }
-      });
-    });
+      })
+    })
   }
 
   this.getCurrencies = function(req, res, next){
@@ -65,8 +65,8 @@ function ExpenseReport(){
           req.allTypesExpenseReport = result
           next()
         }
-      });
-    });
+      })
+    })
   }
 
   this.getAllCostCenter = function(req, res, next){
@@ -79,9 +79,55 @@ function ExpenseReport(){
           req.allCostCenter = result
           next()
         }
-      });
-    });
+      })
+    })
   }
+
+  this.nextCode = function(req, res, next){
+    conn.acquire(function(err,con){
+      con.query('SELECT Code FROM ExpenseReport WHERE YEAR(CreatedAt) = ? order by ExpenseReportID desc limit 1', [new Date().getFullYear()], function(err, result) {
+        con.release()
+        if(err){
+          res.render('error', { error: err } );
+        }else{
+          console.log(this.sql);
+          let Code = '';
+          (result.length === 0) ? Code = parseInt(new Date().getFullYear() + '0001') : Code = result[0].Code + 1
+          console.log('____________________' + Code)
+          req.Code = Code
+          next()
+        }
+      })
+    })
+  }
+
+  this.createER = function(req, res, next){
+
+    let expenseReport = {
+      Code: req.Code,
+      ExpenseReportType_ID: req.body.ExpenseReportType_ID,
+      Budget_ID: req.body.id_budget,
+      RequestedBy: req.body.RequestedBy,
+      AuthorizedBy: req.body.AuthorizeBy,
+      CreatedByMatricula: req.session.matricula,
+      Currency: req.body.CurrencyName,
+      CurrencyQuotation: req.body.CurrencyQuotation
+    }
+
+    conn.acquire(function(err,con){
+      con.query('INSERT INTO ExpenseReport SET ?', [expenseReport], function(err, result) {
+        con.release()
+        if(err){
+          console.log(err);
+          res.render('error', { error: err } );
+        }else{
+          req.resultCreated = result
+          next()
+        }
+      })
+    })
+  }
+
 }
 
 module.exports = new ExpenseReport()

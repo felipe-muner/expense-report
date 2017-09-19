@@ -272,8 +272,8 @@
       // alert('buscarei aprovador')
       if('999999' === $('#id_budget').val()){
         $('#AuthorizeBy option').remove()
-        var optionCR = new Option("Dna. Claudia Ribeiro", "10")
-        var optionDM = new Option("Dna. Denise Martins", "11")
+        var optionCR = new Option("Claudia Ribeiro", "Claudia Ribeiro")
+        var optionDM = new Option("Denise Martins", "Denise Martins")
         $('#AuthorizeBy').append(optionCR).append(optionDM)
       }else{
         let dataSend = {
@@ -307,8 +307,8 @@
 
       let dataSend = $(this).serializeArray()
       dataSend.push({name: 'listExpense', value: JSON.stringify(serializeExpense())})
-      dataSend.push({name: 'CurrencyName', value: 'CurrencyName'})
-      dataSend.push({name: 'CurrencyQuotation', value: 'CurrencyQuotation'})
+      dataSend.push({name: 'CurrencyName', value: $('#Currency option:selected').data('currency')})
+      dataSend.push({name: 'CurrencyQuotation', value: $('#Currency option:selected').data('quotation')})
 
       validateBalanceBudget()
 
