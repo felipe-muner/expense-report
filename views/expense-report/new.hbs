@@ -204,6 +204,13 @@
   </div>
 </div>
 
+<div id="msgLocale" style="display:none;">
+  <span id="msgDateBefore">{{{i18n 'newPage.msgDateBefore'}}}</span>
+  <span id="msgDescriptionError">{{{i18n 'newPage.msgDescriptionError'}}}</span>
+  <span id="msgCostCenterError">{{{i18n 'newPage.msgCostCenterError'}}}</span>
+  <span id="msgValueError">{{{i18n 'newPage.msgValueError'}}}</span>
+</div>
+
 {{#section 'script'}}
 
   <script>
@@ -347,7 +354,7 @@
               if( '' === newLine[e] || moment(newLine[e]).isBefore(moment().format('YYYY-MM-DD')) ){
                 swal({
                   title:"",
-                  text:"Please insert an correct date",
+                  text: $('#msgDateBefore').text(),
                   type: "error"
                 }).then(
                   function () {
@@ -359,7 +366,7 @@
             }else if( 'Description' === e && '' === newLine[e]){
               swal({
                 title:"",
-                text:"Please insert an correct description",
+                text: $('#msgDescriptionError').text(),
                 type: "error"
               }).then(
                 function () {
@@ -369,8 +376,8 @@
               throw new Error('DESCRIPTION DESPESA INCORRETA')
             }else if( 'CostCenter' === e && '' === newLine[e]){
               swal({
-                title:"",
-                text:"Please insert an correct cost center",
+                title: "",
+                text: $('#msgCostCenterError').text(),
                 type: "error"
               }).then(
                 function () {
@@ -380,8 +387,8 @@
               throw new Error('COST CENTER INCORRETA')
             }else if( 'ValueExpense' === e && '' === newLine[e] ){
               swal({
-                title:"",
-                text:"Please insert an correct value",
+                title: "",
+                text: $('#msgValueError').text(),
                 type: "error"
               }).then(
                 function () {
@@ -396,8 +403,8 @@
             if( 'DatePayment' === e ){
               if( '' === newLine[e] || moment(newLine[e]).isBefore(moment().format('YYYY-MM-DD')) ){
                 swal({
-                  title:"",
-                  text:"Please insert an correct date",
+                  title: "",
+                  text: $('#msgDateBefore').text(),
                   type: "error"
                 }).then(
                   function () {
@@ -408,8 +415,8 @@
               }
             }else if( 'Description' === e && '' === newLine[e]){
               swal({
-                title:"",
-                text:"Please insert an correct description",
+                title: "",
+                text: $('#msgDescriptionError').text(),
                 type: "error"
               }).then(
                 function () {
@@ -419,8 +426,8 @@
               throw new Error('DESCRIPTION DESPESA INCORRETA')
             }else if( 'ValueExpense' === e && '' === newLine[e] ){
               swal({
-                title:"",
-                text:"Please insert an correct value",
+                title: "",
+                text: $('#msgValueError').text(),
                 type: "error"
               }).then(
                 function () {

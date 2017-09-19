@@ -25,11 +25,15 @@
 		"authorizedby": "Authorized By",
 		"event": "Event Name",
 		"submitForm": "Create",
-		"datePayment": "Date of Payment",
+		"datePayment": "Payment Date",
 		"description": "Description",
 		"centrocusto": "Cost Center",
 		"value": "Value",
-		"valueBR": "Value in Real"
+		"valueBR": "Value in Real",
+		"msgDateBefore": "Payment data should be as of today",
+		"msgDescriptionError": "Invalid description",
+		"msgCostCenterError": "Invalid cost center",
+		"msgValueError": "Invalid value"
 	},
 	"myPage": {
 		"titlePanel": "My Documents"

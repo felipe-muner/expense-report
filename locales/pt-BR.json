@@ -29,7 +29,11 @@
 		"description": "Descriçāo",
 		"centrocusto": "Centro de Custo",
 		"value": "Valor",
-		"valueBR": "Valor em Real"
+		"valueBR": "Valor em Real",
+		"msgDateBefore": "Data de pagamento deve ser a partir de hoje",
+		"msgDescriptionError": "Descrição inválida",
+		"msgCostCenterError": "Centro de custo inválido",
+		"msgValueError": "Valor inválido"
 	},
 	"myPage": {
 		"titlePanel": "Meus Documentos"
