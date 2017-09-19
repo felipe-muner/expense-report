@@ -33,7 +33,8 @@
 		"msgDateBefore": "Payment data should be as of today",
 		"msgDescriptionError": "Invalid description",
 		"msgCostCenterError": "Invalid cost center",
-		"msgValueError": "Invalid value"
+		"msgValueError": "Invalid value",
+		"msgInsufficientFundsError":"Insufficient funds"
 	},
 	"myPage": {
 		"titlePanel": "My Documents"

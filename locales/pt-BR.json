@@ -33,7 +33,8 @@
 		"msgDateBefore": "Data de pagamento deve ser a partir de hoje",
 		"msgDescriptionError": "Descrição inválida",
 		"msgCostCenterError": "Centro de custo inválido",
-		"msgValueError": "Valor inválido"
+		"msgValueError": "Valor inválido",
+		"msgInsufficientFundsError":"Saldo insuficiente"
 	},
 	"myPage": {
 		"titlePanel": "Meus Documentos"

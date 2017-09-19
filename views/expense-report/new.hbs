@@ -209,6 +209,7 @@
   <span id="msgDescriptionError">{{{i18n 'newPage.msgDescriptionError'}}}</span>
   <span id="msgCostCenterError">{{{i18n 'newPage.msgCostCenterError'}}}</span>
   <span id="msgValueError">{{{i18n 'newPage.msgValueError'}}}</span>
+  <span id="msgSaldoInsuficienteError">{{{i18n 'newPage.msgInsufficientFundsError'}}}</span>
 </div>
 
 {{#section 'script'}}
@@ -309,20 +310,8 @@
       dataSend.push({name: 'CurrencyName', value: 'CurrencyName'})
       dataSend.push({name: 'CurrencyQuotation', value: 'CurrencyQuotation'})
 
-      // dataSend.forEach(function(e){
-      //   if('listExpense' === e.name && 0 === JSON.parse(e.value).length){
-      //     swal({
-      //       title:"",
-      //       text:"Please insert at least 1 valid expense",
-      //       type: "error"
-      //     }).then(
-      //       function () {
-      //         $('.tableExpense:visible tbody tr:first').css('background-color','#EBCCD1')
-      //       }
-      //     )
-      //     throw new Error('ERRO SEM DESPESA NA TABELA')
-      //   }
-      // })
+      validateBalanceBudget()
+
       console.log(dataSend)
       alert('valdiou')
 
@@ -447,6 +436,26 @@
     function updateValueReal(el){
       let valueForeign = parseFloat($(el).val()) * parseFloat($("#Currency option:selected").data('quotation'))
       $(el).closest('tr').find('.realValue').val(valueForeign.toFixed(2))
+    }
+
+    function validateBalanceBudget(){
+      let sumTotal = 0
+      $('.tableExpense:visible .expenseLine').each(function(e){
+        sumTotal += $(this).find('[name=ValueExpense]').val() * parseFloat($("#Currency option:selected").data('quotation'))
+        debugger
+        if(sumTotal > $("#id_budget option:selected").data('saldo')){
+          swal({
+            title: "",
+            text: $('#msgSaldoInsuficienteError').text(),
+            type: "error"
+          }).then(
+            function () {
+              $(that).css('background-color','#EBCCD1')
+            }
+          )
+          throw new Error('Saldo Insuficiente')
+        }
+      })
     }
 
   </script>
