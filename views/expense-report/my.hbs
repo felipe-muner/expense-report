@@ -1,4 +1,33 @@
 <div class="panel panel-primary">
   <div class="panel-heading">{{{i18n 'myPage.titlePanel'}}}</div>
-  <div class="panel-body">Panel Content</div>
+  <div class="panel-body">
+    <table class="table">
+      <thead>
+        <th>Code</th>
+        <th>Created At</th>
+        <th>Type</th>
+        <th>Budget</th>
+        <th>Requested By</th>
+        <th>Authorized By</th>
+        <th>Event Name</th>
+        <th>Currency</th>
+        <th>+</th>
+      </thead>
+      <tbody>
+        {{#each myExpenseReport}}
+          <tr>
+            <td class="text-center">{{Code}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 </div>

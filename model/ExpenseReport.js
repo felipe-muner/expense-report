@@ -123,7 +123,7 @@ function ExpenseReport(){
           console.log(err);
           res.render('error', { error: err } );
         }else{
-          req.resultCreated = result          
+          req.resultCreated = result
           next()
         }
       })
@@ -153,6 +153,34 @@ function ExpenseReport(){
           res.render('error', { error: err } );
         }else{
           req.resultCreated = result
+          next()
+        }
+      })
+    })
+  }
+
+  this.myExpenseReport = function(req, res, next){
+    console.log('qwe');
+    conn.acquire(function(err,con){
+      con.query('SELECT '+
+                  'Code, '+
+                  'CreatedAt, '+
+                  'ExpenseReportType_ID, '+
+                  'Budget_ID, '+
+                  'RequestedBy, '+
+                  'AuthorizedBy, '+
+                  'EventName, '+
+                  'Currency, '+
+                  'CurrencyQuotation '+
+                'FROM ExpenseReport '+
+                'WHERE CreatedByMatricula = ? ORDER BY Code DESC',
+        [req.session.matricula], function(err, result) {
+        con.release()
+        if(err){
+          console.log(err);
+          res.render('error', { error: err } );
+        }else{
+          req.myExpenseReport = result
           next()
         }
       })

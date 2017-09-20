@@ -33,16 +33,14 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
     "Approvers": req.ApproversByBudget
   })
 }).get('/my', er.myExpenseReport , function(req, res, next) {
-  console.log('myyyy');
   res.render('expense-report/my', {
     sess: req.session,
-    nome: "felipe"
+    myExpenseReport: req.myExpenseReport
   })
 }).get('/cancel', function(req, res, next) {
   console.log('cancel');
   res.render('expense-report/cancel', {
-    sess: req.session,
-    nome: "felipe"
+    sess: req.session
   })
 })
 
