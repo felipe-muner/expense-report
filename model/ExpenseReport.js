@@ -106,6 +106,7 @@ function ExpenseReport(){
     let expenseReport = {
       Code: req.Code,
       ExpenseReportType_ID: req.body.ExpenseReportType_ID,
+      Status: 0,
       Budget_ID: req.body.id_budget,
       RequestedBy: req.body.RequestedBy,
       AuthorizedBy: req.body.AuthorizeBy,
