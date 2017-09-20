@@ -312,16 +312,22 @@
 
       validateBalanceBudget()
 
-      console.log(dataSend)
-      alert('valdiou')
-
       $.ajax({
         url: '/expense-report/create',
         type: 'POST',
         data: dataSend,
         dataType:'json',
         success: function(data) {
-          // console.log(JSON.stringify(data,null,2));
+          console.log(data)
+          swal({
+            title:"",
+            text: data.ExpenseReportedCreated,
+            type: "success"
+          }).then(
+            function () {
+              window.location.replace(data.redirect)
+            }
+          )
         }
       })
     })

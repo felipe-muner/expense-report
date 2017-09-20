@@ -123,6 +123,35 @@ function ExpenseReport(){
           console.log(err);
           res.render('error', { error: err } );
         }else{
+          req.resultCreated = result          
+          next()
+        }
+      })
+    })
+  }
+
+  this.createItemExpenseReport = function(req, res, next){
+
+    let expenseReport = {
+      Code: req.Code,
+      ExpenseReportType_ID: req.body.ExpenseReportType_ID,
+      Status: 0,
+      Budget_ID: req.body.id_budget,
+      RequestedBy: req.body.RequestedBy,
+      AuthorizedBy: req.body.AuthorizeBy,
+      CreatedByMatricula: req.session.matricula,
+      EventName: req.body.EventName,
+      Currency: req.body.CurrencyName,
+      CurrencyQuotation: req.body.CurrencyQuotation
+    }
+
+    conn.acquire(function(err,con){
+      con.query('INSERT INTO ExpenseReportItem SET ?', [expenseReport], function(err, result) {
+        con.release()
+        if(err){
+          console.log(err);
+          res.render('error', { error: err } );
+        }else{
           req.resultCreated = result
           next()
         }

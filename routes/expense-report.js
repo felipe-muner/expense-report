@@ -25,13 +25,14 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
   console.log('----');
   console.log(JSON.parse(req.body.listExpense))
   res.json({
-    "req.body": req.body
+    "redirect":"/expense-report/my",
+    "ExpenseReportedCreated": req.Code
   })
 }).post('/approver-by-budget', er.getApproversByBudget, function(req, res, next) {
   res.json({
     "Approvers": req.ApproversByBudget
   })
-}).get('/my', function(req, res, next) {
+}).get('/my', er.myExpenseReport , function(req, res, next) {
   console.log('myyyy');
   res.render('expense-report/my', {
     sess: req.session,
