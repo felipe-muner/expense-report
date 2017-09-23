@@ -34,7 +34,7 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
   })
 }).get('/my', er.myExpenseReport , function(req, res, next) {
   req.myExpenseReport.map(function(e){
-    e.pdf = (2 !== e.ExpenseReportType_ID) ? '<a class="no-loading" href="/expense-report/download-pdf?Code='+ e.Code +'" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>' : '<a class="no-loading" href="/expense-report/download-pdf-accountability?Code='+ e.Code +'" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>'
+    e.pdf = (2 !== e.ExpenseReportType_ID) ? '<a class="no-loading" onclick="downloadPDF(this);" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>' : '<a class="no-loading" onclick="downloadPDFAccountability(this);" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>'
     e.MoreInfo = (2 !== e.ExpenseReportType_ID) ? '<i onclick="moreInfo('+ e.Code +');" class="fa fa-info-circle" aria-hidden="true"></i></a>' : '<i onclick="moreInfoAccountability('+ e.Code +');" class="fa fa-info-circle" aria-hidden="true"></i></a>'
     e.CreatedAt = moment(e.CreatedAt).format('DD/MM/YYYY HH:mm')
   })
