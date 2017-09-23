@@ -11,18 +11,20 @@
         <th>Authorized By</th>
         <th>Event Name</th>
         <th>Currency</th>
-        <th>+</th>
+        <th><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="More Info"></i></th>
+        <th><i class="fa fa-file-pdf-o" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></th>
       </thead>
       <tbody>
         {{#each myExpenseReport}}
           <tr>
             <td class="text-center">{{Code}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td class="text-center">{{CreatedAt}}</td>
+            <td>{{ExpenseReportType_ID}}</td>
+            <td class="text-center">{{Budget_ID}}</td>
+            <td>{{RequestedBy}}</td>
+            <td>{{AuthorizedBy}}</td>
+            <td>{{EventName}}</td>
+            <td>{{Currency}}</td>
             <td></td>
             <td></td>
           </tr>
@@ -31,3 +33,11 @@
     </table>
   </div>
 </div>
+
+
+{{#section 'script'}}
+  <script type="text/javascript">
+    $('[data-toggle="tooltip"]').tooltip()
+  </script>
+
+{{/section}}

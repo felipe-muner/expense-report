@@ -33,6 +33,10 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
     "Approvers": req.ApproversByBudget
   })
 }).get('/my', er.myExpenseReport , function(req, res, next) {
+  req.myExpenseReport.map(function(e){
+    e.CreatedAt = moment(e.CreatedAt).format('DD/MM/YYYY HH:mm')
+  })
+  console.log(req.myExpenseReport)
   res.render('expense-report/my', {
     sess: req.session,
     myExpenseReport: req.myExpenseReport
