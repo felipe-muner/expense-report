@@ -142,6 +142,8 @@ function ExpenseReport(){
         Budget: item.Description,
         CostCenter: item.CostCenter || null,
         Value: item.ValueExpense,
+        Currency: req.Currency,
+        CurrencyQuotation: req.CurrencyQuotation,
         ExpenseReport_ID: req.Code
       }
 
@@ -197,6 +199,8 @@ function ExpenseReport(){
 
   this.adjustBody = function(req, res, next){
     console.log('qwe')
+    req.Currency = req.body.CurrencyName
+    req.CurrencyQuotation = req.body.CurrencyQuotation
     req.listItem = JSON.parse(req.body.listExpense)
     console.log('qwe')
     next()
