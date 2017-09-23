@@ -142,6 +142,7 @@ function ExpenseReport(){
         Budget: item.Description,
         CostCenter: item.CostCenter || null,
         Value: item.ValueExpense,
+        ValueConverted: (parseFloat(item.ValueExpense) * parseFloat(req.CurrencyQuotation)),
         Currency: req.Currency,
         CurrencyQuotation: req.CurrencyQuotation,
         ExpenseReport_ID: req.Code
