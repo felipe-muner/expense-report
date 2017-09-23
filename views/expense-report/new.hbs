@@ -254,6 +254,9 @@
           $('.tableExpense').css('display','none')
           $('#expenseNotWSNotReal').css('display','block')
         }
+        $('.expenseLine').find('input').val('')
+        $('.expenseLine').find('select').val('')
+
         $('.linhaAdicional').remove()
         $('#divTableExpense').css('display','block')
       }
