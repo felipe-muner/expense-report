@@ -20,10 +20,10 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
     TypeExpenseReport: req.allTypesExpenseReport,
     allCostCenter: req.allCostCenter
   })
-}).post('/create', er.nextCode, er.createER, function(req, res, next) {
+}).post('/create', er.adjustBody, er.nextCode, er.createER, er.saveListItem, function(req, res, next) {
   console.log(req.body)
-  console.log('----');
-  console.log(JSON.parse(req.body.listExpense))
+  console.log('----')
+  console.log(req.listItem)
   res.json({
     "redirect":"/expense-report/my",
     "ExpenseReportedCreated": req.Code

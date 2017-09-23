@@ -2,6 +2,7 @@ const conn = require(process.env.PWD + '/conn');
 const connPurchasing = require(process.env.PWD + '/conn-purchasing');
 const fetch = require('node-fetch');
 const request = require('request')
+const async = require('async')
 
 function ExpenseReport(){
 
@@ -130,32 +131,39 @@ function ExpenseReport(){
     })
   }
 
-  this.createItemExpenseReport = function(req, res, next){
+  this.saveListItem = function(req, res, next){
+    console.log('savelistitem')
+    console.log(req.listItem)
+    console.log(req.Code)
 
-    let expenseReport = {
-      Code: req.Code,
-      ExpenseReportType_ID: req.body.ExpenseReportType_ID,
-      Status: 0,
-      Budget_ID: req.body.id_budget,
-      RequestedBy: req.body.RequestedBy,
-      AuthorizedBy: req.body.AuthorizeBy,
-      CreatedByMatricula: req.session.matricula,
-      EventName: req.body.EventName,
-      Currency: req.body.CurrencyName,
-      CurrencyQuotation: req.body.CurrencyQuotation
-    }
+    async.forEach((req.listItem), function (item, callback){
+      let newItem = {
+        PaymentDate: item.DatePayment,
+        Budget: item.Description,
+        CostCenter: item.CostCenter || null,
+        Value: item.ValueExpense,
+        ExpenseReport_ID: req.Code
+      }
 
-    conn.acquire(function(err,con){
-      con.query('INSERT INTO ExpenseReportItem SET ?', [expenseReport], function(err, result) {
-        con.release()
-        if(err){
-          console.log(err);
-          res.render('error', { error: err } );
-        }else{
-          req.resultCreated = result
-          next()
-        }
+      console.log('_______newItem')
+      console.log(newItem)
+      console.log('_______newItem')
+
+      conn.acquire(function(err,con){
+        con.query('INSERT INTO ExpenseReportItem SET ?', [newItem],function(err, result) {
+          con.release()
+          if(err){
+            console.log(err);
+            res.render('error', { error: err } )
+          }else{
+            console.log('gravado com sucesso')
+            callback()
+          }
+        })
       })
+    }, function(err) {
+      console.log('savelistitem---INDOEMBORA')
+      next()
     })
   }
 
@@ -185,6 +193,13 @@ function ExpenseReport(){
         }
       })
     })
+  }
+
+  this.adjustBody = function(req, res, next){
+    console.log('qwe')
+    req.listItem = JSON.parse(req.body.listExpense)
+    console.log('qwe')
+    next()
   }
 
 }
