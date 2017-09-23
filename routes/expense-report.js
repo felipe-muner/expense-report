@@ -34,9 +34,10 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
   })
 }).get('/my', er.myExpenseReport , function(req, res, next) {
   req.myExpenseReport.map(function(e){
+    e.pdf = (2 !== e.ExpenseReportType_ID) ? '<a class="no-loading" href="/expense-report/download-pdf?Code='+ e.Code +'" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>' : '<a class="no-loading" href="/expense-report/download-pdf-accountability?Code='+ e.Code +'" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>'
+    e.MoreInfo = (2 !== e.ExpenseReportType_ID) ? '<i onclick="moreInfo('+ e.Code +');" class="fa fa-info-circle" aria-hidden="true"></i></a>' : '<i onclick="moreInfoAccountability('+ e.Code +');" class="fa fa-info-circle" aria-hidden="true"></i></a>'
     e.CreatedAt = moment(e.CreatedAt).format('DD/MM/YYYY HH:mm')
   })
-  console.log(req.myExpenseReport)
   res.render('expense-report/my', {
     sess: req.session,
     myExpenseReport: req.myExpenseReport
@@ -46,6 +47,32 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
   res.render('expense-report/cancel', {
     sess: req.session
   })
+}).get('/download-pdf', function(req, res, next) {
+  console.log('download-pdf');
+  res.render('expense-report/cancel', {
+    sess: req.session
+  })
+}).get('/download-pdf-accountability', function(req, res, next) {
+  console.log('download-pdf-accountability');
+  console.log('cancel');
+  res.render('expense-report/cancel', {
+    sess: req.session
+  })
 })
+
+
+// .post('/more-info', function(req, res, next) {
+//   console.log('more-info')
+//   console.log(req.body.Code)
+//   res.render('expense-report/more-info', {
+//     sess: req.session
+//   })
+// }).post('/more-info-accontability', function(req, res, next) {
+//   console.log('more-info-accontability')
+//   console.log(req.body.Code)
+//   res.render('expense-report/more-info-accountability', {
+//     sess: req.session
+//   })
+// })
 
 module.exports = router;

@@ -11,7 +11,7 @@
         <th>Authorized By</th>
         <th>Event Name</th>
         <th>Currency</th>
-        <th><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="More Info"></i></th>
+        <!-- <th><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="More Info"></i></th> -->
         <th><i class="fa fa-file-pdf-o" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></th>
       </thead>
       <tbody>
@@ -24,12 +24,12 @@
             <td>{{RequestedBy}}</td>
             <td>{{AuthorizedBy}}</td>
             <td>{{EventName}}</td>
-            <td>{{Currency}}</td>
+            <td>{{Currency}} ({{CurrencyQuotation}})</td>
+            <!-- <td class="text-center">
+              {{{MoreInfo}}}
+            </td> -->
             <td class="text-center">
-              <i class="fa fa-info-circle" aria-hidden="true"></i>
-            </td>
-            <td class="text-center">
-              <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+              {{{pdf}}}
             </td>
           </tr>
         {{/each}}
@@ -42,6 +42,31 @@
 {{#section 'script'}}
   <script type="text/javascript">
     $('[data-toggle="tooltip"]').tooltip()
+
+    function moreInfo(Code){
+      let form = document.createElement("form")
+      form.method = "POST"
+      form.action = "/expense-report/more-info"
+      var campo1 = document.createElement("input")
+      campo1.name= 'Code'
+      campo1.value= Code
+      form.appendChild(campo1)
+      document.body.appendChild(form)
+      form.submit()
+    }
+
+  function moreInfoAccountability(Code){
+    let form = document.createElement("form")
+    form.method = "POST"
+    form.action = "/expense-report/more-info-accontability"
+    var campo1 = document.createElement("input")
+    campo1.name= 'Code'
+    campo1.value= Code
+    form.appendChild(campo1)
+    document.body.appendChild(form)
+    form.submit()
+  }
+
   </script>
 
 {{/section}}
