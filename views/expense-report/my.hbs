@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         {{#each myExpenseReport}}
-          <tr>
+          <tr data-code={{Code}}>
             <td class="text-center">{{Code}}</td>
             <td class="text-center">{{CreatedAt}}</td>
             <td>{{ExpenseReportType_ID}}</td>
@@ -43,55 +43,31 @@
   <script type="text/javascript">
     $('[data-toggle="tooltip"]').tooltip()
 
-  //   function moreInfo(Code){
-  //     let form = document.createElement("form")
-  //     form.method = "POST"
-  //     form.action = "/expense-report/more-info"
-  //     var campo1 = document.createElement("input")
-  //     campo1.name= 'Code'
-  //     campo1.value= Code
-  //     form.appendChild(campo1)
-  //     document.body.appendChild(form)
-  //     form.submit()
-  //   }
-  //
-  // function moreInfoAccountability(Code){
-  //   let form = document.createElement("form")
-  //   form.method = "POST"
-  //   form.action = "/expense-report/more-info-accontability"
-  //   var campo1 = document.createElement("input")
-  //   campo1.name= 'Code'
-  //   campo1.value= Code
-  //   form.appendChild(campo1)
-  //   document.body.appendChild(form)
-  //   form.submit()
-  // }
-
-  function downloadPDF(Code){
+  function downloadPDF(el){
     let form = document.createElement("form")
     form.method = "POST"
-    form.action = "/expense-report/more-info-accontability"
+    form.action = "/expense-report/download-pdf"
+    form.target = "_blank"
     var campo1 = document.createElement("input")
     campo1.name= 'Code'
-    campo1.value= Code
+    campo1.value= $(el).closest('tr').data('code')
     form.appendChild(campo1)
     document.body.appendChild(form)
     form.submit()
   }
 
-  function downloadPDFAccountability(Code){
+  function downloadPDFAccountability(el){
     let form = document.createElement("form")
     form.method = "POST"
-    form.action = "/expense-report/more-info-accontability"
+    form.action = "/expense-report/download-pdf-accountability"
+    form.target = "_blank"
     var campo1 = document.createElement("input")
     campo1.name= 'Code'
-    campo1.value= Code
+    campo1.value= $(el).closest('tr').data('code')
     form.appendChild(campo1)
     document.body.appendChild(form)
     form.submit()
   }
-
-  /expense-report/download-pdf?Code='+ e.Code +'
 
   </script>
 

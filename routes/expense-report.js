@@ -8,6 +8,7 @@ const fs = require('fs')
 const moment = require('moment')
 const pdf = require('html-pdf');
 const A4option = require(process.env.PWD + '/views/report/A4config')
+const HtmlPDF = require(process.env.PWD + '/model/HtmlPDF')
 
 router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCenter, function(req, res, next) {
 // router.get('/new', er.getTypesExpenseReport, er.getAllCostCenter, function(req, res, next) {
@@ -34,7 +35,7 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
   })
 }).get('/my', er.myExpenseReport , function(req, res, next) {
   req.myExpenseReport.map(function(e){
-    e.pdf = (2 !== e.ExpenseReportType_ID) ? '<a class="no-loading" onclick="downloadPDF(this);" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>' : '<a class="no-loading" onclick="downloadPDFAccountability(this);" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>'
+    e.pdf = (2 !== e.ExpenseReportType_ID) ? '<a class="no-loading" onclick="downloadPDF(this);"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>' : '<a class="no-loading" onclick="downloadPDFAccountability(this);"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>'
     e.MoreInfo = (2 !== e.ExpenseReportType_ID) ? '<i onclick="moreInfo('+ e.Code +');" class="fa fa-info-circle" aria-hidden="true"></i></a>' : '<i onclick="moreInfoAccountability('+ e.Code +');" class="fa fa-info-circle" aria-hidden="true"></i></a>'
     e.CreatedAt = moment(e.CreatedAt).format('DD/MM/YYYY HH:mm')
   })
@@ -47,17 +48,13 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
   res.render('expense-report/cancel', {
     sess: req.session
   })
-}).get('/download-pdf', function(req, res, next) {
-  console.log('download-pdf');
-  res.render('expense-report/cancel', {
-    sess: req.session
-  })
-}).get('/download-pdf-accountability', function(req, res, next) {
-  console.log('download-pdf-accountability');
-  console.log('cancel');
-  res.render('expense-report/cancel', {
-    sess: req.session
-  })
+}).post('/download-pdf', er.findExpenseReport, er.findItem, HtmlPDF.REPexpenseReport, function(req, res, next) {
+  res.download(req.REPexpenseReport, new Date() + 'report.pdf')
+  // res.send('vou realizar download pdf')
+}).post('/download-pdf-accountability', er.findExpenseReport, er.findItem, er.findAccountability, function(req, res, next) {
+  console.log('ultima rota accountability')
+  console.log(req.ExpenseReport)
+  res.send('vou realizar download pdf accountability')
 })
 
 

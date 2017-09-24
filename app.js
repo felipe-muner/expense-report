@@ -54,7 +54,6 @@ app.use('/expense-report', require('./routes/expense-report'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  console.log('felipe erro');
   var err = new Error('Not Found');
   err.status = 404;
   next(err);

@@ -139,7 +139,8 @@ function ExpenseReport(){
     async.forEach((req.listItem), function (item, callback){
       let newItem = {
         PaymentDate: item.DatePayment,
-        Budget: item.Description,
+        Budget: req.Budget,
+        Description: item.Description,
         CostCenter: item.CostCenter || null,
         Value: item.ValueExpense,
         ValueConverted: (parseFloat(item.ValueExpense) * parseFloat(req.CurrencyQuotation)),
@@ -148,9 +149,12 @@ function ExpenseReport(){
         ExpenseReport_ID: req.Code
       }
 
-      console.log('_______newItem')
-      console.log(newItem)
-      console.log('_______newItem')
+      console.log('item_______')
+      console.log(item)
+      console.log('item_______')
+      // console.log('_______newItem')
+      // console.log(newItem)
+      // console.log('_______newItem')
 
       conn.acquire(function(err,con){
         con.query('INSERT INTO ExpenseReportItem SET ?', [newItem],function(err, result) {
@@ -198,8 +202,74 @@ function ExpenseReport(){
     })
   }
 
+  this.findExpenseReport = function(req, res, next){
+    console.log('findExpenseReport----')
+    req.Code = req.body.Code
+    conn.acquire(function(err,con){
+      con.query('SELECT '+
+                  'Code, '+
+                  'CreatedAt, '+
+                  'ExpenseReportType_ID, '+
+                  'Budget_ID, '+
+                  'RequestedBy, '+
+                  'AuthorizedBy, '+
+                  'EventName, '+
+                  'Currency, '+
+                  'CurrencyQuotation '+
+                'FROM ExpenseReport '+
+                'WHERE Code = ?',
+        [parseInt(req.Code)], function(err, result) {
+        con.release()
+        if(err){
+          console.log(err);
+          res.render('error', { error: err } );
+        }else{
+          req.ExpenseReport = result[0]
+          next()
+        }
+      })
+    })
+  }
+
+  this.findItem = function(req, res, next){
+    conn.acquire(function(err,con){
+      con.query('SELECT '+
+                  'ItemID, '+
+                  'PaymentDate, '+
+                  'Budget, '+
+                  'Description, '+
+                  'CostCenter, '+
+                  'Value, '+
+                  'ValueConverted, '+
+                  'Currency, '+
+                  'CurrencyQuotation, '+
+                  'ExpenseReport_ID '+
+                'FROM ExpenseReportItem '+
+                'WHERE ExpenseReport_ID = ?',
+        [parseInt(req.Code)], function(err, result) {
+        con.release()
+        if(err){
+          console.log(this.sql);
+          console.log('entrei aquierro');
+          console.log(err);
+          res.render('error', { error: err } );
+        }else{
+          req.listItem = result
+          next()
+        }
+      })
+    })
+  }
+
+  this.findAccountability = function(req, res, next){
+    req.accountabilityItem = []
+    console.log('findAccountability')
+    next()
+  }
+
   this.adjustBody = function(req, res, next){
     console.log('qwe')
+    req.Budget = req.body.id_budget
     req.Currency = req.body.CurrencyName
     req.CurrencyQuotation = req.body.CurrencyQuotation
     req.listItem = JSON.parse(req.body.listExpense)

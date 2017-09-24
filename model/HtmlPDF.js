@@ -9,94 +9,59 @@ var pdf = require('html-pdf');
 var A4option = require(process.env.PWD + '/views/report/A4config')
 
 function HtmlPDF(){
-  this.genPDFInternal = function(req, res, next){
-    fs.readFile(process.env.PWD + '/views/report/internal-event.html', {encoding: 'utf-8'}, function (err, html) {
+  this.REPexpenseReport = function(req, res, next){
+    fs.readFile(process.env.PWD + '/views/report/expense-report.html', {encoding: 'utf-8'}, function (err, html) {
       if (err) {
           throw err
-          callback(err)
       }else{
         styliner.processHTML(html)
           .then(function(processedSource) {
             const $ = cheerio.load(processedSource)
-            console.log('____event printado')
-            console.log(req.findEventByCode)
-            console.log('____event printado')
+            console.log('____expensereport no htmlpdf')
+            console.log(req.ExpenseReport)
+            console.log('____expensereport no htmlpdf')
+            console.log('___items');
+            console.log(req.listItem);
+            console.log('___items');
+            // $('#Code').text(Util.toTitleCase(req.findEventByCode.title || 'Not Reported'))
+            $('#Code').text( req.ExpenseReport.Code )
+            $('#CreatedAt').text( req.ExpenseReport.CreatedAt )
+            $('#Type').text( req.ExpenseReport.ExpenseReportType_ID )
+            $('#Budget').text( req.ExpenseReport.Budget_ID )
+            $('#RequestedBy').text( req.ExpenseReport.RequestedBy )
+            $('#AuthorizedBy').text( req.ExpenseReport.AuthorizedBy )
+            $('#Currency').text( req.ExpenseReport.Currency )
+            $('#CurrencyQuotation').text( req.ExpenseReport.CurrencyQuotation )
+            $('#EventName').text( req.ExpenseReport.EventName )
 
-            $('#eventName').text(Util.toTitleCase(req.findEventByCode.title || 'Not Reported'))
-            $('#Type').text('Internal')
-            $('#eventcode').text(req.findEventByCode.EventCode)
-            $('#eventstatus').text(Util.toTitleCase(req.findEventByCode.StatusName || 'Not Reported'))
-            $('#createdBy').text(Util.toTitleCase(req.findEventByCode.CreatedByName || 'Not Reported'))
-            $('#responsibleBy').text(Util.toTitleCase(req.findEventByCode.ResponsibleByName || 'Not Reported'))
-            $('#departamento').text(Util.toTitleCase('departamento buscar'))
+            // //prod
+            // let products = req.listItem.reduce(function(acc, ele){
+            //   acc.total = acc.total + (ele.Price * ele.Amount * 1.14)
+            //   acc.tabelaProd = acc.tabelaProd + '<tr style="line-height: 15px;">'+
+            //                             '  <td style="border:1px solid black;">'+ ele.ProductNameEnglish + '/' + ele.ProductNamePort + '(' + ele.UnitInEnglish + '/' + ele.UnitInPort + ')' + '</td>'+
+            //                             '  <td style="padding-right:3px;border:1px solid black;text-align:right;">'+ ele.Amount + '</td>'+
+            //                               '<td style="padding-right:3px;border:1px solid black;text-align:right;">'+ ele.Price.toFixed(2) +' </td>'+
+            //                               '<td style="padding-right:3px;border:1px solid black;text-align:right;">'+ (ele.Price * ele.Amount * 1.14).toFixed(2) +'</td>'+
+            //                             '</tr>'
+            //   return acc
+            // }, {tabelaProd:'',total:0})
+            //
+            // products.tabelaProd = products.tabelaProd + '<tr style="line-height: 15px;"><td colspan="4" style="padding-right:3px;text-align:right;">'+ (products.total).toFixed(2) +'</td></tr>'
 
-            $('#startTime').text(moment(req.findEventByCode.start).format('DD/MM/YYYY HH:mm'))
-            $('#endTime').text(moment(req.findEventByCode.end).format('DD/MM/YYYY HH:mm'))
-            // $('#startendtime').text(moment(req.findEventByCode.start).format('DD/MM/YYYY HH:mm') + '\n' +  moment(req.findEventByCode.end).format('DD/MM/YYYY HH:mm'))
-
-            $('#needDataShow').text(Util.toTitleCase(req.findEventByCode.NeedDataShow || 'Not Reported'))
-            $('#needComputer').text(Util.toTitleCase(req.findEventByCode.NeedComputer || 'Not Reported'))
-            if (null !== req.findEventByCode.VideoFrom){
-              $('#videoConferencia').text('From: ' + req.findEventByCode.VideoFrom + ' To: ' + req.findEventByCode.VideoTo)
-            }else {
-              $('#videoConferencia').text('Not Reported')
-            }
-
-            $('#Nparent').text(req.findEventByCode.Nparent || 'Not Reported')
-            $('#Npupil').text(req.findEventByCode.Npupil || 'Not Reported')
-            $('#Nstaff').text(req.findEventByCode.Nstaff || 'Not Reported')
-            $('#Nvisitor').text(req.findEventByCode.Nvisitor || 'Not Reported')
-
-            $('#AdditionalInformation').text(Util.toTitleCase(req.findEventByCode.AdditionalInformation || 'Not Reported'))
-
-            //prod
-            let products = req.findEventByCode.products.reduce(function(acc,ele){
-              acc.total = acc.total + (ele.Price * ele.Amount * 1.14)
-              acc.tabelaProd = acc.tabelaProd + '<tr style="line-height: 15px;">'+
-                                        '  <td style="border:1px solid black;">'+ ele.ProductNameEnglish + '/' + ele.ProductNamePort + '(' + ele.UnitInEnglish + '/' + ele.UnitInPort + ')' + '</td>'+
-                                        '  <td style="padding-right:3px;border:1px solid black;text-align:right;">'+ ele.Amount + '</td>'+
-                                          '<td style="padding-right:3px;border:1px solid black;text-align:right;">'+ ele.Price.toFixed(2) +' </td>'+
-                                          '<td style="padding-right:3px;border:1px solid black;text-align:right;">'+ (ele.Price * ele.Amount * 1.14).toFixed(2) +'</td>'+
-                                        '</tr>'
-              return acc
-            },{tabelaProd:'',total:0})
-
-            let footerTableProd = '<tr style="line-height: 15px;"><td colspan="4" style="padding-right:3px;text-align:right;">'+ (products.total).toFixed(2) +'</td></tr>'
-            products.tabelaProd = products.tabelaProd + footerTableProd
-
-            if(req.findEventByCode.products.length > 0){
-              $('#bodyProducts').html(products.tabelaProd)
-            }else{
-              $('#bodyProducts').html('<tr style="line-height: 15px;text-align:center;"><td colspan="4">Don\'t have products</td></tr>')
-            }
-
-            //guest
-            console.log(req.findEventByCode.guests)
-            console.log('________________________')
-            let guests = req.findEventByCode.guests.reduce(function(acc,ele){
-              acc.tabelaGuest = acc.tabelaGuest + '<tr style="line-height: 15px;">'+
-                                                  '<td style="border:1px solid black;">'+ ele.Type +' </td>'+
-                                                  '<td style="border:1px solid black;">'+ ele.NameGuest +'</td>'+
-                                                '</tr>'
-              return acc
-            },{tabelaGuest:''})
-
-            if(req.findEventByCode.guests.length > 0){
-              $('#bodyGuests').html(guests.tabelaGuest)
-            }else{
-              $('#bodyGuests').html('<tr style="line-height: 15px;text-align:center;"><td colspan="4">Don\'t have guests</td></tr>')
-            }
+            // $('#bodyProducts').html(products.tabelaProd)
 
             pdf.create($.html(), A4option).toFile(function(err, pdfFile) {
               if (err) return console.log(err);
               console.log(pdfFile);
-              res.download(pdfFile.filename, new Date() + 'report.pdf')
+              // res.download(pdfFile.filename, new Date() + 'report.pdf')
+              req.REPexpenseReport = pdfFile.filename
+              next()
             })
           })
       }
     })
   }
-  this.genPDFExternal = function(req, res, next){
+  this.REPaccountability = function(req, res, next){
     fs.readFile(process.env.PWD + '/views/report/external-event.html', {encoding: 'utf-8'}, function (err, html) {
       if (err) {
           throw err
