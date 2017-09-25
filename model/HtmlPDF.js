@@ -27,7 +27,7 @@ function HtmlPDF(){
             $('#Code').text( req.ExpenseReport.Code )
             $('#CreatedAt').text( req.ExpenseReport.CreatedAt )
             $('#Type').text( req.ExpenseReport.ExpenseReportType_ID )
-            $('#Budget').text( req.ExpenseReport.Budget_ID )
+            $('#Budget').text( req.ExpenseReport.Budget )
             $('#RequestedBy').text( req.ExpenseReport.RequestedBy )
             $('#AuthorizedBy').text( req.ExpenseReport.AuthorizedBy )
             $('#Currency').text( req.ExpenseReport.Currency )

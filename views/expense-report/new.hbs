@@ -24,7 +24,7 @@
           <select id="id_budget" name="id_budget" style="width:100%;" required>
             <option value="">Select</option>
             {{#each sess.budgets}}
-              <option data-setor="{{setor}}" data-grupo="{{grupo}}" data-conta="{{conta}}" data-ncont="{{nomecont}}" data-saldo="{{saldo}}" value="{{id_orca}}">{{pad setor 3 0}} {{pad grupo 3 0}} {{conta}} {{ncont}} - R${{addDecimalCases saldo}}</option>
+              <option data-setor="{{setor}}" data-grupo="{{grupo}}" data-conta="{{conta}}" data-ncont="{{nomecont}}" data-saldo="{{saldo}}" data-conta-orca="{{pad setor 3 0}} {{pad grupo 3 0}} {{pad conta 4 0}}" value="{{id_orca}}">{{pad setor 3 0}} {{pad grupo 3 0}} {{conta}} {{ncont}} - R${{addDecimalCases saldo}}</option>
             {{/each}}
           </select>
         </div>
@@ -310,6 +310,7 @@
 
       let dataSend = $(this).serializeArray()
       dataSend.push({name: 'listExpense', value: JSON.stringify(serializeExpense())})
+      dataSend.push({name: 'ContaOrca', value: $('#id_budget option:selected').data('conta-orca')})
       dataSend.push({name: 'CurrencyName', value: $('#Currency option:selected').data('currency')})
       dataSend.push({name: 'CurrencyQuotation', value: $('#Currency option:selected').data('quotation')})
 

@@ -108,7 +108,7 @@ function ExpenseReport(){
       Code: req.Code,
       ExpenseReportType_ID: req.body.ExpenseReportType_ID,
       Status: 0,
-      Budget_ID: req.body.id_budget,
+      Budget: req.Budget,
       RequestedBy: req.body.RequestedBy,
       AuthorizedBy: req.body.AuthorizeBy,
       CreatedByMatricula: req.session.matricula,
@@ -181,7 +181,7 @@ function ExpenseReport(){
                   'Code, '+
                   'CreatedAt, '+
                   'ExpenseReportType_ID, '+
-                  'Budget_ID, '+
+                  'Budget, '+
                   'RequestedBy, '+
                   'AuthorizedBy, '+
                   'EventName, '+
@@ -210,7 +210,7 @@ function ExpenseReport(){
                   'Code, '+
                   'CreatedAt, '+
                   'ExpenseReportType_ID, '+
-                  'Budget_ID, '+
+                  'Budget, '+
                   'RequestedBy, '+
                   'AuthorizedBy, '+
                   'EventName, '+
@@ -269,7 +269,7 @@ function ExpenseReport(){
 
   this.adjustBody = function(req, res, next){
     console.log('qwe')
-    req.Budget = req.body.id_budget
+    req.Budget = req.body.ContaOrca
     req.Currency = req.body.CurrencyName
     req.CurrencyQuotation = req.body.CurrencyQuotation
     req.listItem = JSON.parse(req.body.listExpense)
