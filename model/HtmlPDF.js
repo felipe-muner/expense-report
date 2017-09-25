@@ -34,8 +34,111 @@ function HtmlPDF(){
             $('#CurrencyQuotation').text( req.ExpenseReport.CurrencyQuotation )
             $('#EventName').text( req.ExpenseReport.EventName )
 
+            let header = ''
+            if('001 001 00WS' === req.ExpenseReport.Budget && 'BRL' === req.ExpenseReport.Currency){
+              console.log('header whole school brl');
+              header = '<tr style="background-color:#ddd;line-height: 18px;text-align:center;">'+
+                          '<td style="width:10%;">Date</td>'+
+                          '<td style="width:60%;">Description</td>'+
+                          '<td style="width:10%;">CC</td>'+
+                          '<td style="width:20%;">Value</td>'+
+                        '</tr>'
+              let items = req.listItem.reduce(function(acc, e){
+                acc.total += e.Value
+                acc.tabelaItem = acc.tabelaItem + '<tr style="">'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:center;">'+ moment(e.PaymentDate).format('DD/MM/YYYY') + '</td>'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:left;">'+ e.Description +'</td>'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:center;">'+ e.CostCenter +'</td>'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:right;">'+ e.Value.toFixed(2) +'</td>'+
+                                          '</tr>'
+                return acc
+              }, {tabelaItem:'',total:0})
+
+              $('#headerItem').append(header)
+              $('#bodyItem').append(items.tabelaItem)
+              $('#bodyItem').append('<tr><td colspan="4" style="text-align:right;padding:3px;">'+ items.total.toFixed(2) +'</td></tr>')
+
+            }else if('001 001 00WS' === req.ExpenseReport.Budget && 'BRL' !== req.ExpenseReport.Currency){
+              console.log('header whole e nao real');
+              // header = '<tr style="background-color:#ddd;line-height: 18px;text-align:center;"><td>Payment Date</td><td>Description</td><td>Cost Center</td><td>Value BRL</td><td>Value '+ req.ExpenseReport.Currency +'</td></tr>'
+              header = '<tr style="background-color:#ddd;line-height: 18px;text-align:center;">'+
+                          '<td style="width:10%;">Date</td>'+
+                          '<td style="width:50%;">Description</td>'+
+                          '<td style="width:10%;">CC</td>'+
+                          '<td style="width:15%;">Value '+ req.ExpenseReport.Currency +'</td>'+
+                          '<td style="width:15%;">Value BRL</td>'+
+                        '</tr>'
+              let items = req.listItem.reduce(function(acc, e){
+                acc.total += e.Value
+                acc.totalEstrangeiro += e.ValueConverted
+                acc.tabelaItem = acc.tabelaItem + '<tr style="">'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:center;">'+ moment(e.PaymentDate).format('DD/MM/YYYY') + '</td>'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:left;">'+ e.Description +'</td>'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:center;">'+ e.CostCenter +'</td>'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:right;">'+ e.Value.toFixed(2) +'</td>'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:right;">'+ e.ValueConverted.toFixed(2) +'</td>'+
+                                          '</tr>'
+                return acc
+              }, {tabelaItem:'', total: 0,totalEstrangeiro:0})
+
+              $('#headerItem').append(header)
+              $('#bodyItem').append(items.tabelaItem)
+              $('#bodyItem').append('<tr>'+
+                                      '<td colspan="3"></td>'+
+                                      '<td style="text-align:right;padding:3px;">'+ items.total.toFixed(2) +'</td>'+
+                                      '<td style="text-align:right;padding:3px;">'+ items.totalEstrangeiro.toFixed(2)+'</td>'+
+                                    '</tr>')
+            }else if('001 001 00WS' !== req.ExpenseReport.Budget && 'BRL' === req.ExpenseReport.Currency){
+              console.log('header nao whole e real');
+              header = '<tr style="background-color:#ddd;line-height: 18px;text-align:center;">'+
+                          '<td style="width:10%;">Date</td>'+
+                          '<td style="width:70%;">Description</td>'+
+                          '<td style="width:20%;">Value</td>'+
+                        '</tr>'
+              let items = req.listItem.reduce(function(acc, e){
+                acc.total += e.Value
+                acc.tabelaItem = acc.tabelaItem + '<tr style="">'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:center;">'+ moment(e.PaymentDate).format('DD/MM/YYYY') + '</td>'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:left;">'+ e.Description +'</td>'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:right;">'+ e.Value.toFixed(2) +'</td>'+
+                                          '</tr>'
+                return acc
+              }, {tabelaItem:'',total:0})
+
+              $('#headerItem').append(header)
+              $('#bodyItem').append(items.tabelaItem)
+              $('#bodyItem').append('<tr><td colspan="4" style="text-align:right;padding:3px;">'+ items.total.toFixed(2) +'</td></tr>')
+            }else if('001 001 00WS' !== req.ExpenseReport.Budget && 'BRL' !== req.ExpenseReport.Currency){
+              console.log('header nao whole nao real');
+              header = '<tr style="background-color:#ddd;line-height: 18px;text-align:center;">'+
+                          '<td style="width:10%;">Date</td>'+
+                          '<td style="width:50%;">Description</td>'+
+                          '<td style="width:15%;">Value '+ req.ExpenseReport.Currency +'</td>'+
+                          '<td style="width:15%;">Value BRL</td>'+
+                        '</tr>'
+              let items = req.listItem.reduce(function(acc, e){
+                acc.total += e.Value
+                acc.totalEstrangeiro += e.ValueConverted
+                acc.tabelaItem = acc.tabelaItem + '<tr style="">'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:center;">'+ moment(e.PaymentDate).format('DD/MM/YYYY') + '</td>'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:left;">'+ e.Description +'</td>'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:right;">'+ e.Value.toFixed(2) +'</td>'+
+                                            '<td style="padding:3px;border:1px solid black;text-align:right;">'+ e.ValueConverted.toFixed(2) +'</td>'+
+                                          '</tr>'
+                return acc
+              }, {tabelaItem:'', total: 0,totalEstrangeiro:0})
+
+              $('#headerItem').append(header)
+              $('#bodyItem').append(items.tabelaItem)
+              $('#bodyItem').append('<tr>'+
+                                      '<td colspan="3"></td>'+
+                                      '<td style="text-align:right;padding:3px;">'+ items.total.toFixed(2) +'</td>'+
+                                      '<td style="text-align:right;padding:3px;">'+ items.totalEstrangeiro.toFixed(2)+'</td>'+
+                                    '</tr>')
+            }
+
             // //prod
-            // let products = req.listItem.reduce(function(acc, ele){
+            // let items = req.listItem.reduce(function(acc, ele){
             //   acc.total = acc.total + (ele.Price * ele.Amount * 1.14)
             //   acc.tabelaProd = acc.tabelaProd + '<tr style="line-height: 15px;">'+
             //                             '  <td style="border:1px solid black;">'+ ele.ProductNameEnglish + '/' + ele.ProductNamePort + '(' + ele.UnitInEnglish + '/' + ele.UnitInPort + ')' + '</td>'+
