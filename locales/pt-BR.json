@@ -50,5 +50,6 @@
 	"requestedby": "Requisitado por",
 	"authorizedby": "Autorizado por",
 	"eventname": "Nome do Evento",
-	"currency": "Moeda"
+	"currency": "Moeda",
+	"createtat": "Cotação"
 }

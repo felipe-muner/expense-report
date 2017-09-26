@@ -50,5 +50,7 @@
 	"requestedby": "Requested By",
 	"authorizedby": "Authorized By",
 	"eventname": "Event Name",
-	"currency": "Currency"
+	"currency": "Currency",
+	"createtat": "createtat",
+	"quotation": "Quotation"
 }

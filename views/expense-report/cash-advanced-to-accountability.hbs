@@ -1,0 +1,34 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">{{{i18n 'accountability'}}} - Nº {{ExpenseReport.Code}}</div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-sm-2">
+        <label for="">{{{i18n 'createdat'}}}</label>
+        <input type="text" name="" value="{{ExpenseReport.CreatedAt}}" class="form-control" readonly>
+      </div>
+      <div class="col-sm-2">
+        <label for="">{{{i18n 'budget'}}}</label>
+        <input type="text" name="" value="{{ExpenseReport.Budget}}" class="form-control" readonly>
+      </div>
+      <div class="col-sm-3">
+        <label for="">{{{i18n 'requestedby'}}}</label>
+        <input type="text" name="" value="{{ExpenseReport.RequestedBy}}" class="form-control" readonly>
+      </div>
+      <div class="col-sm-3">
+        <label for="">{{{i18n 'authorizedby'}}}</label>
+        <input type="text" name="" value="{{ExpenseReport.AuthorizedBy}}" class="form-control" readonly>
+      </div>
+      <div class="col-sm-2">
+        <label for="">{{{i18n 'currency'}}}</label>
+        <input type="text" name="" value="{{ExpenseReport.Currency}} ({{ExpenseReport.CurrencyQuotation}})" class="form-control" readonly>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:5px;">
+      <div class="col-sm-12">
+        <label for="">{{{i18n 'eventname'}}}</label>
+        <input type="text" name="" value="{{ExpenseReport.EventName}}" class="form-control" readonly>
+      </div>
+    </div>
+  </div>
+</div>

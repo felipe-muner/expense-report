@@ -62,6 +62,14 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
     sess: req.session,
     listCashAdvancedOpen: req.listCashAdvancedOpen
   })
+}).post('/open-cash-advanced', er.findExpenseReport, er.findItem, function(req, res, next) {
+  req.ExpenseReport
+
+  res.render('expense-report/cash-advanced-to-accountability', {
+    sess: req.session,
+    ExpenseReport: req.ExpenseReport,
+    listItem: req.listItem
+  })
 })
 
 

@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         {{#each listCashAdvancedOpen}}
-          <tr data-code={{Code}}>
+          <tr data-code={{Code}} onclick="openCashAdvance(this);">
             <td class="text-center">{{Code}}</td>
             <td class="text-center">{{CreatedAt}}</td>
             <td>{{NameType}}</td>
@@ -39,5 +39,17 @@
 {{#section 'script'}}
   <script type="text/javascript">
     $('[data-toggle="tooltip"]').tooltip()
+
+    function openCashAdvance(el){
+      let form = document.createElement("form")
+      form.method = "POST"
+      form.action = "/expense-report/open-cash-advanced"
+      var campo1 = document.createElement("input")
+      campo1.name= 'Code'
+      campo1.value= $(el).closest('tr').data('code')
+      form.appendChild(campo1)
+      document.body.appendChild(form)
+      form.submit()
+    }
   </script>
 {{/section}}
