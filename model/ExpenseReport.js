@@ -1,6 +1,5 @@
 const conn = require(process.env.PWD + '/conn');
 const connPurchasing = require(process.env.PWD + '/conn-purchasing');
-const fetch = require('node-fetch');
 const request = require('request')
 const async = require('async')
 
@@ -58,7 +57,7 @@ function ExpenseReport(){
 
   this.getTypesExpenseReport = function(req, res, next){
     conn.acquire(function(err,con){
-      con.query('SELECT ExpenseReportTypeID, NameType FROM ExpenseReportType', function(err, result) {
+      con.query('SELECT ExpenseReportTypeID, NameType FROM ExpenseReportType WHERE ShowInCreation = 1', function(err, result) {
         con.release();
         if(err){
           res.render('error', { error: err } );
@@ -185,16 +184,17 @@ function ExpenseReport(){
     console.log('qwe');
     conn.acquire(function(err,con){
       con.query('SELECT '+
-                  'Code, '+
-                  'CreatedAt, '+
-                  'ExpenseReportType_ID, '+
-                  'Budget, '+
-                  'RequestedBy, '+
-                  'AuthorizedBy, '+
-                  'EventName, '+
-                  'Currency, '+
-                  'CurrencyQuotation '+
-                'FROM ExpenseReport '+
+                  'er.Code, '+
+                  'er.CreatedAt, '+
+                  'er.ExpenseReportType_ID, '+
+                  'ert.NameType, '+
+                  'er.Budget, '+
+                  'er.RequestedBy, '+
+                  'er.AuthorizedBy, '+
+                  'er.EventName, '+
+                  'er.Currency, '+
+                  'er.CurrencyQuotation '+
+                'FROM ExpenseReport er Inner Join ExpenseReportType ert ON er.ExpenseReportType_ID = ert.ExpenseReportTypeID '+
                 'WHERE CreatedByMatricula = ? ORDER BY Code DESC',
         [req.session.matricula], function(err, result) {
         con.release()
@@ -275,8 +275,30 @@ function ExpenseReport(){
   }
 
   this.getCashAdvancedOpen = function(req, res, next){
-    next()
-
+    conn.acquire(function(err,con){
+      con.query('SELECT '+
+                  'Code, '+
+                  'CreatedAt, '+
+                  'ExpenseReportType_ID, '+
+                  'Budget, '+
+                  'RequestedBy, '+
+                  'AuthorizedBy, '+
+                  'EventName, '+
+                  'Currency, '+
+                  'CurrencyQuotation '+
+                'FROM ExpenseReport '+
+                'WHERE CreatedByMatricula = ? AND Status = ? AND ExpenseReportType_ID = ? ORDER BY Code DESC',
+        [req.session.matricula, 0, 1], function(err, result) {
+        con.release()
+        if(err){
+          console.log(err);
+          res.render('error', { error: err } );
+        }else{
+          req.listCashAdvancedOpen = result
+          next()
+        }
+      })
+    })
   }
 
 

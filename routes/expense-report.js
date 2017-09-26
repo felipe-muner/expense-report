@@ -38,6 +38,8 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
     e.pdf = (2 !== e.ExpenseReportType_ID) ? '<a class="no-loading" onclick="downloadPDF(this);"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>' : '<a class="no-loading" onclick="downloadPDFAccountability(this);"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>'
     e.MoreInfo = (2 !== e.ExpenseReportType_ID) ? '<i onclick="moreInfo('+ e.Code +');" class="fa fa-info-circle" aria-hidden="true"></i></a>' : '<i onclick="moreInfoAccountability('+ e.Code +');" class="fa fa-info-circle" aria-hidden="true"></i></a>'
     e.CreatedAt = moment(e.CreatedAt).format('DD/MM/YYYY HH:mm')
+
+    console.log(e.pdf + e.Code)
   })
   res.render('expense-report/my', {
     sess: req.session,
@@ -57,7 +59,8 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
   res.send('vou realizar download pdf accountability')
 }).get('/accountability', er.getCashAdvancedOpen ,function(req, res, next) {
   res.render('expense-report/accountability', {
-    sess: req.session
+    sess: req.session,
+    listCashAdvancedOpen: req.listCashAdvancedOpen
   })
 })
 
