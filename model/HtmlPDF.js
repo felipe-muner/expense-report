@@ -26,7 +26,7 @@ function HtmlPDF(){
             // $('#Code').text(Util.toTitleCase(req.findEventByCode.title || 'Not Reported'))
             $('#Code').text( req.ExpenseReport.Code )
             $('#CreatedAt').text( req.ExpenseReport.CreatedAt )
-            $('#Type').text( req.ExpenseReport.ExpenseReportType_ID )
+            $('#Type').text( req.ExpenseReport.NameType )
             $('#Budget').text( req.ExpenseReport.Budget )
             $('#RequestedBy').text( req.ExpenseReport.RequestedBy )
             $('#AuthorizedBy').text( req.ExpenseReport.AuthorizedBy )

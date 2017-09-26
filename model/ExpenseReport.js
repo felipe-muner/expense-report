@@ -214,16 +214,17 @@ function ExpenseReport(){
     req.Code = req.body.Code
     conn.acquire(function(err,con){
       con.query('SELECT '+
-                  'Code, '+
-                  'CreatedAt, '+
-                  'ExpenseReportType_ID, '+
-                  'Budget, '+
-                  'RequestedBy, '+
-                  'AuthorizedBy, '+
-                  'EventName, '+
-                  'Currency, '+
-                  'CurrencyQuotation '+
-                'FROM ExpenseReport '+
+                  'er.Code, '+
+                  'er.CreatedAt, '+
+                  'er.ExpenseReportType_ID, '+
+                  'ert.NameType, '+
+                  'er.Budget, '+
+                  'er.RequestedBy, '+
+                  'er.AuthorizedBy, '+
+                  'er.EventName, '+
+                  'er.Currency, '+
+                  'er.CurrencyQuotation '+
+                'FROM ExpenseReport er Inner Join ExpenseReportType ert ON er.ExpenseReportType_ID = ert.ExpenseReportTypeID '+
                 'WHERE Code = ?',
         [parseInt(req.Code)], function(err, result) {
         con.release()
@@ -277,16 +278,17 @@ function ExpenseReport(){
   this.getCashAdvancedOpen = function(req, res, next){
     conn.acquire(function(err,con){
       con.query('SELECT '+
-                  'Code, '+
-                  'CreatedAt, '+
-                  'ExpenseReportType_ID, '+
-                  'Budget, '+
-                  'RequestedBy, '+
-                  'AuthorizedBy, '+
-                  'EventName, '+
-                  'Currency, '+
-                  'CurrencyQuotation '+
-                'FROM ExpenseReport '+
+                  'er.Code, '+
+                  'er.CreatedAt, '+
+                  'er.ExpenseReportType_ID, '+
+                  'ert.NameType, '+
+                  'er.Budget, '+
+                  'er.RequestedBy, '+
+                  'er.AuthorizedBy, '+
+                  'er.EventName, '+
+                  'er.Currency, '+
+                  'er.CurrencyQuotation '+
+                'FROM ExpenseReport er Inner Join ExpenseReportType ert ON er.ExpenseReportType_ID = ert.ExpenseReportTypeID '+
                 'WHERE CreatedByMatricula = ? AND Status = ? AND ExpenseReportType_ID = ? ORDER BY Code DESC',
         [req.session.matricula, 0, 1], function(err, result) {
         con.release()
