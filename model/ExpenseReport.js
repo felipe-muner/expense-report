@@ -104,10 +104,12 @@ function ExpenseReport(){
 
   this.createER = function(req, res, next){
 
+
+
     let expenseReport = {
       Code: req.Code,
       ExpenseReportType_ID: req.body.ExpenseReportType_ID,
-      Status: 0,
+      Status: (1 === parseInt(req.body.ExpenseReportType_ID)) ? 0 : null,
       Budget: req.Budget,
       RequestedBy: req.body.RequestedBy,
       AuthorizedBy: req.body.AuthorizeBy,
@@ -116,6 +118,11 @@ function ExpenseReport(){
       Currency: req.body.CurrencyName,
       CurrencyQuotation: req.body.CurrencyQuotation
     }
+
+    console.log('sou um report')
+    console.log(expenseReport)
+    console.log('sou um report')
+
 
     conn.acquire(function(err,con){
       con.query('INSERT INTO ExpenseReport SET ?', [expenseReport], function(err, result) {
@@ -266,6 +273,12 @@ function ExpenseReport(){
     console.log('findAccountability')
     next()
   }
+
+  this.getCashAdvancedOpen = function(req, res, next){
+    next()
+
+  }
+
 
   this.adjustBody = function(req, res, next){
     console.log('qwe')

@@ -34,12 +34,13 @@
 		"msgDescriptionError": "Descrição inválida",
 		"msgCostCenterError": "Centro de custo inválido",
 		"msgValueError": "Valor inválido",
-		"msgInsufficientFundsError":"Saldo insuficiente"
+		"msgInsufficientFundsError": "Saldo insuficiente"
 	},
 	"myPage": {
 		"titlePanel": "Meus Documentos"
 	},
 	"cancelPage": {
 		"titlePanel": "Cancelar Expense Report"
-	}
+	},
+	"accountability": "Prestar Conta"
 }

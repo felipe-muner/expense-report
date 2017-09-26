@@ -55,6 +55,10 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
   console.log('ultima rota accountability')
   console.log(req.ExpenseReport)
   res.send('vou realizar download pdf accountability')
+}).get('/accountability', er.getCashAdvancedOpen ,function(req, res, next) {
+  res.render('expense-report/accountability', {
+    sess: req.session
+  })
 })
 
 
