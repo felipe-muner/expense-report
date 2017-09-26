@@ -42,5 +42,13 @@
 	"cancelPage": {
 		"titlePanel": "Cancel Expense Report"
 	},
-	"accountability": "Accountability"
+	"accountability": "Accountability",
+	"code": "Code",
+	"createdat": "Created At",
+	"type": "Type",
+	"budget": "Budget",
+	"requestedby": "Requested By",
+	"authorizedby": "Authorized By",
+	"eventname": "Event Name",
+	"currency": "Currency"
 }

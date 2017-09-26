@@ -42,5 +42,13 @@
 	"cancelPage": {
 		"titlePanel": "Cancelar Expense Report"
 	},
-	"accountability": "Prestar Conta"
+	"accountability": "Prestar Conta",
+	"code": "Código",
+	"createdat": "Criado em",
+	"type": "Tipo",
+	"budget": "Budget",
+	"requestedby": "Requisitado por",
+	"authorizedby": "Autorizado por",
+	"eventname": "Nome do Evento",
+	"currency": "Moeda"
 }

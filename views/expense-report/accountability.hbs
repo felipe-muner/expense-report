@@ -3,16 +3,16 @@
   <div class="panel-body">
     <table class="table">
       <thead>
-        <th>Code</th>
-        <th>Created At</th>
-        <th>Type</th>
-        <th>Budget</th>
-        <th>Requested By</th>
-        <th>Authorized By</th>
-        <th>Event Name</th>
-        <th>Currency</th>
+        <th>{{{i18n 'code'}}}</th>
+        <th>{{{i18n 'createdat'}}}</th>
+        <th>{{{i18n 'type'}}}</th>
+        <th>{{{i18n 'budget'}}}</th>
+        <th>{{{i18n 'requestedby'}}}</th>
+        <th>{{{i18n 'authorizedby'}}}</th>
+        <th>{{{i18n 'eventname'}}}</th>
+        <th>{{{i18n 'currency'}}}</th>
         <!-- <th><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="More Info"></i></th> -->
-        <th><i class="fa fa-file-pdf-o" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></th>
+        <th><i class="fa fa-sticky-note-o" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{{i18n 'Accountability'}}}"></i></th>
       </thead>
       <tbody>
         {{#each listCashAdvancedOpen}}
@@ -25,11 +25,8 @@
             <td>{{AuthorizedBy}}</td>
             <td>{{EventName}}</td>
             <td>{{Currency}} ({{CurrencyQuotation}})</td>
-            <!-- <td class="text-center">
-              {{{MoreInfo}}}
-            </td> -->
             <td class="text-center">
-              {{{pdf}}}
+              <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
             </td>
           </tr>
         {{/each}}
@@ -37,3 +34,10 @@
     </table>
   </div>
 </div>
+
+
+{{#section 'script'}}
+  <script type="text/javascript">
+    $('[data-toggle="tooltip"]').tooltip()
+  </script>
+{{/section}}
