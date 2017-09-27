@@ -52,5 +52,6 @@
 	"eventname": "Event Name",
 	"currency": "Currency",
 	"createtat": "createtat",
-	"quotation": "Quotation"
+	"quotation": "Quotation",
+	"total": "Total"
 }
