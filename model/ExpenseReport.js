@@ -103,7 +103,9 @@ function ExpenseReport(){
 
   this.createER = function(req, res, next){
 
-
+    console.log('estou na lista item');
+    console.log(req.listItem)
+    console.log('estou na lista item');
 
     let expenseReport = {
       Code: req.Code,
@@ -115,7 +117,9 @@ function ExpenseReport(){
       CreatedByMatricula: req.session.matricula,
       EventName: req.body.EventName,
       Currency: req.body.CurrencyName,
-      CurrencyQuotation: req.body.CurrencyQuotation
+      CurrencyQuotation: req.body.CurrencyQuotation,
+      TotalValue: req.listItem.reduce((acc,e) => acc += parseFloat(e.ValueExpense), 0),
+      TotalValueConverted: req.listItem.reduce((acc,e) => acc += parseFloat(e.ValueExpense) * parseFloat(req.CurrencyQuotation), 0)
     }
 
     console.log('sou um report')
