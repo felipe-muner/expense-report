@@ -23,12 +23,45 @@
         <input type="text" name="" value="{{ExpenseReport.Currency}} ({{ExpenseReport.CurrencyQuotation}})" class="form-control" readonly>
       </div>
     </div>
-
     <div class="row" style="margin-top:5px;">
       <div class="col-sm-12">
         <label for="">{{{i18n 'eventname'}}}</label>
         <input type="text" name="" value="{{ExpenseReport.EventName}}" class="form-control" readonly>
       </div>
     </div>
+
+    <br>
+
+    {{#each listItem}}
+      <table class="table" data-ItemID="{{ItemID}}">
+        <thead>
+          <tr>
+            <th colspan="2" style="text-align:left !important;">Item: {{Description}} </th>
+            <th style="text-align:right;">Item: {{Description}} </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>body</td>
+            <td>body</td>
+            <td>body</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>foot</td>
+            <td>foot</td>
+            <td>foot</td>
+          </tr>
+        </tfoot>
+      </table>
+    {{/each}}
+
+    <div class="row">
+      <div class="col-sm-12 text-right">
+        <input type="submit" name="" value="Submit" class="btn btn-success">
+      </div>
+    </div>
+
   </div>
 </div>
