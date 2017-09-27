@@ -227,7 +227,9 @@ function ExpenseReport(){
                   'er.AuthorizedBy, '+
                   'er.EventName, '+
                   'er.Currency, '+
-                  'er.CurrencyQuotation '+
+                  'er.CurrencyQuotation, '+
+                  'er.TotalValue, '+
+                  'er.TotalValueConverted '+
                 'FROM ExpenseReport er Inner Join ExpenseReportType ert ON er.ExpenseReportType_ID = ert.ExpenseReportTypeID '+
                 'WHERE Code = ?',
         [parseInt(req.Code)], function(err, result) {
