@@ -30,32 +30,40 @@
       </div>
       <div class="col-sm-2">
         <label for="">{{{i18n 'total'}}}</label>
-        <input type="text" name="" value="{{ExpenseReport.Total}}" class="form-control" readonly>
+        <input type="text" name="" value="{{ExpenseReport.TotalValue}}" class="form-control" readonly>
       </div>
     </div>
 
     <br>
 
     {{#each listItem}}
-      <table class="table" data-ItemID="{{ItemID}}">
+      <table class="table" data-item-id="{{ItemID}}" data-expense-report-id={{../ExpenseReport.Code}} data-value={{Value}} style="font-size:13px;">
         <thead>
           <tr>
-            <th colspan="2" style="text-align:left !important;">Item: {{Description}} </th>
-            <th style="text-align:right;">Item: {{Description}} </th>
+            <th style="text-align:left;">Description: {{Description}} </th>
+            <th colspan="2" style="text-align:right;">Value: {{Value}} </th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>body</td>
-            <td>body</td>
-            <td>body</td>
+          <tr class="lineItemAccountability" data-item-id="{{ItemID}}" data-expense-report-id={{../ExpenseReport.Code}}>
+            <td style="width:75%;">
+              <input type="text" name="" value="" class="form-control descriptionItemAccountability">
+            </td>
+            <td style="width:15%;">
+              <input type="number" name="" value="" step="0.01" class="form-control valueItemAccountability" onkeyup="updateValueItem(this)">
+            </td>
+            <td style="width:10%;" class="text-center">
+              <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" data-container="body" onclick="appendTR(this);"></i>
+            </td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <td>foot</td>
-            <td>foot</td>
-            <td>foot</td>
+            <td></td>
+            <td>
+              <input type="text" class="totalItem" name="" value="0.00" style="background-color:#EEE;text-align:right;" readonly>
+            </td>
+            <td></td>
           </tr>
         </tfoot>
       </table>
@@ -63,9 +71,80 @@
 
     <div class="row">
       <div class="col-sm-12 text-right">
-        <input type="submit" name="" value="Submit" class="btn btn-success">
+        <input type="button" name="" value="Submit" class="btn btn-success" onclick="submitAccountability();">
       </div>
     </div>
 
   </div>
 </div>
+
+{{#section 'script'}}
+  <script type="text/javascript">
+    function appendTR(el){
+      let newLine = $(el).closest('tbody').find('tr').eq(0).clone()
+      $(newLine).find('input').val('')
+      $(newLine).find('td:last').html('<i style="font-size:23px;" class="fa fa-trash" aria-hidden="true" onclick="$(this).closest(\'tr\').remove()" data-toggle="tooltip" data-container="body" data-placement="bottom" title="Less Line"></i>')
+      $(newLine).css('background-color', '#FFF')
+      $(el).closest('tbody').append(newLine)
+    }
+
+    function updateValueItem(el){
+      let totalItem = parseFloat($(el).closest('table').data('value'))
+      $(el).closest('table').find('.totalItem').val('')
+      let total = 0
+      $(el).closest('tbody').find('.lineItemAccountability').each(function(e){
+        total += parseFloat($(this).find('.valueItemAccountability').val())
+      })
+
+      $(el).closest('table').find('.totalItem').val(total.toFixed(2))
+
+      if( totalItem !== total ){
+        $(el).closest('table').find('.totalItem').css('color','red')
+      }else{
+        $(el).closest('table').find('.totalItem').css('color','blue')
+      }
+
+    }
+
+    function submitAccountability(){
+      $('.lineItemAccountability').css('background-color','#FFF')
+
+      $('.lineItemAccountability').each(function(e){
+        if('' === $(this).find('.valueItemAccountability').val()
+              || isNaN(parseFloat($('.valueItemAccountability').val()))
+              || '' === $(this).find('.descriptionItemAccountability').val()){
+            swal({
+              title: "",
+              text: 'Please, insert valid description and/or value.',
+              type: "error"
+            })
+            $(this).css('background-color','#F65E5E')
+            throw new Error('VALUE CANT BE EMPTY')
+          }
+      })
+
+      alert('validou')
+
+      let listAccountability = []
+      $('.lineItemAccountability').each(function(e){
+        listAccountability.push({
+          "DescriptionAcc": $(this).find('.descriptionItemAccountability').val(),
+          "Value": parseFloat($(this).find('.valueItemAccountability').val()),
+          "ExpenseReportItem_ID": $(this).data('item-id'),
+          "ExpenseReport_ID": $(this).data('expense-report-id')
+        })
+      })
+
+      debugger
+      $.ajax({
+        url: '/expense-report/close-cash-advanced',
+        type: 'POST',
+        data: {name:'listAccountability', listAccountability: JSON.stringify(listAccountability)},
+        dataType:'json',
+        success: function(data) {
+        }
+      })
+    }
+
+  </script>
+{{/section}}

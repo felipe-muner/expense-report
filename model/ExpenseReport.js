@@ -184,6 +184,49 @@ function ExpenseReport(){
     })
   }
 
+  this.updateStatusCashAdvanced = function(req, res, next){
+    console.log('Vou alterar o status do cash advanced')
+    next()
+  }
+
+  this.createAccountabilityER = function(req, res, next){
+    console.log('vou criar um novo expense report type accountability');
+    next()
+  }
+
+
+  this.saveAccountability = function(req, res, next){
+    console.log('savelistitem')
+    console.log(req.Code)
+
+    next()
+    // async.forEach((req.listItem), function (item, callback){
+    //   let newItem = {
+    //     PaymentDate: item.DatePayment,
+    //     Budget: req.Budget,
+    //     Description: item.Description,
+    //     Description: item.Description
+    //   }
+    //
+    //   conn.acquire(function(err,con){
+    //     con.query('INSERT INTO ExpenseReportItem SET ?', [newItem],function(err, result) {
+    //       con.release()
+    //       if(err){
+    //         console.log(err);
+    //         res.render('error', { error: err } )
+    //       }else{
+    //         console.log('gravado com sucesso')
+    //         callback()
+    //       }
+    //     })
+    //   })
+    // }, function(err) {
+    //   console.log('savelistitem---INDOEMBORA')
+    //   next()
+    // })
+  }
+
+
   this.myExpenseReport = function(req, res, next){
     console.log('qwe');
     conn.acquire(function(err,con){
