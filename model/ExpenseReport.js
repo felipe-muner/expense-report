@@ -159,13 +159,6 @@ function ExpenseReport(){
         ExpenseReport_ID: req.Code
       }
 
-      console.log('item_______')
-      console.log(item)
-      console.log('item_______')
-      // console.log('_______newItem')
-      // console.log(newItem)
-      // console.log('_______newItem')
-
       conn.acquire(function(err,con){
         con.query('INSERT INTO ExpenseReportItem SET ?', [newItem],function(err, result) {
           con.release()
@@ -230,9 +223,9 @@ function ExpenseReport(){
           res.render('error', { error: err } );
         }else{
           req.resultCreatedAccountability = result
-          console.log('salvei e to indo embora')
-          console.log(req.resultCreatedAccountability)
-          console.log('salvei e to indo embora')
+          // console.log('salvei e to indo embora')
+          // console.log(req.resultCreatedAccountability)
+          // console.log('salvei e to indo embora')
           next()
         }
       })
@@ -241,10 +234,30 @@ function ExpenseReport(){
 
 
   this.saveAccountability = function(req, res, next){
-    console.log('savelistitem')
-    console.log(req.Code)
+    async.forEach((req.listAccountability), function (item, callback){
 
-    next()
+      let newAcc = {
+        DescriptionAcc: item.DescriptionAcc,
+        Value: item.Value,
+        ExpenseReportItem_ID: item.ExpenseReportItem_ID,
+        ExpenseReport_ID: item.ExpenseReport_ID
+      }
+
+      conn.acquire(function(err,con){
+        con.query('INSERT INTO ExpenseReportAccountability SET ?', [newAcc],function(err, result) {
+          con.release()
+          if(err){
+            console.log(err);
+            res.render('error', { error: err } )
+          }else{
+            console.log('item acconutability com sucesso')
+            callback()
+          }
+        })
+      })
+    }, function(err) {
+      next()
+    })
   }
 
 
@@ -391,7 +404,7 @@ function ExpenseReport(){
     req.Budget = req.body.ContaOrca
     req.Currency = req.body.CurrencyName
     req.CurrencyQuotation = req.body.CurrencyQuotation
-    req.listItem = JSON.parse(req.body.listAccountability)
+    req.listAccountability = JSON.parse(req.body.listAccountability)
     console.log('qwe')
     next()
   }
