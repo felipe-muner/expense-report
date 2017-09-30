@@ -73,12 +73,26 @@
     form.submit()
   }
 
+  function downloadPDFAccountabilityByCode(code){
+    let form = document.createElement("form")
+    form.method = "POST"
+    form.action = "/expense-report/download-pdf-accountability"
+    form.target = "_blank"
+    var campo1 = document.createElement("input")
+    campo1.name= 'Code'
+    campo1.value= code
+    form.appendChild(campo1)
+    document.body.appendChild(form)
+    form.submit()
+  }
+
   if (new URL(document.URL).searchParams.get('ok')) {
 
-    let lastExpenseReport = $('#tblMyExpenseReport tbody tr:first')
+    let lastExpenseReport = $('#tblMyExpenseReport tbody tr:first').data('code')
 
     $('#printExpenseReport').html('<div class="text-center">'+
-                                      '<img onclick="downloadPDFAccountability('+lastExpenseReport+');" style="cursor:pointer;width:40px;height:40px;" src="/images/printer.ico" >'+
+                                      '<img onclick="downloadPDFAccountabilityByCode('+lastExpenseReport+');" style="cursor:pointer;width:40px;height:40px;" src="/images/printer.ico" >'+
+                                      '<div style="margin-top:5px;">'+lastExpenseReport+'</div>'+
                                   '</div>')
   }
 
