@@ -21,7 +21,7 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
     TypeExpenseReport: req.allTypesExpenseReport,
     allCostCenter: req.allCostCenter
   })
-}).post('/create', er.adjustBody, er.nextCode, er.createER, er.saveListItem, function(req, res, next) {
+}).post('/create', er.adjustBodyER, er.nextCode, er.createER, er.saveListItem, function(req, res, next) {
   console.log(req.body)
   console.log('----')
   console.log(req.listItem)
@@ -73,9 +73,10 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
     ExpenseReport: req.ExpenseReport,
     listItem: req.listItem
   })
-}).post('/close-cash-advanced', er.findExpenseReport, er.findItem, er.nextCode, er.createAccountabilityER, er.updateStatusCashAdvanced, er.saveAccountability, function(req, res, next) {
+}).post('/close-cash-advanced', er.adjustBodyAccountability, er.findExpenseReport, er.findItem, er.nextCode, er.createAccountabilityER, er.updateStatusCashAdvanced, er.saveAccountability, function(req, res, next) {
 
   console.log('____')
+  console.log(req.body);
   console.log(JSON.parse(req.body.listAccountability))
   console.log('____')
 

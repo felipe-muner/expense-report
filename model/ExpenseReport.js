@@ -185,8 +185,17 @@ function ExpenseReport(){
   }
 
   this.updateStatusCashAdvanced = function(req, res, next){
-    console.log('Vou alterar o status do cash advanced')
-    next()
+    conn.acquire(function(err,con){
+      con.query('UPDATE ExpenseReport SET Status = 1, Brother_Code = ? WHERE Code = ?', [req.Code, req.ExpenseReport.Code], function(err, result) {
+        con.release()
+        if(err){
+          console.log(err);
+          res.render('error', { error: err } );
+        }else{
+          next()
+        }
+      })
+    })
   }
 
   this.createAccountabilityER = function(req, res, next){
@@ -197,19 +206,37 @@ function ExpenseReport(){
     console.log('vou criar um novo expense report type accountability')
 
 
-    let expenseReport = {
+    let Accountability = {
       Code: req.Code,
-      ExpenseReportType_ID: req.body.ExpenseReportType_ID,
-      Status: (1 === parseInt(req.body.ExpenseReportType_ID)) ? 0 : null,
-      Budget: req.Budget,
+      ExpenseReportType_ID: 2,
+      Budget: req.ExpenseReport.Budget,
+      RequestedBy: req.ExpenseReport.RequestedBy,
+      AuthorizedBy: req.ExpenseReport.AuthorizedBy,
       CreatedByMatricula: req.session.matricula,
-      EventName: req.body.EventName,
-      Currency: req.body.CurrencyName,
-      CurrencyQuotation: req.body.CurrencyQuotation,
-      TotalValue: req.listItem.reduce((acc,e) => acc += parseFloat(e.ValueExpense), 0),
-      TotalValueConverted: req.listItem.reduce((acc,e) => acc += parseFloat(e.ValueExpense) * parseFloat(req.CurrencyQuotation), 0)
+      EventName: req.ExpenseReport.EventName,
+      Currency: req.ExpenseReport.Currency,
+      CurrencyQuotation: req.ExpenseReport.CurrencyQuotation,
+      Brother_Code: req.ExpenseReport.Code
     }
-    next()
+    console.log('nova contabilidade');
+    console.log(Accountability);
+    console.log('nova contabilidade');
+
+    conn.acquire(function(err,con){
+      con.query('INSERT INTO ExpenseReport SET ?', [Accountability], function(err, result) {
+        con.release()
+        if(err){
+          console.log(err);
+          res.render('error', { error: err } );
+        }else{
+          req.resultCreatedAccountability = result
+          console.log('salvei e to indo embora')
+          console.log(req.resultCreatedAccountability)
+          console.log('salvei e to indo embora')
+          next()
+        }
+      })
+    })
   }
 
 
@@ -218,30 +245,6 @@ function ExpenseReport(){
     console.log(req.Code)
 
     next()
-    // async.forEach((req.listItem), function (item, callback){
-    //   let newItem = {
-    //     PaymentDate: item.DatePayment,
-    //     Budget: req.Budget,
-    //     Description: item.Description,
-    //     Description: item.Description
-    //   }
-    //
-    //   conn.acquire(function(err,con){
-    //     con.query('INSERT INTO ExpenseReportItem SET ?', [newItem],function(err, result) {
-    //       con.release()
-    //       if(err){
-    //         console.log(err);
-    //         res.render('error', { error: err } )
-    //       }else{
-    //         console.log('gravado com sucesso')
-    //         callback()
-    //       }
-    //     })
-    //   })
-    // }, function(err) {
-    //   console.log('savelistitem---INDOEMBORA')
-    //   next()
-    // })
   }
 
 
@@ -373,12 +376,22 @@ function ExpenseReport(){
   }
 
 
-  this.adjustBody = function(req, res, next){
+  this.adjustBodyER = function(req, res, next){
     console.log('qwe')
     req.Budget = req.body.ContaOrca
     req.Currency = req.body.CurrencyName
     req.CurrencyQuotation = req.body.CurrencyQuotation
     req.listItem = JSON.parse(req.body.listExpense)
+    console.log('qwe')
+    next()
+  }
+
+  this.adjustBodyAccountability = function(req, res, next){
+    console.log('qwe')
+    req.Budget = req.body.ContaOrca
+    req.Currency = req.body.CurrencyName
+    req.CurrencyQuotation = req.body.CurrencyQuotation
+    req.listItem = JSON.parse(req.body.listAccountability)
     console.log('qwe')
     next()
   }
