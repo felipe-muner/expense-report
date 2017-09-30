@@ -1,5 +1,5 @@
 <div class="panel panel-primary">
-  <div class="panel-heading">{{{i18n 'accountability'}}} - Nº {{ExpenseReport.Code}}</div>
+  <div class="panel-heading" id="Code" data-code={{ExpenseReport.Code}}>{{{i18n 'accountability'}}} - Nº {{ExpenseReport.Code}}</div>
   <div class="panel-body">
     <div class="row">
       <div class="col-sm-2">
@@ -125,6 +125,8 @@
 
       alert('validou')
 
+
+
       let listAccountability = []
       $('.lineItemAccountability').each(function(e){
         listAccountability.push({
@@ -139,7 +141,7 @@
       $.ajax({
         url: '/expense-report/close-cash-advanced',
         type: 'POST',
-        data: {name:'listAccountability', listAccountability: JSON.stringify(listAccountability)},
+        data: {Code:$('#Code').data('code'), listAccountability: JSON.stringify(listAccountability)},
         dataType:'json',
         success: function(data) {
         }

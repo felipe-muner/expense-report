@@ -190,7 +190,25 @@ function ExpenseReport(){
   }
 
   this.createAccountabilityER = function(req, res, next){
-    console.log('vou criar um novo expense report type accountability');
+    console.log('vou criar um novo expense report type accountability')
+    console.log(req.ExpenseReport)
+    console.log('0000000')
+    console.log(req.listItem)
+    console.log('vou criar um novo expense report type accountability')
+
+
+    let expenseReport = {
+      Code: req.Code,
+      ExpenseReportType_ID: req.body.ExpenseReportType_ID,
+      Status: (1 === parseInt(req.body.ExpenseReportType_ID)) ? 0 : null,
+      Budget: req.Budget,
+      CreatedByMatricula: req.session.matricula,
+      EventName: req.body.EventName,
+      Currency: req.body.CurrencyName,
+      CurrencyQuotation: req.body.CurrencyQuotation,
+      TotalValue: req.listItem.reduce((acc,e) => acc += parseFloat(e.ValueExpense), 0),
+      TotalValueConverted: req.listItem.reduce((acc,e) => acc += parseFloat(e.ValueExpense) * parseFloat(req.CurrencyQuotation), 0)
+    }
     next()
   }
 
@@ -257,6 +275,8 @@ function ExpenseReport(){
   }
 
   this.findExpenseReport = function(req, res, next){
+    console.log('findExpenseReport----')
+    console.log(req.body)
     console.log('findExpenseReport----')
     req.Code = req.body.Code
     conn.acquire(function(err,con){

@@ -73,7 +73,7 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
     ExpenseReport: req.ExpenseReport,
     listItem: req.listItem
   })
-}).post('/close-cash-advanced', er.nextCode, er.createAccountabilityER, er.updateStatusCashAdvanced, er.saveAccountability ,function(req, res, next) {
+}).post('/close-cash-advanced', er.findExpenseReport, er.findItem, er.nextCode, er.createAccountabilityER, er.updateStatusCashAdvanced, er.saveAccountability, function(req, res, next) {
 
   console.log('____')
   console.log(JSON.parse(req.body.listAccountability))
