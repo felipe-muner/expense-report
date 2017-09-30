@@ -1,3 +1,7 @@
+<div id="printExpenseReport" style="margin-top:20px;margin-bottom:20px;">
+
+</div>
+
 <div class="panel panel-primary">
   <div class="panel-heading">{{{i18n 'myPage.titlePanel'}}}</div>
   <div class="panel-body">
@@ -67,6 +71,14 @@
     form.appendChild(campo1)
     document.body.appendChild(form)
     form.submit()
+  }
+
+  if (new URL(document.URL).searchParams.get('ok')) {
+
+
+    $('#printExpenseReport').html('<div class="text-center">'+
+                                      '<img style="cursor:pointer;width:40px;height:40px;" src="/images/printer.ico" >'+
+                                  '</div>')
   }
 
   </script>

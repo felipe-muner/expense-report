@@ -80,7 +80,7 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
   console.log(JSON.parse(req.body.listAccountability))
   console.log('____')
 
-  res.json(req.body)
+  res.json({Code:req.Code})
 })
 
 

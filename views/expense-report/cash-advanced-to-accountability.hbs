@@ -1,83 +1,84 @@
-<div class="panel panel-primary">
-  <div class="panel-heading" id="Code" data-code={{ExpenseReport.Code}}>{{{i18n 'accountability'}}} - Nº {{ExpenseReport.Code}}</div>
-  <div class="panel-body">
-    <div class="row">
-      <div class="col-sm-2">
-        <label for="">{{{i18n 'createdat'}}}</label>
-        <input type="text" name="" value="{{ExpenseReport.CreatedAt}}" class="form-control" readonly>
+<div id="divPrincipal">
+  <div class="panel panel-primary">
+    <div class="panel-heading" id="Code" data-code={{ExpenseReport.Code}}>{{{i18n 'accountability'}}} - Nº {{ExpenseReport.Code}}</div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-2">
+          <label for="">{{{i18n 'createdat'}}}</label>
+          <input type="text" name="" value="{{ExpenseReport.CreatedAt}}" class="form-control" readonly>
+        </div>
+        <div class="col-sm-2">
+          <label for="">{{{i18n 'budget'}}}</label>
+          <input type="text" name="" value="{{ExpenseReport.Budget}}" class="form-control" readonly>
+        </div>
+        <div class="col-sm-3">
+          <label for="">{{{i18n 'requestedby'}}}</label>
+          <input type="text" name="" value="{{ExpenseReport.RequestedBy}}" class="form-control" readonly>
+        </div>
+        <div class="col-sm-3">
+          <label for="">{{{i18n 'authorizedby'}}}</label>
+          <input type="text" name="" value="{{ExpenseReport.AuthorizedBy}}" class="form-control" readonly>
+        </div>
+        <div class="col-sm-2">
+          <label for="">{{{i18n 'currency'}}}</label>
+          <input type="text" name="" value="{{ExpenseReport.Currency}} ({{ExpenseReport.CurrencyQuotation}})" class="form-control" readonly>
+        </div>
       </div>
-      <div class="col-sm-2">
-        <label for="">{{{i18n 'budget'}}}</label>
-        <input type="text" name="" value="{{ExpenseReport.Budget}}" class="form-control" readonly>
+      <div class="row" style="margin-top:5px;">
+        <div class="col-sm-10">
+          <label for="">{{{i18n 'eventname'}}}</label>
+          <input type="text" name="" value="{{ExpenseReport.EventName}}" class="form-control" readonly>
+        </div>
+        <div class="col-sm-2">
+          <label for="">{{{i18n 'total'}}}</label>
+          <input type="text" name="" value="{{ExpenseReport.TotalValue}}" class="form-control" readonly>
+        </div>
       </div>
-      <div class="col-sm-3">
-        <label for="">{{{i18n 'requestedby'}}}</label>
-        <input type="text" name="" value="{{ExpenseReport.RequestedBy}}" class="form-control" readonly>
+
+      <br>
+
+      {{#each listItem}}
+        <table class="table" data-item-id="{{ItemID}}" data-expense-report-id={{../ExpenseReport.Code}} data-value={{Value}} style="font-size:13px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;">Description: {{Description}} </th>
+              <th colspan="2" style="text-align:right;">Value: {{Value}} </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="lineItemAccountability" data-item-id="{{ItemID}}" data-expense-report-id={{../ExpenseReport.Code}}>
+              <td style="width:75%;">
+                <input type="text" name="" value="" class="form-control descriptionItemAccountability">
+              </td>
+              <td style="width:15%;">
+                <input type="number" name="" value="" step="0.01" class="form-control valueItemAccountability" onkeyup="updateValueItem(this)">
+              </td>
+              <td style="width:10%;" class="text-center">
+                <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" data-container="body" onclick="appendTR(this);"></i>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td>
+                <input type="text" class="totalItem" name="" value="0.00" style="background-color:#EEE;text-align:right;" readonly>
+              </td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      {{/each}}
+
+      <div class="row">
+        <div class="col-sm-12 text-right">
+          <input type="button" name="" value="Submit" class="btn btn-success" onclick="submitAccountability();">
+        </div>
       </div>
-      <div class="col-sm-3">
-        <label for="">{{{i18n 'authorizedby'}}}</label>
-        <input type="text" name="" value="{{ExpenseReport.AuthorizedBy}}" class="form-control" readonly>
-      </div>
-      <div class="col-sm-2">
-        <label for="">{{{i18n 'currency'}}}</label>
-        <input type="text" name="" value="{{ExpenseReport.Currency}} ({{ExpenseReport.CurrencyQuotation}})" class="form-control" readonly>
-      </div>
+
     </div>
-    <div class="row" style="margin-top:5px;">
-      <div class="col-sm-10">
-        <label for="">{{{i18n 'eventname'}}}</label>
-        <input type="text" name="" value="{{ExpenseReport.EventName}}" class="form-control" readonly>
-      </div>
-      <div class="col-sm-2">
-        <label for="">{{{i18n 'total'}}}</label>
-        <input type="text" name="" value="{{ExpenseReport.TotalValue}}" class="form-control" readonly>
-      </div>
-    </div>
-
-    <br>
-
-    {{#each listItem}}
-      <table class="table" data-item-id="{{ItemID}}" data-expense-report-id={{../ExpenseReport.Code}} data-value={{Value}} style="font-size:13px;">
-        <thead>
-          <tr>
-            <th style="text-align:left;">Description: {{Description}} </th>
-            <th colspan="2" style="text-align:right;">Value: {{Value}} </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="lineItemAccountability" data-item-id="{{ItemID}}" data-expense-report-id={{../ExpenseReport.Code}}>
-            <td style="width:75%;">
-              <input type="text" name="" value="" class="form-control descriptionItemAccountability">
-            </td>
-            <td style="width:15%;">
-              <input type="number" name="" value="" step="0.01" class="form-control valueItemAccountability" onkeyup="updateValueItem(this)">
-            </td>
-            <td style="width:10%;" class="text-center">
-              <i style="font-size:23px;" class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="More Line" data-container="body" onclick="appendTR(this);"></i>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td></td>
-            <td>
-              <input type="text" class="totalItem" name="" value="0.00" style="background-color:#EEE;text-align:right;" readonly>
-            </td>
-            <td></td>
-          </tr>
-        </tfoot>
-      </table>
-    {{/each}}
-
-    <div class="row">
-      <div class="col-sm-12 text-right">
-        <input type="button" name="" value="Submit" class="btn btn-success" onclick="submitAccountability();">
-      </div>
-    </div>
-
   </div>
 </div>
-
 {{#section 'script'}}
   <script type="text/javascript">
     function appendTR(el){
@@ -125,8 +126,6 @@
 
       alert('validou')
 
-
-
       let listAccountability = []
       $('.lineItemAccountability').each(function(e){
         listAccountability.push({
@@ -137,13 +136,13 @@
         })
       })
 
-      debugger
       $.ajax({
         url: '/expense-report/close-cash-advanced',
         type: 'POST',
         data: {Code:$('#Code').data('code'), listAccountability: JSON.stringify(listAccountability)},
         dataType:'json',
         success: function(data) {
+          window.location.replace("/expense-report/my?ok=true");
         }
       })
     }
