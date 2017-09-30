@@ -5,7 +5,7 @@
 <div class="panel panel-primary">
   <div class="panel-heading">{{{i18n 'myPage.titlePanel'}}}</div>
   <div class="panel-body">
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover" id="tblMyExpenseReport">
       <thead>
         <th>{{{i18n 'code'}}}</th>
         <th>{{{i18n 'createdat'}}}</th>
@@ -75,9 +75,10 @@
 
   if (new URL(document.URL).searchParams.get('ok')) {
 
+    let lastExpenseReport = $('#tblMyExpenseReport tbody tr:first')
 
     $('#printExpenseReport').html('<div class="text-center">'+
-                                      '<img style="cursor:pointer;width:40px;height:40px;" src="/images/printer.ico" >'+
+                                      '<img onclick="downloadPDFAccountability('+lastExpenseReport+');" style="cursor:pointer;width:40px;height:40px;" src="/images/printer.ico" >'+
                                   '</div>')
   }
 
