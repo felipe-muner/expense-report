@@ -209,6 +209,8 @@ function ExpenseReport(){
       EventName: req.ExpenseReport.EventName,
       Currency: req.ExpenseReport.Currency,
       CurrencyQuotation: req.ExpenseReport.CurrencyQuotation,
+      TotalValue: req.listAccountability.reduce((acc,e) => acc += parseFloat(e.Value), 0),
+      TotalValueConverted: req.listAccountability.reduce((acc,e) => acc += parseFloat(e.Value) * parseFloat(req.ExpenseReport.CurrencyQuotation), 0),
       Brother_Code: req.ExpenseReport.Code
     }
     console.log('nova contabilidade');
@@ -239,6 +241,7 @@ function ExpenseReport(){
       let newAcc = {
         DescriptionAcc: item.DescriptionAcc,
         Value: item.Value,
+        ValueConverted: (parseFloat(item.Value) * parseFloat(req.ExpenseReport.CurrencyQuotation)),
         ExpenseReportItem_ID: item.ExpenseReportItem_ID,
         ExpenseReport_ID: item.ExpenseReport_ID
       }
@@ -395,6 +398,16 @@ function ExpenseReport(){
     req.Currency = req.body.CurrencyName
     req.CurrencyQuotation = req.body.CurrencyQuotation
     req.listItem = JSON.parse(req.body.listExpense)
+    console.log('qwe')
+    next()
+  }
+
+  this.adjustBodyCreateAccountability = function(req, res, next){
+    console.log('qwe')
+    req.Budget = req.body.ContaOrca
+    req.Currency = req.body.CurrencyName
+    req.CurrencyQuotation = req.body.CurrencyQuotation
+    req.listAccountability = JSON.parse(req.body.listAccountability)
     console.log('qwe')
     next()
   }
