@@ -398,9 +398,24 @@ function ExpenseReport(){
   }
 
   this.findAccountability = function(req, res, next){
-    req.accountabilityItem = []
-    console.log('findAccountability')
-    next()
+    async.forEach((req.listItemCashAdvanced), function (item, callback){
+      conn.acquire(function(err,con){
+        con.query('SELECT * FROM ExpenseReportAccountability WHERE ExpenseReportItem_ID = ?', [item.ItemID],function(err, result) {
+          con.release()
+          if(err){
+            console.log(err);
+            res.render('error', { error: err } )
+          }else{
+            item.listItemAccountability = result
+            callback()
+          }
+        })
+      })
+    }, function(err) {
+      console.log('getlistindoembora---INDOEMBORA')
+      next()
+    })
+
   }
 
   this.getCashAdvancedOpen = function(req, res, next){

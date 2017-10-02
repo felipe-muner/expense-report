@@ -52,14 +52,13 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
 }).post('/download-pdf', er.findExpenseReport, er.findItem, HtmlPDF.REPexpenseReport, function(req, res, next) {
   res.download(req.REPexpenseReport, new Date() + 'report.pdf')
   // res.send('vou realizar download pdf')
-}).post('/download-pdf-accountability', er.findExpenseReport, er.findItemERAcc, er.findAccountability, function(req, res, next) {
-  console.log('ultima rota aaa accountability')
-  console.log(req.ExpenseReport)
-  console.log('ultima rota aaa accountability')
-  console.log(req.listItemCashAdvanced)
-  console.log('ultima rota aaa accountability')
-
-  res.send('vou realizar download pdf accountability')
+}).post('/download-pdf-accountability', er.findExpenseReport, er.findItemERAcc, er.findAccountability, HtmlPDF.REPaccountability,function(req, res, next) {
+  // console.log('ultima rota aaa accountability')
+  // console.log(req.ExpenseReport)
+  // console.log('ultima rota aaa accountability')
+  // console.log(req.listItemCashAdvanced)
+  // console.log('ultima rota aaa accountability')
+  res.download(req.REPaccountability, new Date() + 'report.pdf')
 }).get('/accountability', er.getCashAdvancedOpen ,function(req, res, next) {
   res.render('expense-report/accountability', {
     sess: req.session,
