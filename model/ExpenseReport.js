@@ -243,7 +243,8 @@ function ExpenseReport(){
         Value: item.Value,
         ValueConverted: (parseFloat(item.Value) * parseFloat(req.ExpenseReport.CurrencyQuotation)),
         ExpenseReportItem_ID: item.ExpenseReportItem_ID,
-        ExpenseReport_ID: item.ExpenseReport_ID
+        ExpenseReportCA_ID: item.ExpenseReport_ID,
+        ExpenseReportACC_ID: req.Code
       }
 
       conn.acquire(function(err,con){
