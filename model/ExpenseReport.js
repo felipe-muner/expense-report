@@ -312,7 +312,8 @@ function ExpenseReport(){
                   'er.Currency, '+
                   'er.CurrencyQuotation, '+
                   'er.TotalValue, '+
-                  'er.TotalValueConverted '+
+                  'er.TotalValueConverted, '+
+                  'er.Brother_Code '+
                 'FROM ExpenseReport er Inner Join ExpenseReportType ert ON er.ExpenseReportType_ID = ert.ExpenseReportTypeID '+
                 'WHERE Code = ?',
         [parseInt(req.Code)], function(err, result) {
@@ -329,6 +330,11 @@ function ExpenseReport(){
   }
 
   this.findItem = function(req, res, next){
+
+    console.log('vou achar finditem');
+    console.log(req.Code)
+    console.log('vou achar finditem');
+
     conn.acquire(function(err,con){
       con.query('SELECT '+
                   'ItemID, '+
@@ -348,10 +354,43 @@ function ExpenseReport(){
         if(err){
           console.log(this.sql);
           console.log('entrei aquierro');
-          console.log(err);
+          console.log(err)
           res.render('error', { error: err } );
         }else{
+          console.log(this.sql);
+          console.log('lista completa')
+          console.log(result)
+          console.log('lista completa')
           req.listItem = result
+          next()
+        }
+      })
+    })
+  }
+
+  this.findItemERAcc = function(req, res, next){
+
+    conn.acquire(function(err,con){
+      con.query('SELECT '+
+                  'ItemID, '+
+                  'PaymentDate, '+
+                  'Budget, '+
+                  'Description, '+
+                  'CostCenter, '+
+                  'Value, '+
+                  'ValueConverted, '+
+                  'Currency, '+
+                  'CurrencyQuotation, '+
+                  'ExpenseReport_ID '+
+                'FROM ExpenseReportItem '+
+                'WHERE ExpenseReport_ID = ?',
+        [parseInt(req.ExpenseReport.Brother_Code)], function(err, result) {
+        con.release()
+        if(err){
+          console.log(err)
+          res.render('error', { error: err } );
+        }else{
+          req.listItemCashAdvanced = result
           next()
         }
       })

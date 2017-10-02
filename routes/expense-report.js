@@ -36,7 +36,6 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
 }).get('/my', er.myExpenseReport , function(req, res, next) {
   req.myExpenseReport.map(function(e){
     e.pdf = (2 !== e.ExpenseReportType_ID) ? '<a class="no-loading" onclick="downloadPDF(this);"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>' : '<a class="no-loading" onclick="downloadPDFAccountability(this);"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>'
-    e.MoreInfo = (2 !== e.ExpenseReportType_ID) ? '<i onclick="moreInfo('+ e.Code +');" class="fa fa-info-circle" aria-hidden="true"></i></a>' : '<i onclick="moreInfoAccountability('+ e.Code +');" class="fa fa-info-circle" aria-hidden="true"></i></a>'
     e.CreatedAt = moment(e.CreatedAt).format('DD/MM/YYYY HH:mm')
 
     console.log(e.pdf + e.Code)
@@ -53,9 +52,13 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
 }).post('/download-pdf', er.findExpenseReport, er.findItem, HtmlPDF.REPexpenseReport, function(req, res, next) {
   res.download(req.REPexpenseReport, new Date() + 'report.pdf')
   // res.send('vou realizar download pdf')
-}).post('/download-pdf-accountability', er.findExpenseReport, er.findItem, er.findAccountability, function(req, res, next) {
-  console.log('ultima rota accountability')
+}).post('/download-pdf-accountability', er.findExpenseReport, er.findItemERAcc, er.findAccountability, function(req, res, next) {
+  console.log('ultima rota aaa accountability')
   console.log(req.ExpenseReport)
+  console.log('ultima rota aaa accountability')
+  console.log(req.listItemCashAdvanced)
+  console.log('ultima rota aaa accountability')
+
   res.send('vou realizar download pdf accountability')
 }).get('/accountability', er.getCashAdvancedOpen ,function(req, res, next) {
   res.render('expense-report/accountability', {
