@@ -25,7 +25,7 @@ function HtmlPDF(){
             console.log('___items');
             // $('#Code').text(Util.toTitleCase(req.findEventByCode.title || 'Not Reported'))
             $('#Code').text( req.ExpenseReport.Code )
-            $('#CreatedAt').text( req.ExpenseReport.CreatedAt )
+            $('#CreatedAt').text( moment(req.ExpenseReport.CreatedAt).format('DD/MM/YYYY') )
             $('#Type').text( req.ExpenseReport.NameType )
             $('#Budget').text( req.ExpenseReport.Budget )
             $('#RequestedBy').text( req.ExpenseReport.RequestedBy )
@@ -174,53 +174,62 @@ function HtmlPDF(){
             let header = ''
             if('BRL' === req.ExpenseReport.Currency){
               console.log('brl');
-              header = '<tr style="background-color:#ddd;line-height: 18px;text-align:center;">'+
-                          '<td style="width:10%;">Date</td>'+
-                          '<td style="width:60%;">Description</td>'+
-                          '<td style="width:20%;">Value</td>'+
-                        '</tr>'
-              // let items = req.listItem.reduce(function(acc, e){
-              //   acc.total += e.Value
-              //   acc.tabelaItem = acc.tabelaItem + '<tr style="">'+
-              //                               '<td style="padding:3px;border:1px solid black;text-align:center;">'+ moment(e.PaymentDate).format('DD/MM/YYYY') + '</td>'+
-              //                               '<td style="padding:3px;border:1px solid black;text-align:left;">'+ e.Description +'</td>'+
-              //                               '<td style="padding:3px;border:1px solid black;text-align:right;">'+ e.Value.toFixed(2) +'</td>'+
-              //                             '</tr>'
-              //   return acc
-              // }, {tabelaItem:'',total:0})
 
-              $('#headerItem').append(header)
-              // $('#bodyItem').append(items.tabelaItem)
-              // $('#bodyItem').append('<tr><td colspan="4" style="text-align:right;padding:3px;">'+ items.total.toFixed(2) +'</td></tr>')
+              let contentHTML = ''
+              let totalAccountability = 0
+              req.listItemCashAdvanced.map(function(itemER){
+                contentHTML += '<table cellspacing="0" style="width:100%;">'
+                contentHTML += '<tr style="background-color:#aaa;"><td style="padding:7px;" colspan="3"> ' + itemER.Description + ' - ' + itemER.Value +'</td></tr>'
+                contentHTML += '<tr style="background-color:#ddd;text-align:right;"><td style="padding:4px;text-align:left;">Description</td><td style="padding:4px;">Value BRL</td></tr>'
+                let totalAccItem = 0
+                itemER.listItemAccountability.map(function(a){
+                  totalAccountability += parseFloat(a.Value)
+                  totalAccItem += parseFloat(a.Value)
+                  contentHTML += '<tr>'
+                    contentHTML += '<td style="width:80%;">'+ a.DescriptionAcc +'</td>'
+                    contentHTML += '<td style="width:20%;text-align:right;">'+ a.Value +'</td>'
+                  contentHTML += '</tr>'
+                })
+                contentHTML += '<tr style="background-color:#ddd;"><td style="width:80%;"></td><td style="text-align:right;width:20%;">'+ totalAccItem.toFixed(2) +'</td></tr>'
+                contentHTML += '</table>'
+              })
 
+              console.log(totalAccountability + 'total na moeda');
+
+              $('#accountabilityItem').append(contentHTML)
             }else{
               console.log('nao real');
-              // header = '<tr style="background-color:#ddd;line-height: 18px;text-align:center;"><td>Payment Date</td><td>Description</td><td>Cost Center</td><td>Value BRL</td><td>Value '+ req.ExpenseReport.Currency +'</td></tr>'
-              header = '<tr style="background-color:#ddd;line-height: 18px;text-align:center;">'+
-                          '<td style="width:10%;">Date</td>'+
-                          '<td style="width:50%;">Description</td>'+
-                          '<td style="width:15%;">Value '+ req.ExpenseReport.Currency +'</td>'+
-                          '<td style="width:15%;">Value BRL</td>'+
-                        '</tr>'
-              // let items = req.listItem.reduce(function(acc, e){
-              //   acc.total += e.Value
-              //   acc.totalEstrangeiro += e.ValueConverted
-              //   acc.tabelaItem = acc.tabelaItem + '<tr style="">'+
-              //                               '<td style="padding:3px;border:1px solid black;text-align:center;">'+ moment(e.PaymentDate).format('DD/MM/YYYY') + '</td>'+
-              //                               '<td style="padding:3px;border:1px solid black;text-align:left;">'+ e.Description +'</td>'+
-              //                               '<td style="padding:3px;border:1px solid black;text-align:right;">'+ e.Value.toFixed(2) +'</td>'+
-              //                               '<td style="padding:3px;border:1px solid black;text-align:right;">'+ e.ValueConverted.toFixed(2) +'</td>'+
-              //                             '</tr>'
-              //   return acc
-              // }, {tabelaItem:'', total: 0,totalEstrangeiro:0})
+              let contentHTML = ''
+              let totalAccountability = 0
+              let totalAccountabilityConverted = 0
+              req.listItemCashAdvanced.map(function(itemER){
+                contentHTML += '<table cellspacing="0" style="width:100%;">'
+                contentHTML += '<tr style="background-color:#aaa;"><td style="padding:7px;" colspan="3"> ' + itemER.Description + ' - ' + itemER.Value + '('+ req.ExpenseReport.Currency +')' +'</td></tr>'
+                contentHTML += '<tr style="background-color:#ddd;text-align:right;"><td style="padding:4px;text-align:left;">Description</td><td style="padding:4px;">Value '+ req.ExpenseReport.Currency +'</td><td style="padding:4px;">Value BRL</td></tr>'
+                let totalAccItem = 0
+                let totalAccItemConverted = 0
+                itemER.listItemAccountability.map(function(a){
+                  console.log(a)
+                  totalAccountability += parseFloat(a.Value)
+                  totalAccountabilityConverted += parseFloat(a.Value) * parseFloat(req.ExpenseReport.CurrencyQuotation)
+                  totalAccItem += parseFloat(a.Value)
+                  totalAccItemConverted += parseFloat(a.Value) * parseFloat(req.ExpenseReport.CurrencyQuotation)
+                  contentHTML += '<tr>'
+                    contentHTML += '<td style="width:60%;">'+ a.DescriptionAcc +'</td>'
+                    contentHTML += '<td style="width:20%;text-align:right;">'+ a.Value +'</td>'
+                    contentHTML += '<td style="width:20%;text-align:right;">'+ a.ValueConverted +'</td>'
+                  contentHTML += '</tr>'
+                })
+                contentHTML += '<tr style="background-color:#ddd;"><td style="width:60%;"></td><td style="text-align:right;width:20%;">'+ totalAccItem.toFixed(2) +'</td><td style="text-align:right;width:20%;">'+ totalAccItemConverted.toFixed(2) +'</td></tr>'
+                contentHTML += '</table>'
+              })
 
-              $('#headerItem').append(header)
-              // $('#bodyItem').append(items.tabelaItem)
-              // $('#bodyItem').append('<tr>'+
-              //                         '<td colspan="3"></td>'+
-              //                         '<td style="text-align:right;padding:3px;">'+ items.total.toFixed(2) +'</td>'+
-              //                         '<td style="text-align:right;padding:3px;">'+ items.totalEstrangeiro.toFixed(2)+'</td>'+
-              //                       '</tr>')
+              console.log(totalAccountability + 'total na moeda');
+              console.log(totalAccountabilityConverted + 'total na moeda convertido');
+
+              $('#Resume').text( ' You spent ' + totalAccountability + ' of ' + req.ExpenseReport.TotalValue + ' requested from Expense Report Nº ' + req.ExpenseReport.Brother_Code)
+
+              $('#accountabilityItem').append(contentHTML)
             }
 
 
