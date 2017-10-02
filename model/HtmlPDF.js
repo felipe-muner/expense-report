@@ -194,7 +194,9 @@ function HtmlPDF(){
                 contentHTML += '</table>'
               })
 
-              console.log(totalAccountability + 'total na moeda');
+              console.log(totalAccountability + 'total na moeda')
+
+              // $('#Resume').text( ' You spent ' + totalAccountability + ' of ' + req.ExpenseReport.TotalValue + ' requested from Expense Report Nº ' + req.ExpenseReport.Brother_Code)
 
               $('#accountabilityItem').append(contentHTML)
             }else{
@@ -227,7 +229,7 @@ function HtmlPDF(){
               console.log(totalAccountability + 'total na moeda');
               console.log(totalAccountabilityConverted + 'total na moeda convertido');
 
-              $('#Resume').text( ' You spent ' + totalAccountability + ' of ' + req.ExpenseReport.TotalValue + ' requested from Expense Report Nº ' + req.ExpenseReport.Brother_Code)
+              // $('#Resume').text( ' You spent ' + totalAccountability + ' of ' + req.ExpenseReport.TotalValue + ' requested from Expense Report Nº ' + req.ExpenseReport.Brother_Code)
 
               $('#accountabilityItem').append(contentHTML)
             }
