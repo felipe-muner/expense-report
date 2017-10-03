@@ -52,7 +52,7 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
 }).post('/download-pdf', er.findExpenseReport, er.findItem, HtmlPDF.REPexpenseReport, function(req, res, next) {
   res.download(req.REPexpenseReport, new Date() + 'report.pdf')
   // res.send('vou realizar download pdf')
-}).post('/download-pdf-accountability', er.findExpenseReport, er.findItemERAcc, er.findAccountability, HtmlPDF.REPaccountability,function(req, res, next) {
+}).post('/download-pdf-accountability', er.findExpenseReport, er.findExpenseReportByBrother_Code, er.findItemERAcc, er.findAccountability, HtmlPDF.REPaccountability,function(req, res, next) {
   // console.log('ultima rota aaa accountability')
   // console.log(req.ExpenseReport)
   // console.log('ultima rota aaa accountability')

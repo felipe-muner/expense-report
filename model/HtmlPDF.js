@@ -179,7 +179,7 @@ function HtmlPDF(){
               let totalAccountability = 0
               req.listItemCashAdvanced.map(function(itemER){
                 contentHTML += '<table cellspacing="0" style="width:100%;">'
-                contentHTML += '<tr style="background-color:#aaa;"><td style="padding:7px;" colspan="3"> ' + itemER.Description + ' - ' + itemER.Value +'</td></tr>'
+                contentHTML += '<tr style="background-color:#aaa;"><td style="padding:7px;"> ' + itemER.Description +'</td><td style="text-align:right;">'+ itemER.Value + '('+ req.ExpenseReport.Currency +')' +'</td></tr>'
                 contentHTML += '<tr style="background-color:#ddd;text-align:right;"><td style="padding:4px;text-align:left;">Description</td><td style="padding:4px;">Value BRL</td></tr>'
                 let totalAccItem = 0
                 itemER.listItemAccountability.map(function(a){
@@ -190,13 +190,14 @@ function HtmlPDF(){
                     contentHTML += '<td style="width:20%;text-align:right;">'+ a.Value +'</td>'
                   contentHTML += '</tr>'
                 })
-                contentHTML += '<tr style="background-color:#ddd;"><td style="width:80%;"></td><td style="text-align:right;width:20%;">'+ totalAccItem.toFixed(2) +'</td></tr>'
+                contentHTML += '<tr><td style="width:80%;"></td><td style="text-align:right;width:20%;background-color:#ddd;">'+ totalAccItem.toFixed(2) +'</td></tr>'
                 contentHTML += '</table>'
+                contentHTML += '<br />'
               })
 
               console.log(totalAccountability + 'total na moeda')
 
-              // $('#Resume').text( ' You spent ' + totalAccountability + ' of ' + req.ExpenseReport.TotalValue + ' requested from Expense Report Nº ' + req.ExpenseReport.Brother_Code)
+              $('#Resume').text( ' You spent ' + totalAccountability + ' of ' + req.ExpenseReportBrother_Code.TotalValue + ' requested from Expense Report Nº ' + req.ExpenseReport.Brother_Code)
 
               $('#accountabilityItem').append(contentHTML)
             }else{
@@ -205,8 +206,12 @@ function HtmlPDF(){
               let totalAccountability = 0
               let totalAccountabilityConverted = 0
               req.listItemCashAdvanced.map(function(itemER){
+                console.log('itemer')
+                console.log(itemER)
+                console.log('itemer')
+
                 contentHTML += '<table cellspacing="0" style="width:100%;">'
-                contentHTML += '<tr style="background-color:#aaa;"><td style="padding:7px;" colspan="3"> ' + itemER.Description + ' - ' + itemER.Value + '('+ req.ExpenseReport.Currency +')' +'</td></tr>'
+                contentHTML += '<tr style="background-color:#aaa;"><td style="padding:7px;"> ' + itemER.Description +'</td><td style="text-align:right;">'+ itemER.Value + '('+ req.ExpenseReport.Currency +')' +'</td><td style="text-align:right;">'+ itemER.ValueConverted + '(BRL)' +'</td></tr>'
                 contentHTML += '<tr style="background-color:#ddd;text-align:right;"><td style="padding:4px;text-align:left;">Description</td><td style="padding:4px;">Value '+ req.ExpenseReport.Currency +'</td><td style="padding:4px;">Value BRL</td></tr>'
                 let totalAccItem = 0
                 let totalAccItemConverted = 0
@@ -222,14 +227,15 @@ function HtmlPDF(){
                     contentHTML += '<td style="width:20%;text-align:right;">'+ a.ValueConverted +'</td>'
                   contentHTML += '</tr>'
                 })
-                contentHTML += '<tr style="background-color:#ddd;"><td style="width:60%;"></td><td style="text-align:right;width:20%;">'+ totalAccItem.toFixed(2) +'</td><td style="text-align:right;width:20%;">'+ totalAccItemConverted.toFixed(2) +'</td></tr>'
+                contentHTML += '<tr><td style="width:60%;"></td><td style="background-color:#ddd;text-align:right;width:20%;">'+ totalAccItem.toFixed(2) +'</td><td style="background-color:#ddd;text-align:right;width:20%;">'+ totalAccItemConverted.toFixed(2) +'</td></tr>'
                 contentHTML += '</table>'
+                contentHTML += '<br />'
               })
 
               console.log(totalAccountability + 'total na moeda');
               console.log(totalAccountabilityConverted + 'total na moeda convertido');
 
-              // $('#Resume').text( ' You spent ' + totalAccountability + ' of ' + req.ExpenseReport.TotalValue + ' requested from Expense Report Nº ' + req.ExpenseReport.Brother_Code)
+              $('#Resume').text( ' You spent ' + totalAccountability + ' of ' + req.ExpenseReportBrother_Code.TotalValue + ' requested from Expense Report Nº ' + req.ExpenseReport.Brother_Code)
 
               $('#accountabilityItem').append(contentHTML)
             }

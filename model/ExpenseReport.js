@@ -329,6 +329,43 @@ function ExpenseReport(){
     })
   }
 
+  this.findExpenseReportByBrother_Code = function(req, res, next){
+    console.log('findExpenseReport----BROTHER CODE')
+    console.log(req.ExpenseReport);
+    console.log('findExpenseReport----BROTHER CODE')
+    conn.acquire(function(err,con){
+      con.query('SELECT '+
+                  'er.Code, '+
+                  'er.CreatedAt, '+
+                  'er.ExpenseReportType_ID, '+
+                  'ert.NameType, '+
+                  'er.Budget, '+
+                  'er.RequestedBy, '+
+                  'er.AuthorizedBy, '+
+                  'er.EventName, '+
+                  'er.Currency, '+
+                  'er.CurrencyQuotation, '+
+                  'er.TotalValue, '+
+                  'er.TotalValueConverted, '+
+                  'er.Brother_Code '+
+                'FROM ExpenseReport er Inner Join ExpenseReportType ert ON er.ExpenseReportType_ID = ert.ExpenseReportTypeID '+
+                'WHERE Code = ?',
+        [parseInt(req.ExpenseReport.Brother_Code)], function(err, result) {
+        con.release()
+        if(err){
+          console.log(err);
+          res.render('error', { error: err } );
+        }else{
+          req.ExpenseReportBrother_Code = result[0]
+          console.log('brothercode de fato');
+          console.log(req.ExpenseReportBrother_Code);
+          console.log('brothercode de fato');
+          next()
+        }
+      })
+    })
+  }
+
   this.findItem = function(req, res, next){
 
     console.log('vou achar finditem');
