@@ -216,10 +216,10 @@
 
   <script>
     $(document).ready(function(e){
-      $('#ExpenseReportType_ID').val('1').trigger('change');
-      $('#id_budget').val('999999').trigger('change');
-      $('#Currency').val('BRL').trigger('change');
-      $('#EventName').val('teste muner')
+      // $('#ExpenseReportType_ID').val('1').trigger('change');
+      // $('#id_budget').val('999999').trigger('change');
+      // $('#Currency').val('BRL').trigger('change');
+      // $('#EventName').val('teste muner')
     })
 
     $('#ExpenseReportType_ID').select2()
@@ -329,7 +329,7 @@
             type: "success"
           }).then(
             function () {
-              // window.location.replace(data.redirect)
+              window.location.replace(data.redirect + '?ok=create')
             }
           )
         }

@@ -56,6 +56,19 @@
     form.submit()
   }
 
+  function downloadPDFByCode(code){
+    let form = document.createElement("form")
+    form.method = "POST"
+    form.action = "/expense-report/download-pdf"
+    form.target = "_blank"
+    var campo1 = document.createElement("input")
+    campo1.name= 'Code'
+    campo1.value= code
+    form.appendChild(campo1)
+    document.body.appendChild(form)
+    form.submit()
+  }
+
   function downloadPDFAccountability(el){
     let form = document.createElement("form")
     form.method = "POST"
@@ -86,10 +99,17 @@
 
     let lastExpenseReport = $('#tblMyExpenseReport tbody tr:first').data('code')
 
-    $('#printExpenseReport').html('<div class="text-center">'+
-                                      '<img onclick="downloadPDFAccountabilityByCode('+lastExpenseReport+');" style="cursor:pointer;width:40px;height:40px;" src="/images/printer.ico" >'+
-                                      '<div style="margin-top:5px;">'+lastExpenseReport+'</div>'+
-                                  '</div>')
+    if('create' !== new URL(document.URL).searchParams.get('ok')){
+      $('#printExpenseReport').html('<div class="text-center">'+
+                                        '<img onclick="downloadPDFAccountabilityByCode('+lastExpenseReport+');" style="cursor:pointer;width:40px;height:40px;" src="/images/printer.ico" >'+
+                                        '<div style="margin-top:5px;">'+lastExpenseReport+'</div>'+
+                                    '</div>')
+    }else{
+      $('#printExpenseReport').html('<div class="text-center">'+
+                                        '<img onclick="downloadPDFByCode('+lastExpenseReport+');" style="cursor:pointer;width:40px;height:40px;" src="/images/printer.ico" >'+
+                                        '<div style="margin-top:5px;">'+lastExpenseReport+'</div>'+
+                                    '</div>')
+    }
   }
 
   </script>
