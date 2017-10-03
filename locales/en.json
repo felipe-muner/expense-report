@@ -53,5 +53,7 @@
 	"currency": "Currency",
 	"createtat": "createtat",
 	"quotation": "Quotation",
-	"total": "Total"
+	"total": "Total",
+	"cancel": "Cancel",
+	"status": "Status"
 }

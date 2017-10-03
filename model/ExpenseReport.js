@@ -191,6 +191,24 @@ function ExpenseReport(){
     })
   }
 
+  this.cancelExpenseReport = function(req, res, next){
+    conn.acquire(function(err,con){
+      con.query('UPDATE ExpenseReport SET Status = ?, CanceledAt = ?, CanceledBy_Matricula = ?, CanceledReason = ? WHERE Code = ?', [10, new Date(), req.session.matricula, req.body.Reason, req.body.Code], function(err, result) {
+        con.release()
+
+        if(err){
+          console.log(err);
+          console.log('entrei no erro');
+          res.render('error', { error: err } );
+        }else{
+          console.log('nao entrei no erro');
+          console.log(result);
+          next()
+        }
+      })
+    })
+  }
+
   this.createAccountabilityER = function(req, res, next){
     console.log('vou criar um novo expense report type accountability')
     console.log(req.ExpenseReport)
@@ -288,6 +306,37 @@ function ExpenseReport(){
           res.render('error', { error: err } );
         }else{
           req.myExpenseReport = result
+          next()
+        }
+      })
+    })
+  }
+
+  this.findAll = function(req, res, next){
+    //maximo 500
+    conn.acquire(function(err,con){
+      con.query('SELECT '+
+                  'er.Code, '+
+                  'er.CreatedAt, '+
+                  'er.Status, '+
+                  'er.ExpenseReportType_ID, '+
+                  'ert.NameType, '+
+                  'er.Budget, '+
+                  'er.RequestedBy, '+
+                  'er.AuthorizedBy, '+
+                  'er.EventName, '+
+                  'er.Currency, '+
+                  'er.CurrencyQuotation, '+
+                  'er.TotalValue '+
+                'FROM ExpenseReport er Inner Join ExpenseReportType ert ON er.ExpenseReportType_ID = ert.ExpenseReportTypeID '+
+                'WHERE er.ExpenseReportType_ID <> 2 ORDER BY ExpenseReportID DESC LIMIT 1000', function(err, result) {
+        con.release()
+        if(err){
+          console.log(err);
+          res.render('error', { error: err } );
+        }else{
+          console.log(result);
+          req.findAll = result
           next()
         }
       })

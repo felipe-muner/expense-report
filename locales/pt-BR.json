@@ -52,5 +52,7 @@
 	"eventname": "Nome do Evento",
 	"currency": "Moeda",
 	"createtat": "Cotação",
-	"total": "Total"
+	"total": "Total",
+	"cancel": "Cancelar",
+	"status": "Status"
 }

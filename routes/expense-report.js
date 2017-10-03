@@ -37,18 +37,32 @@ router.get('/new', er.getCurrencies, er.getTypesExpenseReport, er.getAllCostCent
   req.myExpenseReport.map(function(e){
     e.pdf = (2 !== e.ExpenseReportType_ID) ? '<a class="no-loading" onclick="downloadPDF(this);"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>' : '<a class="no-loading" onclick="downloadPDFAccountability(this);"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>'
     e.CreatedAt = moment(e.CreatedAt).format('DD/MM/YYYY HH:mm')
-
     console.log(e.pdf + e.Code)
   })
   res.render('expense-report/my', {
     sess: req.session,
     myExpenseReport: req.myExpenseReport
   })
-}).get('/cancel', function(req, res, next) {
+}).get('/cancel', er.findAll, function(req, res, next) {
   console.log('cancel');
-  res.render('expense-report/cancel', {
-    sess: req.session
+
+  req.findAll.map((e)=>{
+      e.CreatedAt = moment(e.CreatedAt).format('DD/MM/YYYY HH:mm')
+      e.TotalValue = (e.TotalValue).toFixed(2)
+      e.StatusFormatted = (10 !== e.Status) ? 'Ativo' : 'Cancelado'
+      e.pdf = '<a class="no-loading" onclick="downloadPDF(this);"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>'
+      e.cancel = (10 !== e.Status) ? '<i onclick="cancelEventModal(this);" data-container="body" title="Cancel" data-toggle="tooltip" class="fa fa-window-close" aria-hidden="true"></i>' : ''
   })
+
+  res.render('expense-report/cancel', {
+    sess: req.session,
+    FindAll: req.findAll
+  })
+}).post('/cancel', er.cancelExpenseReport, function(req, res, next) {
+  console.log('cancel post')
+  console.log(req.body)
+  res.json(req.body)
+  console.log('cancel post')
 }).post('/download-pdf', er.findExpenseReport, er.findItem, HtmlPDF.REPexpenseReport, function(req, res, next) {
   res.download(req.REPexpenseReport, new Date() + 'report.pdf')
   // res.send('vou realizar download pdf')

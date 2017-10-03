@@ -1,4 +1,110 @@
 <div class="panel panel-primary">
   <div class="panel-heading">{{{i18n 'cancelPage.titlePanel'}}}</div>
-  <div class="panel-body">Panel Content</div>
+  <div class="panel-body">
+    <table class="table">
+      <thead>
+        <th>{{{i18n 'code'}}}</th>
+        <th>{{{i18n 'createdat'}}}</th>
+        <th>{{{i18n 'type'}}}</th>
+        <th>{{{i18n 'budget'}}}</th>
+        <th>{{{i18n 'requestedby'}}}</th>
+        <th>{{{i18n 'authorizedby'}}}</th>
+        <th>{{{i18n 'eventname'}}}</th>
+        <th>{{{i18n 'currency'}}}</th>
+        <th>{{{i18n 'total'}}}</th>
+        <th>{{{i18n 'status'}}}</th>
+        <th><i class="fa fa-file-pdf-o" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Download PDF"></i></th>
+        <th><i class="fa fa-remove" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{{i18n 'cancel'}}}"></i></th>
+      </thead>
+      <tbody>
+        {{#each FindAll}}
+          <tr data-code={{Code}}>
+            <td class="text-center">{{Code}}</td>
+            <td class="text-center">{{CreatedAt}}</td>
+            <td>{{NameType}}</td>
+            <td class="text-center">{{Budget}}</td>
+            <td>{{RequestedBy}}</td>
+            <td>{{AuthorizedBy}}</td>
+            <td>{{EventName}}</td>
+            <td>{{Currency}} ({{CurrencyQuotation}})</td>
+            <td class="text-right">{{TotalValue}}</td>
+            <td class="text-center">{{StatusFormatted}}</td>
+            <td class="text-center">
+              {{{pdf}}}
+            </td>
+            <td class="text-center">
+              {{{cancel}}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 </div>
+
+{{#section 'script'}}
+  <script type="text/javascript">
+    $('[data-toggle="tooltip"]').tooltip()
+
+    function downloadPDF(el){
+      let form = document.createElement("form")
+      form.method = "POST"
+      form.action = "/expense-report/download-pdf"
+      form.target = "_blank"
+      var campo1 = document.createElement("input")
+      campo1.name= 'Code'
+      campo1.value= $(el).closest('tr').data('code')
+      form.appendChild(campo1)
+      document.body.appendChild(form)
+      form.submit()
+    }
+
+    function cancelEventModal(el){
+      let Code = $(el).closest('tr').data('code')
+      let msg = "Cancel Nº <b>" + Code + "</b>, What is the reason ?"
+      swal({
+        title: "Are you sure?",
+        html: msg,
+        type: 'warning',
+        input: 'text',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        reverseButtons: true,
+        confirmButtonText: 'Yes, cancel it!',
+        inputValidator: function (value) {
+          return new Promise(function (resolve, reject) {
+            if (value) {
+              resolve()
+            } else {
+              reject('You need to write something!')
+            }
+          })
+        }
+      }).then(function (Reason) {
+        cancelEvent(Code, Reason)
+      })
+    }
+
+    function cancelEvent(Code, Reason){
+
+      $.ajax({
+        url: '/expense-report/cancel',
+        type: 'POST',
+        data: {Code, Reason},
+        dataType:'json',
+        success: function(data) {
+          console.log(data)
+          swal({
+            title: "",
+            text: "Successfully Canceled",
+            type: "info"
+          }).then(function(){
+            window.location.replace("/expense-report/cancel")
+          })
+        }
+      })
+    }
+
+  </script>
+{{/section}}
