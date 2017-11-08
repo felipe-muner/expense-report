@@ -2,6 +2,8 @@ const moment = require('moment')
 
 function hbsHelpers(hbs) {
   return hbs.create({
+    extname: '.hbs',
+    layoutDir: 'views/layout/',
     defaultLayout:'layout',
     helpers: {
       section: function(name, options){
