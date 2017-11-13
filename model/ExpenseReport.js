@@ -5,6 +5,40 @@ const async = require('async')
 
 function ExpenseReport(){
 
+  let nameCurrency = [
+    {code: "AUD", name: "Australian Dollar"},
+    {code: "BGN", name: "Bulgarian Lev"},
+    {code: "CAD", name: "Canadian Dollar"},
+    {code: "CHF", name: "Swiss Franc"},
+    {code: "CNY", name: "Chinese Yuan"},
+    {code: "CZK", name: "Czech Koruna"},
+    {code: "DKK", name: "Danish Krone"},
+    {code: "GBP", name: "British Pound"},
+    {code: "HKD", name: "Hong Kong Dollar"},
+    {code: "HRK", name: "Croatian Kuna"},
+    {code: "HUF", name: "Hungarian Forint"},
+    {code: "IDR", name: "Indonesian Rupiah"},
+    {code: "ILS", name: "Israeli New Shekel"},
+    {code: "INR", name: "Indian Rupee"},
+    {code: "JPY", name: "Japanese Yen"},
+    {code: "KRW", name: "South Korean Won"},
+    {code: "MXN", name: "Mexican Peso"},
+    {code: "MYR", name: "Malaysian Ringgit"},
+    {code: "NOK", name: "Norwegian Krone"},
+    {code: "NZD", name: "New Zealand Dollar"},
+    {code: "PHP", name: "Philippine Peso"},
+    {code: "PLN", name: "Polish Zloty"},
+    {code: "RON", name: "Romanian Leu"},
+    {code: "RUB", name: "Russian ruble"},
+    {code: "SEK", name: "Swedish Krona"},
+    {code: "SGD", name: "Singapore Dollar"},
+    {code: "THB", name: "Thai Baht"},
+    {code: "TRY", name: "Turkish Lira"},
+    {code: "USD", name: "US Dollar"},
+    {code: "ZAR", name: "South African Rand"},
+    {code: "EUR", name: "Euro"}
+  ]
+
   this.getApproversByBudget = function(req, res, next){
     connPurchasing.acquire(function(err,con){
       con.query('SELECT u.ID_USER, u.Fname, u.LName FROM user_approve_budget AS uab Inner Join tblusers AS u ON u.ID_USER = uab.id_user WHERE u.Failed = 2 AND uab.id_budget = ?', [parseInt(req.body.id_budget)], function(err, result) {
@@ -22,38 +56,86 @@ function ExpenseReport(){
   }
 
   this.getCurrencies = function(req, res, next){
-    request('http://api.fixer.io/latest?base=BRL', function (error, response, body) {
-      if(error){
-        next(error)
-      }else{
-        let parseURLCurrency = (JSON.parse(body).rates);
-        let arrayCurrency = Object.keys(parseURLCurrency).map(function(key){
-          let newCurrency = {}
-          newCurrency.code = key
-          newCurrency.completeName = key
-          newCurrency.quotation = (1 / parseURLCurrency[key]).toFixed(4)
-          return newCurrency
-        })
+    // select * from currency where Date in(select min(Date) from currency) group by code;
+    // SELECT * FROM CURRENCY WHERE Date IN(SELECT MAX(Date) FROM CURRENCY) GROUP BY CODE;
+    conn.acquire(function(err,con){
+      con.query('SELECT * FROM CURRENCY WHERE Date IN(SELECT MAX(Date) FROM CURRENCY) GROUP BY CODE;', function(err, result) {
+        con.release();
+        if(err){
+          res.render('error', { error: err } );
+        }else{
+          console.log(result);
+          console.log('mun123');
 
-        arrayCurrency.push({
-          "code":"BRL",
-          "completeName":"BRL",
-          "quotation":"1.0000"
-        })
+          let arrayCurrency = result.map((e)=>{
+            let newCurrency = {}
+            newCurrency.code = e.Code
+            newCurrency.completeName = e.Name
+            // console.log('hehehehe');
+            // console.log(nameCurrency.find(el => el.code === e.Code))
+            // console.log('hehehehe');
+            // newCurrency.completeName = nameCurrency.find(el => el.code == e.Code).name
+            newCurrency.quotation = e.ValueConverted.toFixed(4)
+            return newCurrency
+          })
 
-        arrayCurrency.sort((a,b) => {
-          if (a.code < b.code)
-            return -1;
-          if (a.code > b.code)
-            return 1;
-          return 0;
-        })
+          arrayCurrency.push({
+            "code":"BRL",
+            "completeName":"Real",
+            "quotation":"1.0000"
+          })
 
-        req.currencies = arrayCurrency
-        next()
-      }
+          arrayCurrency.sort((a,b) => {
+            if (a.completeName < b.completeName)
+              return -1;
+            if (a.completeName > b.completeName)
+              return 1;
+            return 0;
+          })
+
+          console.log('muner');
+          console.log(arrayCurrency)
+          console.log('muner');
+          req.currencies = arrayCurrency
+          next()
+        }
+      })
     })
   }
+
+  // this.getCurrencies = function(req, res, next){
+  //   request('http://api.fixer.io/latest?base=BRL', function (error, response, body) {
+  //     if(error){
+  //       next(error)
+  //     }else{
+  //       let parseURLCurrency = (JSON.parse(body).rates);
+  //       let arrayCurrency = Object.keys(parseURLCurrency).map(function(key){
+  //         let newCurrency = {}
+  //         newCurrency.code = key
+  //         newCurrency.completeName = nameCurrency.find(e => e.code === key).name
+  //         newCurrency.quotation = (1 / parseURLCurrency[key]).toFixed(4)
+  //         return newCurrency
+  //       })
+  //
+  //       arrayCurrency.push({
+  //         "code":"BRL",
+  //         "completeName":"BRL",
+  //         "quotation":"1.0000"
+  //       })
+  //
+  //       arrayCurrency.sort((a,b) => {
+  //         if (a.code < b.code)
+  //           return -1;
+  //         if (a.code > b.code)
+  //           return 1;
+  //         return 0;
+  //       })
+  //
+  //       req.currencies = arrayCurrency
+  //       next()
+  //     }
+  //   })
+  // }
 
   this.getTypesExpenseReport = function(req, res, next){
     conn.acquire(function(err,con){
