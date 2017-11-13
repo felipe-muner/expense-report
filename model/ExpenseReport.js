@@ -64,17 +64,12 @@ function ExpenseReport(){
         if(err){
           res.render('error', { error: err } );
         }else{
-          console.log(result);
-          console.log('mun123');
+          console.log(result)
 
           let arrayCurrency = result.map((e)=>{
             let newCurrency = {}
             newCurrency.code = e.Code
             newCurrency.completeName = e.Name
-            // console.log('hehehehe');
-            // console.log(nameCurrency.find(el => el.code === e.Code))
-            // console.log('hehehehe');
-            // newCurrency.completeName = nameCurrency.find(el => el.code == e.Code).name
             newCurrency.quotation = e.ValueConverted.toFixed(4)
             return newCurrency
           })
@@ -608,6 +603,21 @@ function ExpenseReport(){
           res.render('error', { error: err } );
         }else{
           req.listCashAdvancedOpen = result
+          next()
+        }
+      })
+    })
+  }
+
+  this.getAllSupplier = function(req, res, next){
+    conn.acquire(function(err,con){
+      con.query('SELECT s.codigo, s.razao, s.cnpj, s.banco, s.agencia, s.conta, b.title FROM Supplier s INNER JOIN Bank b ON s.banco = b.code', function(err, result) {
+        con.release();
+        if(err){
+          console.log(this.sql)
+          res.render('error', { error: err } );
+        }else{
+          req.allSupplier = result
           next()
         }
       })

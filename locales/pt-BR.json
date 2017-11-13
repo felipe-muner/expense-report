@@ -54,5 +54,21 @@
 	"createtat": "Cotação",
 	"total": "Total",
 	"cancel": "Cancelar",
-	"status": "Status"
+	"status": "Status",
+	"cash": "Dinheiro",
+	"bankSlip": "Boleto",
+	"paymentBankNational": "Pagamento Banco Nacional",
+	"paymentBankInternational": "Pagamento Banco Internacional",
+	"supplier": "Fornecedor",
+	"name": "Nome",
+	"bank": "Banco",
+	"agency": "Agência",
+	"account": "Conta",
+	"bankName": "Nome Banco",
+	"accountNumber": "Conta",
+	"sortCode": "Sort Code",
+	"IBAN": "IBAN",
+	"swift/BIC": "SWIFT/BIC",
+	"aba": "ABA",
+	"rounting": "Rounting"
 }

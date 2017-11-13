@@ -55,5 +55,21 @@
 	"quotation": "Quotation",
 	"total": "Total",
 	"cancel": "Cancel",
-	"status": "Status"
+	"status": "Status",
+	"cash": "Cash",
+	"bankSlip": "Bank Slip",
+	"paymentBankNational": "Payment National Bank",
+	"paymentBankInternational": "Payment International Bank",
+	"supplier": "Supplier",
+	"name": "Name",
+	"bank": "Bank",
+	"agency": "Agency",
+	"account": "Account",
+	"bankName": "Bank Name",
+	"accountNumber": "Account Number",
+	"sortCode": "sortCode",
+	"IBAN": "IBAN",
+	"swift/BIC": "SWIFT/BIC",
+	"aba": "ABA",
+	"rounting": "Rounting"
 }

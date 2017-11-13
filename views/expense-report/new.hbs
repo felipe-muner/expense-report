@@ -54,6 +54,101 @@
         </div>
       </div>
 
+      <div class="row" style="margin-top:10px;">
+        <div class="col-md-9">
+          <label class="radio-inline">
+              <input name="PaymentType" type="radio" value="1" checked="checked">
+              {{i18n 'cash'}}
+          </label>
+          <label class="radio-inline">
+              <input name="PaymentType" type="radio" value="2">
+              {{i18n 'bankSlip'}}
+          </label>
+          <label class="radio-inline">
+              <input name="PaymentType" type="radio" value="3">
+              {{i18n 'paymentBankNational'}}
+          </label>
+          <label class="radio-inline">
+              <input name="PaymentType" type="radio" value="4">
+              {{i18n 'paymentBankInternational'}}
+          </label>
+        </div>
+      </div>
+      <div style="margin-top:10px;">
+        <div class="tipoPagamento pagDinheiro">
+        </div>
+
+        <div class="tipoPagamento pagBoleto" style="display:none;">
+          <div class="row">
+            <div class="col-sm-12">
+              <label for="">{{{i18n 'supplier'}}}</label>
+              <select class="supplierList" name="Supplier" style="width:100%;">
+                <option value=""></option>
+                {{#each allSupplier}}
+                  <option value="{{codigo}}">{{razao}} ({{cnpj}})</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="tipoPagamento pagBancoNacional" style="display:none;">
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="">{{{i18n 'name'}}}</label>
+              <input type="text" name="NationalName" id="NationalName" value="" class="form-control">
+            </div>
+            <div class="col-sm-3">
+              <label for="">{{{i18n 'bank'}}}</label>
+              <input type="text" name="NationalBankName" id="NationalBankName" value="" class="form-control">
+            </div>
+            <div class="col-sm-3">
+              <label for="">{{{i18n 'agency'}}}</label>
+              <input type="text" name="NationalAgency" id="NationalAgency" value="" class="form-control">
+            </div>
+            <div class="col-sm-3">
+              <label for="">{{{i18n 'account'}}}</label>
+              <input type="text" name="NationalAccount" id="NationalAccount" value="" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="tipoPagamento pagBancoInternacional" style="display:none;">
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="">{{{i18n 'bankName'}}}</label>
+              <input type="text" name="InternationalBankName" id="InternationalBankName" value="" class="form-control">
+            </div>
+            <div class="col-sm-3">
+              <label for="">{{{i18n 'accountNumber'}}}</label>
+              <input type="text" name="InternationalAccount" id="InternationalAccount" value="" class="form-control">
+            </div>
+            <div class="col-sm-3">
+              <label for="">{{{i18n 'sortCode'}}}</label>
+              <input type="text" name="InternationalSortCode" id="InternationalSortCode" value="" class="form-control">
+            </div>
+            <div class="col-sm-3">
+              <label for="">{{{i18n 'IBAN'}}}</label>
+              <input type="text" name="InternationalIBAN" id="InternationalIBAN" value="" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="">{{{i18n 'swift/BIC'}}}</label>
+              <input type="text" name="InternationalSwiftBic" id="InternationalSwiftBic" value="" class="form-control">
+            </div>
+            <div class="col-sm-3">
+              <label for="">{{{i18n 'aba'}}}</label>
+              <input type="text" name="Aba" id="Aba" value="" class="form-control">
+            </div>
+            <div class="col-sm-3">
+              <label for="">{{{i18n 'rounting'}}}</label>
+              <input type="text" name="Rounting" id="Rounting" value="" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!--  TABELA DESPESAS-->
       <div class="row" style="margin-top:10px;">
         <div class="col-sm-12" id="divTableExpense" style="display:none;">
@@ -215,6 +310,23 @@
 {{#section 'script'}}
 
   <script>
+
+    $('.supplierList').select2()
+
+    $('input[name=PaymentType]').change(function(e){
+      console.log(this.value)
+      $('.tipoPagamento').css('display','none')
+      if(1 === parseInt(this.val)){
+          $('.pagDinheiro').css('display','block')
+      }else if(2 === parseInt(this.value)){
+        $('.pagBoleto').css('display','block')
+      }else if(3 === parseInt(this.value)){
+        $('.pagBancoNacional').css('display','block')
+      }else if(4 === parseInt(this.value)){
+        $('.pagBancoInternacional').css('display','block')
+      }
+    })
+
     $(document).ready(function(e){
       // $('#ExpenseReportType_ID').val('1').trigger('change');
       // $('#id_budget').val('999999').trigger('change');
