@@ -107,7 +107,7 @@ function HtmlPDF(){
 
               $('#headerItem').append(header)
               $('#bodyItem').append(items.tabelaItem)
-              $('#bodyItem').append('<tr><td colspan="4" style="text-align:right;padding:3px;">'+ items.total.toFixed(2) +'</td></tr>')
+              $('#bodyItem').append('<tr><td colspan="3" style="text-align:right;padding:3px;">'+ items.total.toFixed(2) +'</td></tr>')
             }else if('001 001 00WS' !== req.ExpenseReport.Budget && 'BRL' !== req.ExpenseReport.Currency){
               console.log('header nao whole nao real');
               header = '<tr style="background-color:#ddd;line-height: 18px;text-align:center;">'+
@@ -131,7 +131,7 @@ function HtmlPDF(){
               $('#headerItem').append(header)
               $('#bodyItem').append(items.tabelaItem)
               $('#bodyItem').append('<tr>'+
-                                      '<td colspan="3"></td>'+
+                                      '<td colspan="2"></td>'+
                                       '<td style="text-align:right;padding:3px;">'+ items.total.toFixed(2) +'</td>'+
                                       '<td style="text-align:right;padding:3px;">'+ items.totalEstrangeiro.toFixed(2)+'</td>'+
                                     '</tr>')

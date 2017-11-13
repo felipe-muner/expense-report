@@ -291,7 +291,7 @@
             $('#AuthorizeBy option').remove()
             $('#AuthorizeBy').append(new Option('Select', ''))
             data.Approvers.map(function(e){
-              $('#AuthorizeBy').append(new Option(toTitleCase(e.Fname) + ' ' + toTitleCase(e.LName), e.ID_USER))
+              $('#AuthorizeBy').append(new Option( toTitleCase(e.Fname) + ' ' + toTitleCase(e.LName), toTitleCase(e.Fname) + ' ' + toTitleCase(e.LName) ))
             })
           }
         })
