@@ -82,7 +82,7 @@
           <div class="row">
             <div class="col-sm-12">
               <label for="">{{{i18n 'supplier'}}}</label>
-              <select class="supplierList" name="Supplier" style="width:100%;">
+              <select class="supplierList" name="BankSlipSupplier" style="width:100%;">
                 <option value=""></option>
                 {{#each allSupplier}}
                   <option value="{{codigo}}">{{razao}} ({{cnpj}})</option>
@@ -93,6 +93,17 @@
         </div>
 
         <div class="tipoPagamento pagBancoNacional" style="display:none;">
+          <div class="row">
+            <div class="col-sm-12">
+              <label for="">{{{i18n 'supplier'}}}</label>
+              <select class="supplierList" name="NationalSupplier" id="NationalSupplier" style="width:100%;">
+                <option value=""></option>
+                {{#each allSupplier}}
+                  <option value="{{codigo}}" data-razao="{{razao}}" data-banco="{{banco}}" data-agencia="{{agencia}}" data-conta="{{conta}}">{{razao}} ({{cnpj}})</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
           <div class="row">
             <div class="col-sm-3">
               <label for="">{{{i18n 'name'}}}</label>
@@ -142,7 +153,7 @@
               <input type="text" name="Aba" id="Aba" value="" class="form-control">
             </div>
             <div class="col-sm-3">
-              <label for="">{{{i18n 'rounting'}}}</label>
+              <label for="">{{{i18n 'routing'}}}</label>
               <input type="text" name="Rounting" id="Rounting" value="" class="form-control">
             </div>
           </div>
@@ -441,7 +452,7 @@
             type: "success"
           }).then(
             function () {
-              window.location.replace(data.redirect + '?ok=create')
+              // window.location.replace(data.redirect + '?ok=create')
             }
           )
         }
@@ -579,6 +590,21 @@
         }
       })
     }
+
+    $("#NationalSupplier").change(function(e){
+      if( !$("#NationalSupplier").val() ){
+        $('#NationalName').val('')
+        $('#NationalBankName').val('')
+        $('#NationalAgency').val('')
+        $('#NationalAccount').val('')
+      }else{
+        $('#NationalName').val( $("#NationalSupplier option:selected").data('razao') )
+        $('#NationalBankName').val( $("#NationalSupplier option:selected").data('banco') )
+        $('#NationalAgency').val( $("#NationalSupplier option:selected").data('agencia') )
+        $('#NationalAccount').val( $("#NationalSupplier option:selected").data('conta') )
+      }
+
+    })
 
   </script>
 

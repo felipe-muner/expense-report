@@ -67,9 +67,9 @@
 	"account": "Account",
 	"bankName": "Bank Name",
 	"accountNumber": "Account Number",
-	"sortCode": "sortCode",
+	"sortCode": "Sort Code",
 	"IBAN": "IBAN",
 	"swift/BIC": "SWIFT/BIC",
 	"aba": "ABA",
-	"rounting": "Rounting"
+	"routing": "Routing"
 }

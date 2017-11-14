@@ -181,7 +181,8 @@ function ExpenseReport(){
   this.createER = function(req, res, next){
 
     console.log('estou na lista item');
-    console.log(req.listItem)
+    // console.log(req.listItem)
+    console.log(req.body)
     console.log('estou na lista item');
 
     let expenseReport = {
