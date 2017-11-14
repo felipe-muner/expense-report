@@ -82,7 +82,7 @@
           <div class="row">
             <div class="col-sm-12">
               <label for="">{{{i18n 'supplier'}}}</label>
-              <select class="supplierList" name="BankSlipSupplier" style="width:100%;">
+              <select class="supplierList" name="BankSlipSupplier_ID" id="BankSlipSupplier_ID" style="width:100%;">
                 <option value=""></option>
                 {{#each allSupplier}}
                   <option value="{{codigo}}">{{razao}} ({{cnpj}})</option>
@@ -94,9 +94,21 @@
 
         <div class="tipoPagamento pagBancoNacional" style="display:none;">
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-3">
+              <label for="">{{{i18n 'accountType'}}}</label>
+              <br>
+              <label class="radio-inline">
+                  <input name="AccountType" type="radio" value="Conta Corrente" checked="checked">
+                  Conta Corrente
+              </label>
+              <label class="radio-inline">
+                  <input name="AccountType" type="radio" value="Conta Poupança">
+                  Conta Poupança
+              </label>
+            </div>
+            <div class="col-sm-9">
               <label for="">{{{i18n 'supplier'}}}</label>
-              <select class="supplierList" name="NationalSupplier" id="NationalSupplier" style="width:100%;">
+              <select class="supplierList" name="NationalSupplier_ID" id="NationalSupplier_ID" style="width:100%;">
                 <option value=""></option>
                 {{#each allSupplier}}
                   <option value="{{codigo}}" data-razao="{{razao}}" data-banco="{{banco}}" data-agencia="{{agencia}}" data-conta="{{conta}}">{{razao}} ({{cnpj}})</option>
@@ -104,7 +116,7 @@
               </select>
             </div>
           </div>
-          <div class="row">
+          <div class="row" style="margin-top:5px;">
             <div class="col-sm-3">
               <label for="">{{{i18n 'name'}}}</label>
               <input type="text" name="NationalName" id="NationalName" value="" class="form-control">
@@ -126,35 +138,46 @@
 
         <div class="tipoPagamento pagBancoInternacional" style="display:none;">
           <div class="row">
+            <div class="col-sm-12">
+              <label for="">{{{i18n 'supplier'}}}</label>
+              <select class="supplierList" name="InternationalSupplier_ID" id="InternationalSupplier_ID" style="width:100%;">
+                <option value=""></option>
+                {{#each allSupplier}}
+                  <option value="{{codigo}}" data-razao="{{razao}}" data-banco="{{banco}}" data-agencia="{{agencia}}" data-conta="{{conta}}">{{razao}} ({{cnpj}})</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="row" style="margin-top:5px;">
             <div class="col-sm-3">
               <label for="">{{{i18n 'bankName'}}}</label>
-              <input type="text" name="InternationalBankName" id="InternationalBankName" value="" class="form-control">
+              <input type="text" name="InternationalBankName" id="InternationalBankName" value="" class="form-control interPayment">
             </div>
             <div class="col-sm-3">
               <label for="">{{{i18n 'accountNumber'}}}</label>
-              <input type="text" name="InternationalAccount" id="InternationalAccount" value="" class="form-control">
+              <input type="text" name="InternationalAccount" id="InternationalAccount" value="" class="form-control interPayment">
             </div>
             <div class="col-sm-3">
               <label for="">{{{i18n 'sortCode'}}}</label>
-              <input type="text" name="InternationalSortCode" id="InternationalSortCode" value="" class="form-control">
+              <input type="text" name="InternationalSortCode" id="InternationalSortCode" value="" class="form-control interPayment">
             </div>
             <div class="col-sm-3">
               <label for="">{{{i18n 'IBAN'}}}</label>
-              <input type="text" name="InternationalIBAN" id="InternationalIBAN" value="" class="form-control">
+              <input type="text" name="InternationalIBAN" id="InternationalIBAN" value="" class="form-control interPayment">
             </div>
           </div>
-          <div class="row">
+          <div class="row" style="margin-top:5px;">
             <div class="col-sm-3">
               <label for="">{{{i18n 'swift/BIC'}}}</label>
-              <input type="text" name="InternationalSwiftBic" id="InternationalSwiftBic" value="" class="form-control">
+              <input type="text" name="InternationalSwiftBic" id="InternationalSwiftBic" value="" class="form-control interPayment">
             </div>
             <div class="col-sm-3">
               <label for="">{{{i18n 'aba'}}}</label>
-              <input type="text" name="Aba" id="Aba" value="" class="form-control">
+              <input type="text" name="InternationalAba" id="InternationalAba" value="" class="form-control interPayment">
             </div>
             <div class="col-sm-3">
               <label for="">{{{i18n 'routing'}}}</label>
-              <input type="text" name="Rounting" id="Rounting" value="" class="form-control">
+              <input type="text" name="InternationalRouting" id="InternationalRouting" value="" class="form-control interPayment">
             </div>
           </div>
         </div>
@@ -339,10 +362,10 @@
     })
 
     $(document).ready(function(e){
-      // $('#ExpenseReportType_ID').val('1').trigger('change');
-      // $('#id_budget').val('999999').trigger('change');
-      // $('#Currency').val('BRL').trigger('change');
-      // $('#EventName').val('teste muner')
+      $('#ExpenseReportType_ID').val('1').trigger('change');
+      $('#id_budget').val('999999').trigger('change');
+      $('#Currency').val('BRL').trigger('change');
+      $('#EventName').val('teste muner')
     })
 
     $('#ExpenseReportType_ID').select2()
@@ -436,6 +459,36 @@
       dataSend.push({name: 'ContaOrca', value: $('#id_budget option:selected').data('conta-orca')})
       dataSend.push({name: 'CurrencyName', value: $('#Currency option:selected').data('currency')})
       dataSend.push({name: 'CurrencyQuotation', value: $('#Currency option:selected').data('quotation')})
+
+      if(2 === parseInt( $('input[name=PaymentType]:checked').val() )){
+        if(!$('#BankSlipSupplier_ID').val()){
+          swal({
+            title: "",
+            text: 'Please, choose the supplier',
+            type: "error"
+          })
+          throw new Error('Choose the supplier to bankbill')
+        }
+      }else if(3 === parseInt( $('input[name=PaymentType]:checked').val())) {
+        alert('NACIONAL')
+
+      }else if(4 === parseInt( $('input[name=PaymentType]:checked').val() )){
+        let contadorNaoVazio = 0
+        $('.interPayment').each(function(e){
+          if( $(this).val() ) contadorNaoVazio++
+        })
+        debugger
+        alert(contadorNaoVazio)
+        if(3 > contadorNaoVazio){
+          swal({
+            title: "",
+            html: 'Please, insert at least 3 fields:<br>- Bank Name<br>- Account Name<br>- Sort Code<br>- IBAN<br>- SWIFT/BIC<br>- ABA<br>- Routing',
+            type: "error"
+          })
+          throw new Error('Insira 3 campos para pagamento internacional')
+        }
+
+      }
 
       validateBalanceBudget()
 

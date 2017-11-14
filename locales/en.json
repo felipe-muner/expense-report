@@ -71,5 +71,6 @@
 	"IBAN": "IBAN",
 	"swift/BIC": "SWIFT/BIC",
 	"aba": "ABA",
-	"routing": "Routing"
+	"routing": "Routing",
+	"accountType": "Account Type"
 }
