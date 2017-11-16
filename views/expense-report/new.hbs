@@ -123,7 +123,13 @@
             </div>
             <div class="col-sm-3">
               <label for="">{{{i18n 'bank'}}}</label>
-              <input type="text" name="NationalBankName" id="NationalBankName" value="" class="form-control nationalPayment">
+              <!-- <input type="text" name="NationalBankName" id="NationalBankName" value="" class="form-control nationalPayment"> -->
+              <select class="form-control" name="NationalBankName" id="NationalBankName" >
+                <option value=""></option>
+                {{#each allBank}}
+                  <option value="{{code}}">{{title}}</option>
+                {{/each}}
+              </select>
             </div>
             <div class="col-sm-3">
               <label for="">{{{i18n 'agency'}}}</label>
@@ -471,7 +477,7 @@
         }
       }else if(3 === parseInt( $('input[name=PaymentType]:checked').val())) {
 
-        if( !!$('.nationalPayment').toArray().find(e=>!e.value) || !$('input[name=AccountType]:checked').val() ){
+        if( !!$('.nationalPayment').toArray().find(e=>!e.value) || !$('#NationalBankName').val() || !$('input[name=AccountType]:checked').val() ){
           swal({
             title: "",
             html: 'Required fields: <br>- Account Type<br>- Name<br>- Bank<br>- Agency<br>- Account',

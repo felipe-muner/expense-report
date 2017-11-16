@@ -10,7 +10,7 @@ const pdf = require('html-pdf');
 const A4option = require(process.env.PWD + '/views/report/A4config')
 const HtmlPDF = require(process.env.PWD + '/model/HtmlPDF')
 
-router.get('/new', er.getCurrencies, er.getAllSupplier, er.getTypesExpenseReport, er.getAllCostCenter, function(req, res, next) {
+router.get('/new', er.getCurrencies, er.getAllSupplier, er.getAllBank, er.getTypesExpenseReport, er.getAllCostCenter, function(req, res, next) {
 // router.get('/new', er.getTypesExpenseReport, er.getAllCostCenter, function(req, res, next) {
   console.log(req.currencies);
   console.log(req.allTypesExpenseReport);
@@ -20,7 +20,8 @@ router.get('/new', er.getCurrencies, er.getAllSupplier, er.getTypesExpenseReport
     Currency: req.currencies,
     TypeExpenseReport: req.allTypesExpenseReport,
     allCostCenter: req.allCostCenter,
-    allSupplier: req.allSupplier
+    allSupplier: req.allSupplier,
+    allBank: req.allBank
   })
 }).post('/create', er.adjustBodyER, er.nextCode, er.createER, er.saveListItem, function(req, res, next) {
   console.log(req.body)
