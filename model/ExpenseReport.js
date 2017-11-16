@@ -200,6 +200,31 @@ function ExpenseReport(){
       TotalValueConverted: req.listItem.reduce((acc,e) => acc += parseFloat(e.ValueExpense) * parseFloat(req.CurrencyQuotation), 0)
     }
 
+    expenseReport.PaymentType = parseInt(req.body.PaymentType)
+
+    if(2 === parseInt(req.body.PaymentType)){
+      console.log('boleto')
+      expenseReport.BankSlipSupplier_ID = req.body.BankSlipSupplier_ID
+    }else if(3 === parseInt(req.body.PaymentType)){
+      expenseReport.NationalSupplier_ID = req.body.NationalSupplier_ID || null
+      expenseReport.NationalAccountType = req.body.AccountType
+      expenseReport.NationalName = req.body.NationalName
+      expenseReport.NationalBankName = req.body.NationalBankName
+      expenseReport.NationalAgency = req.body.NationalAgency
+      expenseReport.NationalAccount = req.body.NationalAccount
+      console.log('naci')
+    }else if(4 === parseInt(req.body.PaymentType)){
+      expenseReport.InternationalSupplier_ID = req.body.InternationalSupplier_ID || null
+      expenseReport.InternationalBankName = req.body.InternationalBankName
+      expenseReport.InternationalAccount = req.body.InternationalAccount
+      expenseReport.InternationalSortCode = req.body.InternationalSortCode
+      expenseReport.InternationalIBAN = req.body.InternationalIBAN
+      expenseReport.InternationalSwiftBic = req.body.InternationalSwiftBic
+      expenseReport.InternationalAba = req.body.InternationalAba
+      expenseReport.InternationalRouting = req.body.InternationalRouting
+      console.log('inter')
+    }
+
     console.log('sou um report')
     console.log(expenseReport)
     console.log('sou um report')

@@ -146,7 +146,7 @@ router.post('/email-forget-password', function(req, res, next) {
 // })
 
 
-//DESCOMENTAR
+//descomentar
 // router.get('*', function(req, res, next) {
 //   req.session.matricula ? next() : res.redirect('/');
 // });
