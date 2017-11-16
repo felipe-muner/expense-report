@@ -33,6 +33,7 @@ function HtmlPDF(){
             $('#Currency').text( req.ExpenseReport.Currency )
             $('#CurrencyQuotation').text( req.ExpenseReport.CurrencyQuotation )
             $('#EventName').text( req.ExpenseReport.EventName )
+            $('#PaymentType').text( req.ExpenseReport.NamePayment )
 
             let header = ''
             if('001 001 00WS' === req.ExpenseReport.Budget && 'BRL' === req.ExpenseReport.Currency){

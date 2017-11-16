@@ -465,11 +465,17 @@ function ExpenseReport(){
                   'er.CurrencyQuotation, '+
                   'er.TotalValue, '+
                   'er.TotalValueConverted, '+
-                  'er.Brother_Code '+
-                'FROM ExpenseReport er Inner Join ExpenseReportType ert ON er.ExpenseReportType_ID = ert.ExpenseReportTypeID '+
+                  'er.Brother_Code, '+
+                  'erpt.ExpenseReportPaymentTypeID, '+
+                  'erpt.Name as PaymentTypeName '+
+                'FROM ExpenseReport er '+
+                'Inner Join ExpenseReportType ert ON er.ExpenseReportType_ID = ert.ExpenseReportTypeID '+
+                'Inner Join ExpenseReportPaymentType erpt ON er.PaymentType = erpt.ExpenseReportPaymentTypeID '+
                 'WHERE Code = ?',
         [parseInt(req.Code)], function(err, result) {
         con.release()
+        console.log(this.sql);
+        console.log('printei');
         if(err){
           console.log(err);
           res.render('error', { error: err } );
