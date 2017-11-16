@@ -625,6 +625,20 @@ function ExpenseReport(){
     })
   }
 
+  this.getAllBank = function(req, res, next){
+    conn.acquire(function(err,con){
+      con.query('SELECT code, title FROM Bank', function(err, result) {
+        con.release();
+        if(err){
+          res.render('error', { error: err } );
+        }else{
+          req.allBank = result
+          next()
+        }
+      })
+    })
+  }
+
 
   this.adjustBodyER = function(req, res, next){
     console.log('qwe')

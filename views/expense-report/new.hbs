@@ -94,18 +94,6 @@
 
         <div class="tipoPagamento pagBancoNacional" style="display:none;">
           <div class="row">
-            <div class="col-sm-3">
-              <label for="">{{{i18n 'accountType'}}}</label>
-              <br>
-              <label class="radio-inline">
-                  <input name="AccountType" type="radio" value="Conta Corrente" checked="checked">
-                  Conta Corrente
-              </label>
-              <label class="radio-inline">
-                  <input name="AccountType" type="radio" value="Conta Poupança">
-                  Conta Poupança
-              </label>
-            </div>
             <div class="col-sm-9">
               <label for="">{{{i18n 'supplier'}}}</label>
               <select class="supplierList" name="NationalSupplier_ID" id="NationalSupplier_ID" style="width:100%;">
@@ -115,23 +103,35 @@
                 {{/each}}
               </select>
             </div>
+            <div class="col-sm-3">
+              <label for="">{{{i18n 'accountType'}}}</label>
+              <br>
+              <label class="radio-inline">
+                  <input name="AccountType" type="radio" value="Conta Corrente">
+                  Conta Corrente
+              </label>
+              <label class="radio-inline">
+                  <input name="AccountType" type="radio" value="Conta Poupança">
+                  Conta Poupança
+              </label>
+            </div>
           </div>
           <div class="row" style="margin-top:5px;">
             <div class="col-sm-3">
               <label for="">{{{i18n 'name'}}}</label>
-              <input type="text" name="NationalName" id="NationalName" value="" class="form-control">
+              <input type="text" name="NationalName" id="NationalName" value="" class="form-control nationalPayment">
             </div>
             <div class="col-sm-3">
               <label for="">{{{i18n 'bank'}}}</label>
-              <input type="text" name="NationalBankName" id="NationalBankName" value="" class="form-control">
+              <input type="text" name="NationalBankName" id="NationalBankName" value="" class="form-control nationalPayment">
             </div>
             <div class="col-sm-3">
               <label for="">{{{i18n 'agency'}}}</label>
-              <input type="text" name="NationalAgency" id="NationalAgency" value="" class="form-control">
+              <input type="text" name="NationalAgency" id="NationalAgency" value="" class="form-control nationalPayment">
             </div>
             <div class="col-sm-3">
               <label for="">{{{i18n 'account'}}}</label>
-              <input type="text" name="NationalAccount" id="NationalAccount" value="" class="form-control">
+              <input type="text" name="NationalAccount" id="NationalAccount" value="" class="form-control nationalPayment">
             </div>
           </div>
         </div>
@@ -470,7 +470,15 @@
           throw new Error('Choose the supplier to bankbill')
         }
       }else if(3 === parseInt( $('input[name=PaymentType]:checked').val())) {
-        alert('NACIONAL')
+
+        if( !!$('.nationalPayment').toArray().find(e=>!e.value) || !$('input[name=AccountType]:checked').val() ){
+          swal({
+            title: "",
+            html: 'Required fields: <br>- Account Type<br>- Name<br>- Bank<br>- Agency<br>- Account',
+            type: "error"
+          })
+          throw new Error('Os 5 campos obrigatórios para pagamento nacional.')
+        }
 
       }else if(4 === parseInt( $('input[name=PaymentType]:checked').val() )){
         let contadorNaoVazio = 0
@@ -478,11 +486,10 @@
           if( $(this).val() ) contadorNaoVazio++
         })
         debugger
-        alert(contadorNaoVazio)
-        if(3 > contadorNaoVazio){
+        if(3 > contadorNaoVazio && !$('#InternationalSupplier_ID').val()){
           swal({
             title: "",
-            html: 'Please, insert at least 3 fields:<br>- Bank Name<br>- Account Name<br>- Sort Code<br>- IBAN<br>- SWIFT/BIC<br>- ABA<br>- Routing',
+            html: 'Please, select a supplier or insert at least 3 fields:<br>- Bank Name<br>- Account Name<br>- Sort Code<br>- IBAN<br>- SWIFT/BIC<br>- ABA<br>- Routing',
             type: "error"
           })
           throw new Error('Insira 3 campos para pagamento internacional')
@@ -644,17 +651,17 @@
       })
     }
 
-    $("#NationalSupplier").change(function(e){
-      if( !$("#NationalSupplier").val() ){
+    $("#NationalSupplier_ID").change(function(e){
+      if( !$("#NationalSupplier_ID").val() ){
         $('#NationalName').val('')
         $('#NationalBankName').val('')
         $('#NationalAgency').val('')
         $('#NationalAccount').val('')
       }else{
-        $('#NationalName').val( $("#NationalSupplier option:selected").data('razao') )
-        $('#NationalBankName').val( $("#NationalSupplier option:selected").data('banco') )
-        $('#NationalAgency').val( $("#NationalSupplier option:selected").data('agencia') )
-        $('#NationalAccount').val( $("#NationalSupplier option:selected").data('conta') )
+        $('#NationalName').val( $("#NationalSupplier_ID option:selected").data('razao') )
+        $('#NationalBankName').val( $("#NationalSupplier_ID option:selected").data('banco') )
+        $('#NationalAgency').val( $("#NationalSupplier_ID option:selected").data('agencia') )
+        $('#NationalAccount').val( $("#NationalSupplier_ID option:selected").data('conta') )
       }
 
     })
