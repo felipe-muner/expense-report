@@ -446,6 +446,38 @@ function ExpenseReport(){
     })
   }
 
+  this.searchER = function(req, res, next){
+    //maximo 500
+    conn.acquire(function(err,con){
+      con.query('SELECT '+
+                  'er.Code, '+
+                  'er.CreatedAt, '+
+                  'er.Status, '+
+                  'er.ExpenseReportType_ID, '+
+                  'ert.NameType, '+
+                  'er.Budget, '+
+                  'er.RequestedBy, '+
+                  'er.AuthorizedBy, '+
+                  'er.EventName, '+
+                  'er.Currency, '+
+                  'er.CurrencyQuotation, '+
+                  'er.TotalValue '+
+                'FROM ExpenseReport er Inner Join ExpenseReportType ert ON er.ExpenseReportType_ID = ert.ExpenseReportTypeID '+
+                'WHERE CAST(CreatedAt AS DATE) BETWEEN ? AND ?', [req.body.FromDate, req.body.ToDate], function(err, result) {
+        con.release()
+        if(err){
+          console.log(err);
+          res.render('error', { error: err } );
+        }else{
+          console.log(this.sql);
+          // console.log(result);
+          req.searched = result
+          next()
+        }
+      })
+    })
+  }
+
   this.findExpenseReport = function(req, res, next){
     console.log('findExpenseReport----')
     console.log(req.body)
