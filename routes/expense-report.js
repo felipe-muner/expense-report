@@ -76,6 +76,9 @@ router.get('/new', er.getCurrencies, er.getAllSupplier, er.getAllBank, er.getTyp
   // console.log('ultima rota aaa accountability')
   res.download(req.REPaccountability, new Date() + 'report.pdf')
 }).get('/accountability', er.getCashAdvancedOpen ,function(req, res, next) {
+  req.listCashAdvancedOpen.map((e)=>{
+      e.CreatedAt = moment(e.CreatedAt).format('DD/MM/YYYY HH:mm')
+    })
   res.render('expense-report/accountability', {
     sess: req.session,
     listCashAdvancedOpen: req.listCashAdvancedOpen
