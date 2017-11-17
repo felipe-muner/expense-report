@@ -17,9 +17,9 @@ function HtmlPDF(){
         styliner.processHTML(html)
           .then(function(processedSource) {
             const $ = cheerio.load(processedSource)
-            console.log('____expensereport no htmlpdf')
+            console.log('____expensereport no htmlpdf123')
             console.log(req.ExpenseReport)
-            console.log('____expensereport no htmlpdf')
+            console.log('____expensereport no htmlpdf123')
             console.log('___items');
             console.log(req.listItem);
             console.log('___items');
@@ -34,6 +34,32 @@ function HtmlPDF(){
             $('#CurrencyQuotation').text( req.ExpenseReport.CurrencyQuotation )
             $('#EventName').text( req.ExpenseReport.EventName )
             $('#PaymentType').text( req.ExpenseReport.PaymentTypeName )
+
+            if(2 === req.ExpenseReport.ExpenseReportPaymentTypeID){
+              console.log('sou boleto123')
+              $('#SupplierBankBill').text( req.ExpenseReport.SupplierName )
+              $('.pagBoleto').css('display','table-row')
+            }else if(3 === req.ExpenseReport.ExpenseReportPaymentTypeID){
+              console.log('sou nacional123')
+              $('.pagNacional').css('display','table-row')
+              $('#SupplierNacional').text( req.ExpenseReport.SupplierName )
+              $('#NationalAccountType').text( req.ExpenseReport.NationalAccountType )
+              $('#NationalName').text( req.ExpenseReport.NationalName )
+              $('#NationalBankName').text( req.ExpenseReport.BankNameTitle )
+              $('#NationalAgency').text( req.ExpenseReport.NationalAgency )
+              $('#NationalAccount').text( req.ExpenseReport.NationalAccount )
+            }else if(4 === req.ExpenseReport.ExpenseReportPaymentTypeID){
+              console.log('sou internacional123')
+              $('#SupplierInternacional').text( req.ExpenseReport.SupplierName )
+              $('#InternationalBankName').text( req.ExpenseReport.InternationalBankName )
+              $('#InternationalAccount').text( req.ExpenseReport.InternationalAccount )
+              $('#InternationalSortCode').text( req.ExpenseReport.InternationalSortCode )
+              $('#InternationalIBAN').text( req.ExpenseReport.InternationalIBAN )
+              $('#InternationalSwiftBic').text( req.ExpenseReport.InternationalSwiftBic )
+              $('#InternationalAba').text( req.ExpenseReport.InternationalAba )
+              $('#InternationalRouting').text( req.ExpenseReport.InternationalRouting )
+              $('.pagInter').css('display','table-row')
+            }
 
             let header = ''
             if('001 001 00WS' === req.ExpenseReport.Budget && 'BRL' === req.ExpenseReport.Currency){

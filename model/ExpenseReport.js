@@ -467,11 +467,27 @@ function ExpenseReport(){
                   'er.TotalValueConverted, '+
                   'er.Brother_Code, '+
                   'erpt.ExpenseReportPaymentTypeID, '+
-                  'erpt.Name as PaymentTypeName '+
+                  'erpt.Name as PaymentTypeName, '+
+                  'er.NationalAccountType, '+
+                  'er.NationalName, '+
+                  'er.NationalBankName, '+
+                  'er.NationalAgency, '+
+                  'er.NationalAccount, '+
+                  'er.InternationalBankName, '+
+                  'er.InternationalAccount, '+
+                  'er.InternationalSortCode, '+
+                  'er.InternationalIBAN, '+
+                  'er.InternationalSwiftBic, '+
+                  'er.InternationalAba, '+
+                  'er.InternationalRouting, '+
+                  's.razao as SupplierName, '+
+                  'b.title As BankNameTitle '+
                 'FROM ExpenseReport er '+
                 'Inner Join ExpenseReportType ert ON er.ExpenseReportType_ID = ert.ExpenseReportTypeID '+
                 'Inner Join ExpenseReportPaymentType erpt ON er.PaymentType = erpt.ExpenseReportPaymentTypeID '+
-                'WHERE Code = ?',
+                'Left Join Supplier AS s ON s.codigo IN(er.BankSlipSupplier_ID, er.NationalSupplier_ID, er.InternationalSupplier_ID) '+
+                'Left Join Bank b ON er.NationalBankName = b.code '+
+                'WHERE er.Code = ?',
         [parseInt(req.Code)], function(err, result) {
         con.release()
         console.log(this.sql);
@@ -480,6 +496,10 @@ function ExpenseReport(){
           console.log(err);
           res.render('error', { error: err } );
         }else{
+          console.log('sou eu');
+          console.log(result[0]);
+          console.log('sou eu');
+
           req.ExpenseReport = result[0]
           next()
         }
