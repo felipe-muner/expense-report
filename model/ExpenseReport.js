@@ -483,8 +483,8 @@ function ExpenseReport(){
                   's.razao as SupplierName, '+
                   'b.title As BankNameTitle '+
                 'FROM ExpenseReport er '+
-                'Inner Join ExpenseReportType ert ON er.ExpenseReportType_ID = ert.ExpenseReportTypeID '+
-                'Inner Join ExpenseReportPaymentType erpt ON er.PaymentType = erpt.ExpenseReportPaymentTypeID '+
+                'Left Join ExpenseReportType ert ON er.ExpenseReportType_ID = ert.ExpenseReportTypeID '+
+                'Left Join ExpenseReportPaymentType erpt ON er.PaymentType = erpt.ExpenseReportPaymentTypeID '+
                 'Left Join Supplier AS s ON s.codigo IN(er.BankSlipSupplier_ID, er.NationalSupplier_ID, er.InternationalSupplier_ID) '+
                 'Left Join Bank b ON er.NationalBankName = b.code '+
                 'WHERE er.Code = ?',
