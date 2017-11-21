@@ -13,8 +13,6 @@ const A4option = require(process.env.PWD + '/views/report/A4config')
 const version = require(process.env.PWD + '/package.json')['version']
 
 router.get('/', function(req, res, next) {
-  console.log('entrei aqui testarei session');
-  req.session.version = version
   if (req.session.matricula) {
     console.log('entrei aqui tem session!');
     res.redirect('/panel')
@@ -41,6 +39,7 @@ router.post('/login', l.searchMatricula, l.incrementAttempt, l.checkFirstAccess,
   req.session.idunidade = req.foundUser.idunidade
   req.session.functionalityProfile = req.functionalityProfile
   req.session.budgets = req.budgets
+  req.session.version = version
 
   res.redirect('/panel')
 })
