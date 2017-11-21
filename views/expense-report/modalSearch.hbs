@@ -1,0 +1,53 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="filterModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Search</h4>
+      </div>
+      <form id="formSearch">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="Code">Code:</label>
+                <input type="number" class="form-control" id="Code" name="Code" min="20170000">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="FromDate">From:</label>
+                <input type="date" class="form-control" id="FromDate" name="FromDate" required>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="ToDate">To:</label>
+                <input type="date" class="form-control" id="ToDate" name="ToDate" required>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="RequestedBy">Requested By:</label>
+                <input type="text" class="form-control" id="RequestedBy" name="RequestedBy">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="AuthorizedBy">Authorized By:</label>
+                <input type="text" class="form-control" id="AuthorizedBy" name="AuthorizedBy">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="submit" value="Search">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

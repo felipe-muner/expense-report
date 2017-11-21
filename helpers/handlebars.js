@@ -4,6 +4,7 @@ function hbsHelpers(hbs) {
   return hbs.create({
     extname: '.hbs',
     layoutsDir: 'views/layout/',
+    partialsDir: 'views/',
     defaultLayout: 'layout',
     helpers: {
       section: function(name, options){
