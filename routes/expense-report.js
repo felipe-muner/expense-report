@@ -62,8 +62,15 @@ router.get('/new', er.getCurrencies, er.getAllSupplier, er.getAllBank, er.getTyp
   })
 }).post('/search', er.searchER,function(req, res, next) {
 
-  if(req.body.RequestedBy) req.searched = req.searched.filter(e => e.RequestedBy.toLowerCase().includes(req.body.RequestedBy.toLowerCase()))
-  if(req.body.AuthorizedBy) req.searched = req.searched.filter(e => e.AuthorizedBy.toLowerCase().includes(req.body.AuthorizedBy.toLowerCase()))
+  if(req.body.Code){
+    req.searched = req.searched.reduce((acc,ele)=>{
+      if(parseInt(req.body.Code) === ele.Code) acc.push(ele)
+      return acc
+    },[])
+  }else{
+    if(req.body.RequestedBy) req.searched = req.searched.filter(e => e.RequestedBy.toLowerCase().includes(req.body.RequestedBy.toLowerCase()))
+    if(req.body.AuthorizedBy) req.searched = req.searched.filter(e => e.AuthorizedBy.toLowerCase().includes(req.body.AuthorizedBy.toLowerCase()))
+  }
 
   req.searched.map((e)=>{
       e.CreatedAt = moment(e.CreatedAt).format('DD/MM/YYYY HH:mm')
@@ -76,8 +83,15 @@ router.get('/new', er.getCurrencies, er.getAllSupplier, er.getAllBank, er.getTyp
   res.json(req.searched)
 }).post('/search-my', er.searchERMy, function(req, res, next) {
 
-  if(req.body.RequestedBy) req.searched = req.searched.filter(e => e.RequestedBy.toLowerCase().includes(req.body.RequestedBy.toLowerCase()))
-  if(req.body.AuthorizedBy) req.searched = req.searched.filter(e => e.AuthorizedBy.toLowerCase().includes(req.body.AuthorizedBy.toLowerCase()))
+  if(req.body.Code){
+    req.searched = req.searched.reduce((acc,ele)=>{
+      if(parseInt(req.body.Code) === ele.Code) acc.push(ele)
+      return acc
+    },[])
+  }else{
+    if(req.body.RequestedBy) req.searched = req.searched.filter(e => e.RequestedBy.toLowerCase().includes(req.body.RequestedBy.toLowerCase()))
+    if(req.body.AuthorizedBy) req.searched = req.searched.filter(e => e.AuthorizedBy.toLowerCase().includes(req.body.AuthorizedBy.toLowerCase()))
+  }
 
   req.searched.map((e)=>{
       e.CreatedAt = moment(e.CreatedAt).format('DD/MM/YYYY HH:mm')
