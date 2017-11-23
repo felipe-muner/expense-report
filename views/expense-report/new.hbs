@@ -212,7 +212,7 @@
                   <input type="text" name="Description" value="" class="form-control">
                 </td>
                 <td>
-                  <select name="CostCenter" class="form-control CostCenter">
+                  <select name="CostCenter" class="form-control CostCenter" style="font-size:11px;">
                     <option value="">Select</option>
                     {{#each allCostCenter}}
                       <option value="{{Number}}">{{Number}} - {{Name}}</option>
@@ -250,7 +250,7 @@
                   <input type="text" name="Description" value="" class="form-control">
                 </td>
                 <td>
-                  <select name="CostCenter" class="form-control CostCenter">
+                  <select name="CostCenter" class="form-control CostCenter" style="font-size:11px;">
                     <option value="">Select</option>
                     {{#each allCostCenter}}
                       <option value="{{Number}}">{{Number}} - {{Name}}</option>
@@ -478,6 +478,9 @@
       }else if(3 === parseInt( $('input[name=PaymentType]:checked').val())) {
 
         if( !!$('.nationalPayment').toArray().find(e=>!e.value) || !$('#NationalBankName').val() || !$('input[name=AccountType]:checked').val() ){
+
+          $('.pagBancoNacional label:not(:first)').css('padding','3px 7px').css('background-color','rgb(235, 204, 209)')
+
           swal({
             title: "",
             html: 'Required fields: <br>- Account Type<br>- Name<br>- Bank<br>- Agency<br>- Account',
