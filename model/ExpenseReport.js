@@ -490,6 +490,7 @@ function ExpenseReport(){
                   'er.Budget, '+
                   'er.RequestedBy, '+
                   'er.AuthorizedBy, '+
+                  'er.CreatedByMatricula, '+
                   'er.EventName, '+
                   'er.Currency, '+
                   'er.CurrencyQuotation, '+
