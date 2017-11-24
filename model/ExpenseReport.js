@@ -418,7 +418,7 @@ function ExpenseReport(){
   }
 
   this.findAll = function(req, res, next){
-    //maximo 500
+    //maximo 1000
     conn.acquire(function(err,con){
       con.query('SELECT '+
                   'er.Code, '+

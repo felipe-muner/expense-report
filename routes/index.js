@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
   }
 });
 
-router.post('/login', l.searchMatricula, l.incrementAttempt, l.checkFirstAccess, l.changeSenhaBecauseTime, l.getFunctionality, l.getBudgets, l.clearAttempt, function (req, res, next){
+router.post('/login', l.searchMatricula, l.incrementAttempt, l.checkFirstAccess, l.changeSenhaBecauseTime, l.getFunctionality, l.getBudgets, l.clearAttempt, l.getAllBudgets, function (req, res, next){
   console.log('___')
   console.log('___')
   console.log(req.foundUser)

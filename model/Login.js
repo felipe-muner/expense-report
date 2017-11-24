@@ -74,6 +74,40 @@ function Login(){
     }
   }
 
+  this.getAllBudgets = function(req, res, next){
+    if (1 === req.foundUser.AllBudget) {
+      console.log('TENHO TODAS CONTAS SIIIIIMMM')
+
+        connPurchasing.acquire(function(err,con){
+          con.query('SELECT '+
+                      'o.id_orca, '+
+                      'o.setor, '+
+                      'o.grupo, '+
+                      'o.conta, '+
+                      'o.nomecont, '+
+                      'o.saldo '+
+                      'FROM '+
+                      'orcamento AS o', function(err, budgets) {
+            console.log(this.sql)
+            con.release()
+            req.budgets = budgets
+            req.budgets.unshift({
+              id_orca: '999999',
+              setor: '001',
+              grupo: '001',
+              conta: '00WS',
+              nomecont: 'Whole School',
+              saldo: 10000000
+            })
+            next()
+          })
+        })
+    }else {
+      console.log('NAOOOO TENHO TODAS CONTAS')
+      next()
+    }
+  }
+
   this.getFunctionality = function(req, res, next){
     if (req.userOkpassOk) {
       conn.acquire(function(err,con){
@@ -166,6 +200,7 @@ function Login(){
                   'unidades.idunidade,'+
                   'unidades.unidade,'+
                   'departamentos.nomedepartamento,'+
+                  'u.AllBudget,'+
                   '(select valor from constantes where nome = ?) as limitDaySamePassword '+
                 'FROM '+
                   'sistemas s '+
