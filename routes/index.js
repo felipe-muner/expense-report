@@ -87,7 +87,7 @@ router.post('/change-password', function(req, res, next) {
               if(err){
                 res.render('error', { error: err } );
               }else{
-                res.redirect('/login')
+                res.redirect('/')
               }
             })
           })
